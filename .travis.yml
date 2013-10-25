@@ -2,7 +2,7 @@ language: java
 deploy:
   provider: heroku
   api_key:
-    secure: X6ihU2bYg768gIfpGOr9rwTLXndhe1JBA7q4Eo8DhZm27SeNLKYIbJ/sjVA/uvjt6DXQa5gBohkE/49uLA43ePqwLqj/VJ0YE46WHMSQwUwyUPEkDaUQsRrq0i+Dr4M6cn4+BHXNewY3gucxoIv8j27HpfdypMfA2fFc6zWHhi4=
-  app: ticket-boys
+    secure: WAgNZtY6t4GTV+hFnAvFuZ99pP4wEIBSv/oTRXr7aHUOYAG6KRRqKGm2z7F8WKB+mY5QMUvr4ibgK6wvXoKyIsskz/o5pHGtoGBMTyLR3LSjIc7+khXhdnIl1GetoxbmeQCC26QuF9pu8Bofg46EEtK+JD/hiovWmHPy5U0rRaw=
+  app: ticket-system
   on:
     repo: hhagmans/Ticket-Boys
