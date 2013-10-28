@@ -11,6 +11,7 @@ public class HelloBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private String test = "blubasd";
 	private String name;
 
 	public String getName() {
@@ -19,6 +20,14 @@ public class HelloBean implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getTest(){
+		return test;
+	}
+	
+	public void setTest(String test){
+		this.test = test;
 	}
 
 }
