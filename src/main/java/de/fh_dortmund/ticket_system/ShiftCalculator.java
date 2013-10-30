@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * Dieses Objekt berechnet den Dispatcher-Schichtplan und erstellt Shift-Objekte
+ * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten) 
  * 
  * @author Ticket-Boys
  *

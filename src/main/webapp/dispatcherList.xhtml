@@ -10,14 +10,10 @@
   	
     <p:dataTable id="shiftTable" var="shift" value="#{shiftCalculator.shifts}" widgetVar="shiftTable"   
             emptyMessage="Es wurden keine Treffer gefunden" styleClass="dispatcherList">  
-  <!-- 
-            <p:outputPanel>  
-                <h:outputText value="Alle Felder durchsuchen:" />  
-                <p:inputText id="globalFilter" onkeyup="shiftCalculator.filter()" style="width:150px" />  
-            </p:outputPanel>   -->
-  
+
+
         <p:column id="kwColumn" filterBy="weekNumber"  sortBy="weekNumber" 
-                headerText="KW"   
+                headerText="Kalenderwoche"   
                 filterMatchMode="exact">  
             <h:outputText value="#{shift.weekNumber}" />  
         </p:column>  
