@@ -5,6 +5,14 @@ import javax.faces.bean.SessionScoped;
 
 import java.io.Serializable;
 
+
+/**
+ * Login-Bean zur Validierung der Login-Daten
+ * 
+ * @author Ticket-Boys
+ *
+ */
+
 @ManagedBean
 @SessionScoped
 public class Login implements Serializable {
@@ -12,6 +20,7 @@ public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String test = "blub";
+	
 	private String name;
 	private String passwort;
 
