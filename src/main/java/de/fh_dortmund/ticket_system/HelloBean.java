@@ -11,7 +11,7 @@ public class HelloBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String test = "blubasd";
+	private String test = "blub";
 	private String name;
 
 	public String getName() {
