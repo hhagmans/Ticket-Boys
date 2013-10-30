@@ -10,27 +10,25 @@
   	
     <p:dataTable id="shiftTable" var="shift" value="#{shiftCalculator.shifts}" widgetVar="shiftTable"   
             emptyMessage="Es wurden keine Treffer gefunden" styleClass="dispatcherList">  
-  
-         <!-- <f:facet name="header">  
+  <!-- 
             <p:outputPanel>  
-                <h:outputText value="Search all fields:" />  
-                <p:inputText id="globalFilter" onkeyup="carsTable.filter()" style="width:150px" />  
-            </p:outputPanel>  
-        </f:facet>   -->
+                <h:outputText value="Alle Felder durchsuchen:" />  
+                <p:inputText id="globalFilter" onkeyup="shiftCalculator.filter()" style="width:150px" />  
+            </p:outputPanel>   -->
   
-        <p:column id="kwColumn" filterBy="weekNumber"   
+        <p:column id="kwColumn" filterBy="weekNumber"  sortBy="weekNumber" 
                 headerText="KW"   
-                filterMatchMode="contains">  
+                filterMatchMode="exact">  
             <h:outputText value="#{shift.weekNumber}" />  
         </p:column>  
   
-        <p:column id="dispatcherNameColumn" filterBy="dispatcherName"  
+        <p:column id="dispatcherNameColumn" filterBy="dispatcherName" sortBy="dispatcherName" 
                 headerText="Name des Dispatchers" 
                 filterMatchMode="contains">  
             <h:outputText value="#{shift.dispatcherName}" />  
         </p:column>  
   
-        <p:column id="substituteNameColumn" filterBy="substituteName"   
+        <p:column id="substituteNameColumn" filterBy="substituteName" sortBy="substituteName"   
                 headerText="Vertreter"   
                 filterMatchMode="contains">  
             <h:outputText value="#{shift.substituteName}" />  
