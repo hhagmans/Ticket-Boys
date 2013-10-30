@@ -1,0 +1,43 @@
+<ui:composition template="template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h:form>  
+  	
+  	
+    <p:dataTable id="shiftTable" var="shift" value="#{ShiftCalculator.shifts}" widgetVar="shiftTable"   
+            emptyMessage="Es wurden keine Treffer gefunden" styleClass="dispatcherList">  
+  
+         <!-- <f:facet name="header">  
+            <p:outputPanel>  
+                <h:outputText value="Search all fields:" />  
+                <p:inputText id="globalFilter" onkeyup="carsTable.filter()" style="width:150px" />  
+            </p:outputPanel>  
+        </f:facet>   -->
+  
+        <p:column id="kwColumn" filterBy="weekNumber"   
+                headerText="KW"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{shift.weekNumber}" />  
+        </p:column>  
+  
+        <p:column id="dispatcherNameColumn" filterBy="dispatcherName"  
+                headerText="Name des Dispatchers" 
+                filterMatchMode="contains">  
+            <h:outputText value="#{shift.dispatcherName}" />  
+        </p:column>  
+  
+        <p:column id="substituteNameColumn" filterBy="substituteName"   
+                headerText="Vertreter"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{shift.substituteName}" />  
+        </p:column>  
+    </p:dataTable>  
+      
+</h:form> 
+	</ui:define>
+
+</ui:composition>

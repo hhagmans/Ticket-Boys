@@ -19,7 +19,7 @@ public class Login implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String test = "blub";
+	private String test = "blubfdasdfsa";
 	
 	private String name;
 	private String passwort;
