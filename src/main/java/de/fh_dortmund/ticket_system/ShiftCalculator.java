@@ -22,15 +22,23 @@ public class ShiftCalculator implements Serializable {
 	private List<Shift> shifts;
 	
 	public ShiftCalculator() {
-	shifts = new ArrayList<Shift>();
+	setShifts(new ArrayList<Shift>());
 	fillDatShit();
 	}
 
 	private void fillDatShit() {
-		shifts.add(new Shift(1,"Herbert", "Nicht Herbert"));
-		shifts.add(new Shift(2,"Dieter", "Herbert"));
-		shifts.add(new Shift(3,"Nicht Herbert", "Herbert"));
-		shifts.add(new Shift(3,"Dieter","Nicht Herbert"));
+		getShifts().add(new Shift(1,"Herbert", "Nicht Herbert"));
+		getShifts().add(new Shift(2,"Dieter", "Herbert"));
+		getShifts().add(new Shift(3,"Nicht Herbert", "Herbert"));
+		getShifts().add(new Shift(4,"Dieter","Nicht Herbert"));
+	}
+
+	public List<Shift> getShifts() {
+		return shifts;
+	}
+
+	public void setShifts(List<Shift> shifts) {
+		this.shifts = shifts;
 	}
 	
 	
