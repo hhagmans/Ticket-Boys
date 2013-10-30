@@ -15,7 +15,7 @@
 
 	<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>faces/hello.xhtml</welcome-file>
+		<welcome-file>faces/login.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<!-- JSF mapping -->
@@ -43,4 +43,13 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+	<!-- Primefaces -->
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.SUBMIT</param-name>
+		<param-value>FULL</param-value>
+	</context-param>
 </web-app>

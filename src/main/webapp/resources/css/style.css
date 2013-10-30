@@ -1,0 +1,13 @@
+html{
+	background-color: darkgray;
+}
+
+body {
+	margin: 0 auto;
+	width: 80%;
+	background-color: lightgray;
+}
+
+.login {
+	margin: 0 auto;
+}
