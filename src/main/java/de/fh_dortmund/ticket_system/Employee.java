@@ -1,5 +1,7 @@
 package de.fh_dortmund.ticket_system;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -10,7 +12,9 @@ import javax.faces.bean.ManagedBean;
  */
 
 @ManagedBean
-public class Employee {
+public class Employee implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String konzernID;
 	private String firstName;
