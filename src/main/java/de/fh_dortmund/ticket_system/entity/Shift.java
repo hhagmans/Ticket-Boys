@@ -1,4 +1,4 @@
-package de.fh_dortmund.ticket_system;
+package de.fh_dortmund.ticket_system.entity;
 
 import javax.faces.bean.ManagedBean;
 

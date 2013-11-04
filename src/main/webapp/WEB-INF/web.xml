@@ -15,7 +15,7 @@
 
 	<!-- Welcome page -->
 	<welcome-file-list>
-		<welcome-file>faces/login.xhtml</welcome-file>
+		<welcome-file>login.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<!-- JSF mapping -->
@@ -26,10 +26,6 @@
 	</servlet>
 
 	<!-- Map these files with JSF -->
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>/faces/*</url-pattern>
-	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
