@@ -1,5 +1,5 @@
 html{
-	background-color: darkgray;
+	background-color: #c5c2bb;
 }
 
 body {
@@ -10,4 +10,43 @@ body {
 
 .login {
 	margin: 0 auto;
+}
+.dispatcherList{
+	margin: 0 auto;
+	background-color: aqua;
+}
+
+#evonik_logo {
+	position: absolute;
+	right: 11%;
+	top: 20px;
+	height: 80px;
+	width: auto;
+}
+
+#dispatcher_logo {
+	margin-left: 10px;
+}
+
+#footer {
+	text-align: center;
+	color: #c5c2bb;
+	font-size: 14px;
+}
+
+#evonik_headline {
+	position: absolute;
+	color: #9a1d85;
+	top: 20px;
+	margin-left: 130px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.evonik_deep_purple {
+	color: #9a1d85;
+}
+
+.evonik_warm_grey {
+	color: #c5c2bb;
 }
