@@ -1,4 +1,4 @@
-package de.fh_dortmund.ticket_system.model;
+package de.fh_dortmund.ticket_system.authentication;
 
 import java.io.Serializable;
 
@@ -7,30 +7,37 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-@ManagedBean
+@ManagedBean(name = "auth")
 @SessionScoped
-public class Login implements Serializable {
+public class Authentication implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private String name;
 	private String passwort;
-	private boolean logedIn;
+	private boolean loggedIn;
 
 	public String login() {
 		if (authenticate(name, passwort)) {
-			logedIn = true;
+			setLoggedIn(true);
 
-			return "index?faces-redirect=true";
+			return "/pages/index?faces-redirect=true";
 		} else {
-			logedIn = false;
+			setLoggedIn(false);
 
-			FacesMessage msg = new FacesMessage("Login error!", "ERROR MSG");
+			FacesMessage msg = new FacesMessage("Login error! Name oder Passwort ist falsch.", "ERROR MSG");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
-			return "login?faces-redirect=true";
+			return "/login?faces-redirect=true";
 		}
+	}
+
+	public String logout() {
+		setLoggedIn(false);
+
+		return "/login?faces-redirect=true";
 	}
 
 	/**
@@ -63,12 +70,11 @@ public class Login implements Serializable {
 		this.passwort = passwort;
 	}
 
-	public Boolean getLogenIn() {
-		return logedIn;
+	public boolean isLoggedIn() {
+		return loggedIn;
 	}
 
-	public void setLogenIn(Boolean logenIn) {
-		this.logedIn = logenIn;
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}
-
 }
