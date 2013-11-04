@@ -5,50 +5,68 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-		<h:form>  
-  	
-  	
-    <p:dataTable id="employeeTable" var="employee" value="#{employees.employees}" widgetVar="employeeTable"   
-            emptyMessage="Es wurden keine Treffer gefunden" styleClass="employeeList">  
+		<h:form id ="employeeListMainform">
 
 
-        <p:column id="konzernID" filterBy="konzernID"  sortBy="konzernID" 
-                headerText="KonzernID"   
-                filterMatchMode="exact">  
-            <h:outputText value="#{employee.konzernID}" />  
-        </p:column>  
-  
-        <p:column id="employeeFirstNameColumn" filterBy="firstName" sortBy="firstName" 
-                headerText="Vorname" 
-                filterMatchMode="contains">  
-            <h:outputText value="#{employee.firstName}" />  
-        </p:column>  
-  
-        <p:column id="employeeLastNameColumn" filterBy="lastName" sortBy="lastName"   
-                headerText="Nachname"   
-                filterMatchMode="contains">  
-            <h:outputText value="#{employee.lastName}" />  
-        </p:column>  
-        
-         <p:column id="employeeCityColumn" filterBy="city" sortBy="city"   
-                headerText="Arbeitsort"   
-                filterMatchMode="contains">  
-            <h:outputText value="#{employee.city}" />  
-        </p:column> 
-            
-             <p:column id="employeeZipcodeColumn" filterBy="zipcode" sortBy="zipcode"   
-                headerText="Postleitzahl"   
-                filterMatchMode="contains">  
-            <h:outputText value="#{employee.zipcode}" />  
-        </p:column> 
-           <p:column id="employeeRoleColumn" filterBy="role" sortBy="role"   
-                headerText="Rolle"   
-                filterMatchMode="contains">  
-            <h:outputText value="#{employee.role.toString()}" />  
-        </p:column> 
-    </p:dataTable>  
-      
-</h:form> 
+			<p:dataTable id="employeeTable" var="employee"
+				value="#{employees.employees}" widgetVar="employeeTable"
+				emptyMessage="Es wurden keine Treffer gefunden"
+				styleClass="employeeList" rowKey="#{employee.konzernID}"
+				selection="#{employees.selectedEmployee}" selectionMode="single">
+
+
+				<p:column id="employeeKonzernIDColumn" filterBy="konzernID" sortBy="konzernID"
+					headerText="KonzernID" filterMatchMode="contains">
+					<h:outputText value="#{employee.konzernID}" />
+				</p:column>
+
+				<p:column id="employeeFirstNameColumn" filterBy="firstName"
+					sortBy="firstName" headerText="Vorname" filterMatchMode="contains">
+					<h:outputText value="#{employee.firstName}" />
+				</p:column>
+
+				<p:column id="employeeLastNameColumn" filterBy="lastName"
+					sortBy="lastName" headerText="Nachname" filterMatchMode="contains">
+					<h:outputText value="#{employee.lastName}" />
+				</p:column>
+
+				<p:column id="employeeCityColumn" filterBy="city" sortBy="city"
+					headerText="Arbeitsort"
+					filterMatchMode="contains">
+					<h:outputText value="#{employee.city}" />
+				</p:column>
+
+				<p:column id="employeeZipcodeColumn" filterBy="zipcode"
+					sortBy="zipcode" headerText="Postleitzahl"
+					filterMatchMode="contains">
+					<h:outputText value="#{employee.zipcode}" />
+				</p:column>
+				<p:column id="employeeRoleColumn" filterBy="role" sortBy="role"
+					headerText="Rolle" filterMatchMode="contains">
+					<h:outputText value="#{employee.role.toString()}" />
+				</p:column>
+			</p:dataTable>
+
+			<br />
+			<p:commandButton id="editButton" value="edit" icon="ui-icon-edit"
+				update=":employeeListMainform:display" oncomplete="PF('editDialog').show()" />
+
+			<p:dialog id="editDialog" header="Mitarbeiter Info" widgetVar="editDialog"
+				resizable="false" width="200" showEffect="clip" hideEffect="fold">
+
+				<h:panelGrid id="display" columns="2" cellpadding="4">
+
+					<h:outputText value="Vorname:" />
+					<h:outputText value="#{employees.selectedEmployee.firstName}" />
+
+					<h:outputText value="Nachname" />
+					<h:outputText value="#{employees.selectedEmployee.lastName}" />
+
+				</h:panelGrid>
+			</p:dialog>
+
+
+		</h:form>
 	</ui:define>
 
 </ui:composition>

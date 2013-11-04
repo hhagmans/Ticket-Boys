@@ -5,33 +5,34 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-		<h:form>  
-  	
-  	
-    <p:dataTable id="shiftTable" var="shift" value="#{shiftCalculator.shifts}" widgetVar="shiftTable"   
-            emptyMessage="Es wurden keine Treffer gefunden" styleClass="dispatcherList">  
+		<h:form id="dispatcherListMainform">
 
 
-        <p:column id="kwColumn" filterBy="weekNumber"  sortBy="weekNumber" 
-                headerText="Kalenderwoche"   
-                filterMatchMode="exact">  
-            <h:outputText value="#{shift.weekNumber}" />  
-        </p:column>  
-  
-        <p:column id="dispatcherNameColumn" filterBy="dispatcherName" sortBy="dispatcherName" 
-                headerText="Name des Dispatchers" 
-                filterMatchMode="contains">  
-            <h:outputText value="#{shift.dispatcherName}" />  
-        </p:column>  
-  
-        <p:column id="substituteNameColumn" filterBy="substituteName" sortBy="substituteName"   
-                headerText="Vertreter"   
-                filterMatchMode="contains">  
-            <h:outputText value="#{shift.substituteName}" />  
-        </p:column>  
-    </p:dataTable>  
-      
-</h:form> 
+			<p:dataTable id="shiftTable" var="shift"
+				value="#{shiftCalculator.shifts}" widgetVar="shiftTable"
+				emptyMessage="Es wurden keine Treffer gefunden"
+				styleClass="dispatcherList">
+
+
+				<p:column id="kwColumn" filterBy="weekNumber" sortBy="weekNumber"
+					headerText="Kalenderwoche" filterMatchMode="exact">
+					<h:outputText value="#{shift.weekNumber}" />
+				</p:column>
+
+				<p:column id="dispatcherNameColumn" filterBy="dispatcherName"
+					sortBy="dispatcherName" headerText="Name des Dispatchers"
+					filterMatchMode="contains">
+					<h:outputText value="#{shift.dispatcherName}" />
+				</p:column>
+
+				<p:column id="substituteNameColumn" filterBy="substituteName"
+					sortBy="substituteName" headerText="Vertreter"
+					filterMatchMode="contains">
+					<h:outputText value="#{shift.substituteName}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
 	</ui:define>
 
 </ui:composition>

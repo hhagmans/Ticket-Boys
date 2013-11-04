@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 public class Employees {
 	
 	private List<Employee> employees;
+	private Employee selectedEmployee;
 	
 	public Employees() {
 		super();
@@ -37,6 +38,14 @@ public class Employees {
 
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
+	}
+
+	public Employee getSelectedEmployee() {
+		return selectedEmployee;
+	}
+
+	public void setSelectedEmployee(Employee selectedEmployee) {
+		this.selectedEmployee = selectedEmployee;
 	}
 
 	
