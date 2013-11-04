@@ -68,5 +68,29 @@ public class Employees implements Serializable {
 	public void setSelectedEmployee(Employee selectedEmployee) {
 		this.selectedEmployee = selectedEmployee;
 	}
+	
+	private Employee getEmployeeByKonzernID(String konzernID)
+	{
+		for(Employee e : employees)
+		{
+			if(e.getKonzernID().equals(konzernID))
+			{
+				return e;
+			}
+		}
+		return null;
+	}
+	
+	public void saveChanges()
+	{
+		Employee emp = getEmployeeByKonzernID(selectedEmployee.getKonzernID());
+		if(emp == null)
+			return;
+		emp.setCity(selectedEmployee.getCity());
+		emp.setFirstName(selectedEmployee.getFirstName());
+		emp.setLastName(selectedEmployee.getLastName());
+		emp.setRole(selectedEmployee.getRole());
+		emp.setZipcode(selectedEmployee.getZipcode());
+	}
 
 }
