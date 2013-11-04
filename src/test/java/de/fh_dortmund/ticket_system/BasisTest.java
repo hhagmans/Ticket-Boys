@@ -1,8 +1,7 @@
 package de.fh_dortmund.ticket_system;
 
 import static org.junit.Assert.*;
-
-import de.fh_dortmund.ticket_system.Login;
+import de.fh_dortmund.ticket_system.model.Login;
 
 import org.junit.Test;
 

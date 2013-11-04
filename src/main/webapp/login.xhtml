@@ -14,7 +14,7 @@
 				<p:outputLabel>Passwort: </p:outputLabel>
 				<p:password value="#{login.passwort}" />
 				<br />
-				<p:commandButton value="Submit" type="submit" action="welcome?faces-redirect=true" ajax="FALSE"/>  
+				<p:commandButton value="Submit" type="submit" action="#{login.login()}" ajax="FALSE"/>  
 			</p:panel>
 		</h:form>
 	</ui:define>
