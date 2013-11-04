@@ -1,5 +1,15 @@
 package de.fh_dortmund.ticket_system;
 
+import javax.faces.bean.ManagedBean;
+
+/**
+ * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
+ * 
+ * @author Ticket-Boys
+ *
+ */
+
+@ManagedBean
 public class Employee {
 	
 	private String konzernID;
@@ -8,6 +18,7 @@ public class Employee {
 	private String city;
 	private int zipcode;
 	private Role role;
+	
 	public String getKonzernID() {
 		return konzernID;
 	}
