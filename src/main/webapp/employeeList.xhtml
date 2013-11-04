@@ -12,23 +12,40 @@
             emptyMessage="Es wurden keine Treffer gefunden" styleClass="employeeList">  
 
 
-        <p:column id="KonzernID" filterBy="KonzernID"  sortBy="KonzernID" 
+        <p:column id="KonzernID" filterBy="KonzernID"  sortBy="konzernID" 
                 headerText="KonzernID"   
                 filterMatchMode="exact">  
-            <h:outputText value="#{shift.weekNumber}" />  
+            <h:outputText value="#{employee.konzernID}" />  
         </p:column>  
   
-        <p:column id="dispatcherNameColumn" filterBy="dispatcherName" sortBy="dispatcherName" 
-                headerText="Name des Dispatchers" 
+        <p:column id="employeeFirstNameColumn" filterBy="firstName" sortBy="firstName" 
+                headerText="Vorname" 
                 filterMatchMode="contains">  
-            <h:outputText value="#{shift.dispatcherName}" />  
+            <h:outputText value="#{employee.firstName}" />  
         </p:column>  
   
-        <p:column id="substituteNameColumn" filterBy="substituteName" sortBy="substituteName"   
-                headerText="Vertreter"   
+        <p:column id="employeeLastNameColumn" filterBy="lastName" sortBy="lastName"   
+                headerText="Nachname"   
                 filterMatchMode="contains">  
-            <h:outputText value="#{shift.substituteName}" />  
+            <h:outputText value="#{employee.lastName}" />  
         </p:column>  
+        
+         <p:column id="employeeCityColumn" filterBy="city" sortBy="city"   
+                headerText="Arbeitsort"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{employee.city}" />  
+        </p:column> 
+            
+             <p:column id="employeeZipcodeColumn" filterBy="zipcode" sortBy="zipcode"   
+                headerText="Postleitzahl"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{employee.zipcode}" />  
+        </p:column> 
+           <p:column id="employeeRoleColumn" filterBy="role" sortBy="role"   
+                headerText="Rolle"   
+                filterMatchMode="contains">  
+            <h:outputText value="#{employee.role}" />  
+        </p:column> 
     </p:dataTable>  
       
 </h:form> 

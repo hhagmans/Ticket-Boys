@@ -9,14 +9,22 @@ public class Employees {
 
 	public Employees() {
 		super();
-		this.employees = new ArrayList<Employee>();
+		this.setEmployees(new ArrayList<Employee>());
 		fillEmployees();
 	}
 
 	private void fillEmployees() {
 		Employee employee = new Employee("Kartoffel1337", "Karl-Heinz", "Toffelhaus", "Dortmund", 44135, Role.admin);
 		Employee employee2 = new Employee("Mettwurst1337", "Mette", "Wurstowitz", "Stadt ohne Namen", 45883, Role.dispatcher);
-		employees.add(employee );
+		getEmployees().add(employee );
+	}
+
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 	
