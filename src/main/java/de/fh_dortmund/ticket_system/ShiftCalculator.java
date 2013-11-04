@@ -5,11 +5,8 @@ import javax.faces.bean.ManagedBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -37,19 +34,19 @@ public class ShiftCalculator implements Serializable {
 
 	private void fillDatShit() {		
 		
-		Gson gson = new Gson();
-		
 		List<Employee> empList = null;
 		
+		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
+		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+		String json = s.hasNext() ? s.next() : "";
 		try {
-			BufferedReader br = new BufferedReader(
-					new FileReader("./../../ticket-system/src/test/fixtures/UserList.json"));
-			
-			Type type = new TypeToken<List<Employee>>(){}.getType();
-		    empList = new Gson().fromJson(br, type);
-		} catch (FileNotFoundException e) {
+			is.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		Type type = new TypeToken<List<Employee>>(){}.getType();
+		empList = new Gson().fromJson(json, type);
 		
 		if (empList != null) {
 			
