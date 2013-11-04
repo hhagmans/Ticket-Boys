@@ -12,7 +12,7 @@
             emptyMessage="Es wurden keine Treffer gefunden" styleClass="employeeList">  
 
 
-        <p:column id="KonzernID" filterBy="KonzernID"  sortBy="konzernID" 
+        <p:column id="konzernID" filterBy="konzernID"  sortBy="konzernID" 
                 headerText="KonzernID"   
                 filterMatchMode="exact">  
             <h:outputText value="#{employee.konzernID}" />  
@@ -44,7 +44,7 @@
            <p:column id="employeeRoleColumn" filterBy="role" sortBy="role"   
                 headerText="Rolle"   
                 filterMatchMode="contains">  
-            <h:outputText value="#{employee.role}" />  
+            <h:outputText value="#{employee.role.toString()}" />  
         </p:column> 
     </p:dataTable>  
       
