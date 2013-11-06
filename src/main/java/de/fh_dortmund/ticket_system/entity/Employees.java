@@ -48,9 +48,7 @@ public class Employees implements Serializable {
 		Type type = new TypeToken<List<Employee>>(){}.getType();
 		empList = new Gson().fromJson(json, type);
 
-		for (int i = 0; i < empList.size(); i++) {
-			getEmployees().add(empList.get(i));
-		}
+		setEmployees(empList);
 	}
 
 	public List<Employee> getEmployees() {
