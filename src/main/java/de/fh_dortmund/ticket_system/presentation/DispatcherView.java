@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import de.fh_dortmund.ticket_system.business.Employees;
+import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
@@ -18,7 +18,7 @@ public class DispatcherView
 	ShiftData	shifts;
 
 	@ManagedProperty("#{employees}")
-	Employees			employees;
+	EmployeeData			employees;
 
 	private List<Shift>	selectedShifts;
 
@@ -53,12 +53,12 @@ public class DispatcherView
 		this.selectedShifts = selectedShifts;
 	}
 
-	public Employees getEmployees()
+	public EmployeeData getEmployees()
 	{
 		return employees;
 	}
 
-	public void setEmployees(Employees employees)
+	public void setEmployees(EmployeeData employees)
 	{
 		this.employees = employees;
 	}
