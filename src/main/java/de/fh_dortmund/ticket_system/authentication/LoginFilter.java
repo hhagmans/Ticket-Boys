@@ -20,32 +20,38 @@ import javax.servlet.http.HttpServletResponse;
  * 
  */
 @WebFilter("/pages/*")
-public class LoginFilter implements Filter {
+public class LoginFilter implements Filter
+{
 
 	/**
 	 * Checks if user is logged in. If not it redirects to the login.xhtml page.
 	 */
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws ServletException, IOException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException,
+			IOException
+	{
 		HttpServletRequest req = (HttpServletRequest) request;
-		Authentication login = (Authentication) req.getSession().getAttribute(
-				"auth");
+		Authentication login = (Authentication) req.getSession().getAttribute("auth");
 
-		if (login == null || !login.isLoggedIn()) {
+		if (login == null || !login.isLoggedIn())
+		{
 			// User is not logged in, so redirect to index.
 			HttpServletResponse res = (HttpServletResponse) response;
 			res.sendRedirect(req.getContextPath() + "/login.xhtml");
-		} else {
+		}
+		else
+		{
 			chain.doFilter(request, response);
 		}
 	}
 
-	public void init(FilterConfig config) throws ServletException {
+	public void init(FilterConfig config) throws ServletException
+	{
 		// Nothing to do here!
 	}
 
-	public void destroy() {
+	public void destroy()
+	{
 		// Nothing to do here!
 	}
 

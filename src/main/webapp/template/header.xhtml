@@ -4,13 +4,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 <body>
 	<ui:composition>
 		<p:panel>
 			<h:graphicImage id="evonik_logo" name="images/evonik_logo.png" />
-			<h:graphicImage id="dispatcher_logo" name="images/dispatcher_logo.png" />
+			<h:graphicImage id="dispatcher_logo"
+				name="images/dispatcher_logo.png" />
 			<p id="evonik_headline">Dispatcher &amp; Urlaubsplan</p>
+
+			<br />
+			<h:form>
+				<p:menubar>
+					<p:menuitem value="Home" action="index?faces-redirect=true"
+						icon="ui-icon-close" />
+					<p:menuitem value="Dispatcher"
+						action="dispatcherList?faces-redirect=true" icon="ui-icon-close" />
+					<p:menuitem value="Nutzer"
+						action="employeeList?faces-redirect=true" icon="ui-icon-close" />
+
+					<f:facet name="options">
+						<p:commandButton type="submit" value="Logout"
+							icon="ui-icon-extlink" action="#{auth.logout}" ajax="FALSE" />
+					</f:facet>
+				</p:menubar>
+			</h:form>
 		</p:panel>
 	</ui:composition>
 </body>
