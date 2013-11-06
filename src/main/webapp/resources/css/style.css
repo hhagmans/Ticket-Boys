@@ -1,4 +1,4 @@
-html{
+html {
 	background-color: #c5c2bb;
 }
 
@@ -11,7 +11,8 @@ body {
 .login {
 	margin: 0 auto;
 }
-.dispatcherList{
+
+.dispatcherList {
 	margin: 0 auto;
 	background-color: aqua;
 }
@@ -56,8 +57,15 @@ body {
 	color: black;
 }
 
-.ui-menu.ui-widget li > .ui-menuitem-link.ui-state-hover{
+.ui-menu.ui-widget li>.ui-menuitem-link.ui-state-hover {
 	color: #9a1d85;
 	background-color: transparent;
 	background-image: none;
+}
+
+/*
+	Hides dispatcher select all checkbox.
+*/
+.table-no-select-all .ui-chkbox-all {
+     display: none !important;
 }
