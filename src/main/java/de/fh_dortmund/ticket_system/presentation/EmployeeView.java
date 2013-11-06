@@ -16,6 +16,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 public class EmployeeView {
 
 	@ManagedProperty("#{employeeData}")
+	private
 	EmployeeData employeeData;
 
 	
@@ -31,5 +32,13 @@ public class EmployeeView {
 		FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public EmployeeData getEmployeeData() {
+		return employeeData;
+	}
+
+	public void setEmployeeData(EmployeeData employeeData) {
+		this.employeeData = employeeData;
 	}
 }

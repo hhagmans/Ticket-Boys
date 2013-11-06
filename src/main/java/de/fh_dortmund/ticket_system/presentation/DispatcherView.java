@@ -15,10 +15,10 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 public class DispatcherView
 {
 	@ManagedProperty("#{shiftData}")
-	ShiftData	shifts;
+	ShiftData	shiftData;
 
-	@ManagedProperty("#{employees}")
-	EmployeeData			employees;
+	@ManagedProperty("#{employeeData}")
+	EmployeeData			employeeData;
 
 	private List<Shift>	selectedShifts;
 
@@ -53,23 +53,26 @@ public class DispatcherView
 		this.selectedShifts = selectedShifts;
 	}
 
-	public EmployeeData getEmployees()
-	{
-		return employees;
+
+	public ShiftData getShiftData() {
+		return shiftData;
 	}
 
-	public void setEmployees(EmployeeData employees)
-	{
-		this.employees = employees;
+
+	public void setShiftData(ShiftData shiftData) {
+		this.shiftData = shiftData;
 	}
 
-	public ShiftData getShifts()
-	{
-		return shifts;
+
+	public EmployeeData getEmployeeData() {
+		return employeeData;
 	}
 
-	public void setShifts(ShiftData shifts)
-	{
-		this.shifts = shifts;
+
+	public void setEmployeeData(EmployeeData employeeData) {
+		this.employeeData = employeeData;
 	}
+	
+	
+
 }

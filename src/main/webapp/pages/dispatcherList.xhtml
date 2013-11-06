@@ -2,7 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 	<h:outputScript library="js" name="common.js" />
 
@@ -13,12 +14,18 @@
 
 
 			<p:dataTable id="shiftTable" var="shift"
-				value="#{shiftData.shiftModel}" widgetVar="shiftTable"
-				selection="#{dispatcherView.selectedShifts}"
+				value="#{dispatcherView.shiftData.shiftModel}"
+				widgetVar="shiftTable" selection="#{dispatcherView.selectedShifts}"
 				emptyMessage="Es wurden keine Treffer gefunden"
 				draggableColumns="true"
 				styleClass="dispatcherList table-no-select-all">
 
+				<f:facet name="header">
+					<p:commandButton id="swapShifts" value="Ausgewählte Schichten tauschen"
+						action="#{dispatcherView.switchShifts()}"
+						icon="ui-icon-edit" update=":dispatcherListMainform:shiftTable"
+						oncomplete="PF('shiftTable').update" />
+				</f:facet>
 
 				<p:column selectionMode="multiple" style="width:2%" />
 
