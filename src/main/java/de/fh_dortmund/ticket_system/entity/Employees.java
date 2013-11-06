@@ -81,14 +81,14 @@ public class Employees implements Serializable {
 	
 	public void saveChanges()
 	{
-		Employee emp = getEmployeeByKonzernID(selectedEmployee.getKonzernID());
-		if(emp == null)
+		;
+		if(getEmployeeByKonzernID(selectedEmployee.getKonzernID()) == null)
 			return;
-		emp.setCity(selectedEmployee.getCity());
-		emp.setFirstName(selectedEmployee.getFirstName());
-		emp.setLastName(selectedEmployee.getLastName());
-		emp.setRole(selectedEmployee.getRole());
-		emp.setZipcode(selectedEmployee.getZipcode());
+		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setCity(selectedEmployee.getCity());
+		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setFirstName(selectedEmployee.getFirstName());
+		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setLastName(selectedEmployee.getLastName());
+		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setRole(selectedEmployee.getRole());
+		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setZipcode(selectedEmployee.getZipcode());
 	}
 
 }
