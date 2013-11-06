@@ -3,12 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
 <body>
 	<ui:composition>
 		<p:panel>
-			<img id="evonik_logo" src="resources/images/evonik_logo.png"></img>
-			<img id="dispatcher_logo" src="resources/images/dispatcher_logo.png"></img>
+			<h:graphicImage id="evonik_logo" name="images/evonik_logo.png" />
+			<h:graphicImage id="dispatcher_logo" name="images/dispatcher_logo.png" />
 			<p id="evonik_headline">Dispatcher &amp; Urlaubsplan</p>
 		</p:panel>
 	</ui:composition>
