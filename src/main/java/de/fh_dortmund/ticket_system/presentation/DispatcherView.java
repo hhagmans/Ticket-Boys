@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
@@ -12,35 +13,36 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.ShiftCalculator;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DispatcherView
 {
 	@ManagedProperty("#{shiftCalculator}")
-	ShiftCalculator	shifts;
+	ShiftCalculator		shifts;
 
 	@ManagedProperty("#{employees}")
-	Employees		employees;
+	Employees			employees;
 
-	private Shift	shift1;
-	private Shift	shift2;
+	private Shift		shift1;
+	private Shift		shift2;
 
-	private List<Shift> selectedShifts;
+	private List<Shift>	selectedShifts;
 
 	public void switchShifts()
 	{
-		if(getSelectedShifts().size()!=2)
-			//TODO Exceptionhandling
+		if (getSelectedShifts().size() != 2)
+			// TODO Exceptionhandling
 			return;
-		
+
 		Shift shift0 = getSelectedShifts().get(0);
 		Shift shift1 = getSelectedShifts().get(1);
-		
-		if(shift0 ==null || shift1==null)
-			//TODO Exceptionhandling
+
+		if (shift0 == null || shift1 == null)
+			// TODO Exceptionhandling
 			return;
-		
-		Shift tempShift0 = new Shift(shift0.getYearWeekCombi(), shift0.getWeekNumber(), shift0.getDispatcherName(), shift0.getSubstituteName());
-		
+
+		Shift tempShift0 = new Shift(shift0.getYearWeekCombi(), shift0.getWeekNumber(), shift0.getDispatcherName(),
+				shift0.getSubstituteName());
+
 		shift0.setDispatcherName(shift1.getDispatcherName());
 		shift1.setDispatcherName(tempShift0.getDispatcherName());
 	}
@@ -65,11 +67,33 @@ public class DispatcherView
 		this.shift2 = shift2;
 	}
 
-	public List<Shift> getSelectedShifts() {
+	public List<Shift> getSelectedShifts()
+	{
 		return selectedShifts;
 	}
 
-	public void setSelectedShifts(List<Shift> selectedShifts) {
+	public void setSelectedShifts(List<Shift> selectedShifts)
+	{
 		this.selectedShifts = selectedShifts;
+	}
+
+	public Employees getEmployees()
+	{
+		return employees;
+	}
+
+	public void setEmployees(Employees employees)
+	{
+		this.employees = employees;
+	}
+
+	public ShiftCalculator getShifts()
+	{
+		return shifts;
+	}
+
+	public void setShifts(ShiftCalculator shifts)
+	{
+		this.shifts = shifts;
 	}
 }

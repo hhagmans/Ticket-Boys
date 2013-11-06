@@ -4,13 +4,18 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.webapp.FacesServlet;
+
+import com.sun.faces.util.MessageUtils;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Employees;
+import de.fh_dortmund.ticket_system.util.MessageUtil;
 
 @ManagedBean(name = "auth")
 @SessionScoped
@@ -27,19 +32,21 @@ public class Authentication implements Serializable
 	@ManagedProperty("#{employees}")
 	Employees					employees;
 
-	@PostConstruct
-	public void blub()
-	{
-
-	}
-
 	public String login()
 	{
 		if (authenticate(name, passwort))
 		{
 			setLoggedIn(true);
 
-			setEmployee(getEmployees().findEmployeeByID(name));
+			Employee employee = getEmployees().findEmployeeByID(name);
+			if (employee == null)
+			{
+				MessageUtil.show("User nicht gefunden!", FacesMessage.SEVERITY_ERROR);
+			}
+			else
+			{
+				setEmployee(employee);
+			}
 
 			return "/pages/index?faces-redirect=true";
 		}
@@ -47,10 +54,7 @@ public class Authentication implements Serializable
 		{
 			setLoggedIn(false);
 
-			FacesMessage msg = new FacesMessage("Login error! Name oder Passwort ist falsch.", "ERROR MSG");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			MessageUtil.show("Login error! Name oder Passwort ist falsch.", FacesMessage.SEVERITY_ERROR);
 
 			return "/login?faces-redirect=true";
 		}
