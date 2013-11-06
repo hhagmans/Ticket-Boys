@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.EmployeeModel;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDAOImpl;
 
@@ -34,48 +35,30 @@ public class EmployeeData
 {
 
 	private static final long	serialVersionUID	= 1L;
-	private List<Employee>		employees;
-	private Employee			selectedEmployee;
 	private EmployeeDAO employeeDAO;
+	private EmployeeModel employeeModel;
 
 	public EmployeeData()
 	{
 		employeeDAO = new EmployeeDAOImpl();
-		employees = employeeDAO.getAllEmployees();
+		setEmployeeModel(new EmployeeModel(employeeDAO.getAllEmployees()));
 	}
 
 
 	public Employee findEmployeeByID(String konzernID)
 	{
-		for (Employee employee : employees)
-		{
-			if (employee.getKonzernID().equals(konzernID))
-				return employee;
-		}
 
-		return null;
-	}
-
-	public List<Employee> getEmployees()
-	{
-		return employees;
-	}
-
-	public void setEmployees(List<Employee> employees)
-	{
-		this.employees = employees;
-	}
-
-	public Employee getSelectedEmployee()
-	{
-		return selectedEmployee;
-	}
-
-	public void setSelectedEmployee(Employee selectedEmployee)
-	{
-		this.selectedEmployee = selectedEmployee;
+		return getEmployeeModel().getRowData(konzernID);
 	}
 
 
+	public EmployeeModel getEmployeeModel() {
+		return employeeModel;
+	}
 
+
+	public void setEmployeeModel(EmployeeModel employeeModel) {
+		this.employeeModel = employeeModel;
+	}
 }
+

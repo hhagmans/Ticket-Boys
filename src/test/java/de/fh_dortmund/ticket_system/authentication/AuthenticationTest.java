@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.EmployeeModel;
 import de.fh_dortmund.ticket_system.entity.Role;
 
 public class AuthenticationTest
@@ -30,12 +31,13 @@ public class AuthenticationTest
 	{
 		auth = new NoAuthentication();
 		auth.setEmployeeData(new EmployeeData());
-		auth.getEmployeeData().setEmployees(new ArrayList<Employee>()
+		auth.getEmployeeData().setEmployeeModel(new EmployeeModel( new ArrayList<Employee>()
 		{
 			{
 				add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE));
 			}
-		});
+		})
+		);
 	}
 
 	@Test
