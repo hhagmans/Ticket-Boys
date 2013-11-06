@@ -28,7 +28,7 @@ public class AuthenticationTest
 	@Before
 	public void setUp() throws Exception
 	{
-		auth = new Authentication();
+		auth = new NoAuthentication();
 		auth.setEmployees(new Employees());
 		auth.getEmployees().setEmployees(new ArrayList<Employee>()
 		{

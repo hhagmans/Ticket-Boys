@@ -2,24 +2,15 @@ package de.fh_dortmund.ticket_system.authentication;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.webapp.FacesServlet;
-
-import com.sun.faces.util.MessageUtils;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Employees;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
-@ManagedBean(name = "auth")
-@SessionScoped
-public class Authentication implements Serializable
+public abstract class Authentication implements Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
@@ -32,21 +23,20 @@ public class Authentication implements Serializable
 	@ManagedProperty("#{employees}")
 	Employees					employees;
 
+	/**
+	 * Hier kommt die Authentifizierung statt.
+	 * 
+	 * @param name2
+	 * @param passwort2
+	 * @return
+	 */
+	protected abstract boolean authenticate(String name, String passwort);
+
 	public String login()
 	{
-		if (authenticate(name, passwort))
+		if (authenticate(name, passwort) && findEmploye())
 		{
 			setLoggedIn(true);
-
-			Employee employee = getEmployees().findEmployeeByID(name);
-			if (employee == null)
-			{
-				MessageUtil.show("User nicht gefunden!", FacesMessage.SEVERITY_ERROR);
-			}
-			else
-			{
-				setEmployee(employee);
-			}
 
 			return "/pages/index?faces-redirect=true";
 		}
@@ -54,29 +44,32 @@ public class Authentication implements Serializable
 		{
 			setLoggedIn(false);
 
-			MessageUtil.show("Login error! Name oder Passwort ist falsch.", FacesMessage.SEVERITY_ERROR);
-
 			return "/login?faces-redirect=true";
 		}
+	}
+
+	private boolean findEmploye()
+	{
+		Employee employee = getEmployees().findEmployeeByID(name);
+		if (employee == null)
+		{
+			MessageUtil.show("User nicht gefunden!", FacesMessage.SEVERITY_ERROR);
+			return false;
+		}
+
+		setEmployee(employee);
+
+		return true;
 	}
 
 	public String logout()
 	{
 		setLoggedIn(false);
 
-		return "/login?faces-redirect=true";
-	}
+		if (FacesContext.getCurrentInstance() != null && FacesContext.getCurrentInstance().getExternalContext() != null)
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-	/**
-	 * Hier kommt die Authentifizierung mit LDAP statt.
-	 * 
-	 * @param name2
-	 * @param passwort2
-	 * @return
-	 */
-	private boolean authenticate(String name, String passwort)
-	{
-		return true;
+		return "/login?faces-redirect=true";
 	}
 
 	public String getName()
