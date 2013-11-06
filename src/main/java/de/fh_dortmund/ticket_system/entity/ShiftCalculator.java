@@ -98,4 +98,19 @@ public class ShiftCalculator implements Serializable {
 	public ShiftModel getShiftModel() {
 		return shiftModel;
 	}
+	
+	public void swapShifts()
+	{
+		if(selectedShifts.size()!=2)
+			//TODO Exceptionhandling
+			return;
+		
+		Shift shift0 = selectedShifts.get(0);
+		Shift shift1 = selectedShifts.get(1);
+		
+		if(shift0 ==null || shift1==null)
+			//TODO Exceptionhandling
+			return;
+		
+	}
 }

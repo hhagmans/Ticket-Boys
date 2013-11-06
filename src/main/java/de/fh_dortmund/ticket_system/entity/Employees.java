@@ -111,19 +111,6 @@ public class Employees
 		return -1;
 	}
 
-	public void saveChanges()
-	{
-		;
-		int index = getIndexOfEmployeeByKonzernID(selectedEmployee.getKonzernID());
-		if (index < 0)
-			return;
-		employees.get(index).setCity(selectedEmployee.getCity());
-		employees.get(index).setFirstName(selectedEmployee.getFirstName());
-		employees.get(index).setLastName(selectedEmployee.getLastName());
-		employees.get(index).setRole(selectedEmployee.getRole());
-		employees.get(index).setZipcode(selectedEmployee.getZipcode());
-	}
-
 	public void onEdit(RowEditEvent event)
 	{
 		FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
