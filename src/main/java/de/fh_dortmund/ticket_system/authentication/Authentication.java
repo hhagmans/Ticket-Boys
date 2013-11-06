@@ -117,14 +117,6 @@ public class Authentication implements Serializable
 
 	public Employees getEmployees()
 	{
-		if (employees == null)
-			employees = (Employees) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap()
-					.get("employees");
-
-		if (employees == null)
-			employees = (Employees) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-					.get("employees");
-
 		return employees;
 	}
 
