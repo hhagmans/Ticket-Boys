@@ -28,7 +28,6 @@ public class ShiftCalculator implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Shift> shifts;
-	private List<Shift> selectedShifts;
 	
 	private ShiftModel shiftModel;
 	
@@ -87,30 +86,9 @@ public class ShiftCalculator implements Serializable {
 		this.shifts = shifts;
 	}
 
-	public List<Shift> getSelectedShifts() {
-		return selectedShifts;
-	}
-
-	public void setSelectedShifts(List<Shift> selectedShifts) {
-		this.selectedShifts = selectedShifts;
-	}
 
 	public ShiftModel getShiftModel() {
 		return shiftModel;
 	}
 	
-	public void swapShifts()
-	{
-		if(selectedShifts.size()!=2)
-			//TODO Exceptionhandling
-			return;
-		
-		Shift shift0 = selectedShifts.get(0);
-		Shift shift1 = selectedShifts.get(1);
-		
-		if(shift0 ==null || shift1==null)
-			//TODO Exceptionhandling
-			return;
-		
-	}
 }
