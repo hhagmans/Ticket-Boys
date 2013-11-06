@@ -6,8 +6,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
+import de.fh_dortmund.ticket_system.business.Employees;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.Employees;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
 public abstract class Authentication implements Serializable

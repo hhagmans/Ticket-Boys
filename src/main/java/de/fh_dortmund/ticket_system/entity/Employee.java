@@ -12,8 +12,6 @@ import javax.faces.bean.SessionScoped;
  * 
  */
 
-@ManagedBean
-@SessionScoped
 public class Employee implements Serializable
 {
 

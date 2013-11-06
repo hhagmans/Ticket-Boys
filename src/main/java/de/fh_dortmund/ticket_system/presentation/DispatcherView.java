@@ -6,23 +6,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import de.fh_dortmund.ticket_system.entity.Employees;
+import de.fh_dortmund.ticket_system.business.Employees;
+import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.entity.ShiftsData;
 
 @ManagedBean
 @SessionScoped
 public class DispatcherView
 {
-	@ManagedProperty("#{shiftCalculator}")
-	private
-	ShiftsData	shifts;
+	@ManagedProperty("#{shiftData}")
+	ShiftData	shifts;
 
 	@ManagedProperty("#{employees}")
 	Employees			employees;
-
-	private Shift		shift1;
-	private Shift		shift2;
 
 	private List<Shift>	selectedShifts;
 
@@ -46,25 +42,6 @@ public class DispatcherView
 		shift1.setDispatcherName(tempShift0.getDispatcherName());
 	}
 
-	public Shift getShift1()
-	{
-		return shift1;
-	}
-
-	public void setShift1(Shift shift1)
-	{
-		this.shift1 = shift1;
-	}
-
-	public Shift getShift2()
-	{
-		return shift2;
-	}
-
-	public void setShift2(Shift shift2)
-	{
-		this.shift2 = shift2;
-	}
 
 	public List<Shift> getSelectedShifts()
 	{
@@ -86,12 +63,12 @@ public class DispatcherView
 		this.employees = employees;
 	}
 
-	public ShiftsData getShifts()
+	public ShiftData getShifts()
 	{
 		return shifts;
 	}
 
-	public void setShifts(ShiftsData shifts)
+	public void setShifts(ShiftData shifts)
 	{
 		this.shifts = shifts;
 	}

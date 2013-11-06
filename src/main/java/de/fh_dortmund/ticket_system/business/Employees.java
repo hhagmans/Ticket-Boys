@@ -1,4 +1,4 @@
-package de.fh_dortmund.ticket_system.entity;
+package de.fh_dortmund.ticket_system.business;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +16,8 @@ import org.primefaces.event.RowEditEvent;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import de.fh_dortmund.ticket_system.entity.Employee;
 
 /**
  * Diese Klasse speichert und verwaltet alle bekannten Benutzer
@@ -35,9 +37,9 @@ public class Employees
 
 	public Employees()
 	{
+		fillEmployees();
 	}
 
-	@PostConstruct
 	private void fillEmployees()
 	{
 		this.setEmployees(new ArrayList<Employee>());
@@ -64,8 +66,6 @@ public class Employees
 		empList = new Gson().fromJson(json, type);
 
 		setEmployees(empList);
-
-		setSelectedEmployee(getEmployees().get(0));
 	}
 
 	public Employee findEmployeeByID(String konzernID)
@@ -97,18 +97,6 @@ public class Employees
 	public void setSelectedEmployee(Employee selectedEmployee)
 	{
 		this.selectedEmployee = selectedEmployee;
-	}
-
-	private int getIndexOfEmployeeByKonzernID(String konzernID)
-	{
-		for (Employee e : employees)
-		{
-			if (e.getKonzernID().equals(konzernID))
-			{
-				return employees.indexOf(e);
-			}
-		}
-		return -1;
 	}
 
 	public void onEdit(RowEditEvent event)

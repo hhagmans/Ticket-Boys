@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.fh_dortmund.ticket_system.business.Employees;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.Employees;
 import de.fh_dortmund.ticket_system.entity.Role;
 
 public class AuthenticationTest
