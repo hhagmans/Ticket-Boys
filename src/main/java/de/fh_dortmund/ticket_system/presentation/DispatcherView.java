@@ -9,14 +9,14 @@ import javax.faces.bean.ViewScoped;
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.Employees;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.entity.ShiftCalculator;
+import de.fh_dortmund.ticket_system.entity.ShiftsData;
 
 @ManagedBean
 @ViewScoped
 public class DispatcherView
 {
 	@ManagedProperty("#{shiftCalculator}")
-	ShiftCalculator	shifts;
+	ShiftsData	shifts;
 
 	@ManagedProperty("#{employees}")
 	Employees		employees;
