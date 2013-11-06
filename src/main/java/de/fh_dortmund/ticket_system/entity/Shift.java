@@ -17,52 +17,56 @@ public class Shift implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String yearWeekCombi;
+	private int year;
 	private int weekNumber;
-	private String dispatcherName;
-	private String substituteName;
-	
-	/**
-	 * 
-	 * @param weekNumber Kalenderwoche der Schicht
-	 * @param dispatcherName vollständiger Name der dieser Schicht zugeteilten Dispatchers
-	 * @param substituteName vollständiger Name der dieser Schicht zugeteilten Vertreters des Dispatchers
-	 * @param yearWeekCombi KW-YYYY der Schicht
-	 */
-	
-	
+	private Employee dispatcher;
+	private Employee substitutioner;
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
 	public int getWeekNumber() {
 		return weekNumber;
-	}
-	public Shift(String yearWeekCombi, int weekNumber, String dispatcherName,
-			String substituteName) {
-		super();
-		this.yearWeekCombi = yearWeekCombi;
-		this.weekNumber = weekNumber;
-		this.dispatcherName = dispatcherName;
-		this.substituteName = substituteName;
 	}
 	public void setWeekNumber(int weekNumber) {
 		this.weekNumber = weekNumber;
 	}
-	public String getDispatcherName() {
-		return dispatcherName;
+	public Employee getDispatcher() {
+		return dispatcher;
 	}
-	public void setDispatcherName(String dispatcherName) {
-		this.dispatcherName = dispatcherName;
+	public void setDispatcher(Employee dispatcher) {
+		this.dispatcher = dispatcher;
 	}
-	public String getSubstituteName() {
-		return substituteName;
+	public Employee getSubstitutioner() {
+		return substitutioner;
 	}
-	public void setSubstituteName(String substituteName) {
-		this.substituteName = substituteName;
+	public void setSubstitutioner(Employee substitutioner) {
+		this.substitutioner = substitutioner;
 	}
-	public String getYearWeekCombi() {
-		return yearWeekCombi;
+	/**
+	 * 
+	 * @param weekNumber Kalenderwoche der Schicht
+	 * @param dispatcher vollständiger Name der dieser Schicht zugeteilten Dispatchers
+	 * @param substitutioner vollständiger Name der dieser Schicht zugeteilten Vertreters des Dispatchers
+	 * @param yearWeekCombi KW-YYYY der Schicht
+	 */
+	public Shift(int year, int weekNumber, Employee dispatcher,
+			Employee substitutioner) {
+		super();
+		this.year = year;
+		this.weekNumber = weekNumber;
+		this.dispatcher = dispatcher;
+		this.substitutioner = substitutioner;
 	}
-	public void setYearWeekCombi(String yearWeekCombi) {
-		this.yearWeekCombi = yearWeekCombi;
+	public Object getUniqueRowKey() {
+		// TODO Auto-generated method stub
+		return year+"-"+weekNumber;
 	}
+	
+	
+	
 
 
 }

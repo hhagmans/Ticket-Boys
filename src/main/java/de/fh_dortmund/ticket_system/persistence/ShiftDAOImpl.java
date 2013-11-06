@@ -48,6 +48,7 @@ public class ShiftDAOImpl implements ShiftDAO{
 			int usercount = empList.size();
 			int actUsercounter = 0;
 			Employee actEmp = null;
+			Employee actEmp2 = null;
 			
 			for (int i = 0; i < 52;i++) {
 				if (actUsercounter >= usercount) {
@@ -55,8 +56,11 @@ public class ShiftDAOImpl implements ShiftDAO{
 				}
 				actEmp = empList.get(actUsercounter);
 				
+				if(actUsercounter+1 < empList.size())
+				actEmp2 = empList.get(actUsercounter+1);
 				
-				shifts.add(new Shift("2013-" + i + 1,i + 1,actEmp.getFirstName(), actEmp.getLastName()));
+				
+				shifts.add(new Shift(2013,i + 1,actEmp, actEmp));
 				actUsercounter++;
 			}
 		}

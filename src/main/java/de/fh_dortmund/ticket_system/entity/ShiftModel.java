@@ -26,7 +26,7 @@ public class ShiftModel extends ListDataModel<Shift> implements SelectableDataMo
         List<Shift> Shifts = (List<Shift>) getWrappedData();  
           
         for(Shift Shift : Shifts) {  
-            if(Shift.getYearWeekCombi().equals(rowKey))  
+            if(Shift.getUniqueRowKey().equals(rowKey))  
                 return Shift;  
         }  
           
@@ -35,6 +35,6 @@ public class ShiftModel extends ListDataModel<Shift> implements SelectableDataMo
   
     @Override  
     public Object getRowKey(Shift Shift) {  
-        return Shift.getYearWeekCombi();  
+        return Shift.getUniqueRowKey();  
     }  
 }  
