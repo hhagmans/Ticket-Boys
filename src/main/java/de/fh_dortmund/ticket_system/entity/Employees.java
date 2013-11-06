@@ -36,6 +36,7 @@ public class Employees implements Serializable {
 
 		List<Employee> empList = null;
 
+		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
@@ -45,6 +46,7 @@ public class Employees implements Serializable {
 			e.printStackTrace();
 		}
 		
+		// Serialisieren in eine Liste von Employees
 		Type type = new TypeToken<List<Employee>>(){}.getType();
 		empList = new Gson().fromJson(json, type);
 
@@ -67,28 +69,29 @@ public class Employees implements Serializable {
 		this.selectedEmployee = selectedEmployee;
 	}
 	
-	private Employee getEmployeeByKonzernID(String konzernID)
+	private int getIndexOfEmployeeByKonzernID(String konzernID)
 	{
 		for(Employee e : employees)
 		{
 			if(e.getKonzernID().equals(konzernID))
 			{
-				return e;
+				return employees.indexOf(e);
 			}
 		}
-		return null;
+		return -1;
 	}
 	
 	public void saveChanges()
 	{
-		Employee emp = getEmployeeByKonzernID(selectedEmployee.getKonzernID());
-		if(emp == null)
+		;
+		int index = getIndexOfEmployeeByKonzernID(selectedEmployee.getKonzernID());
+		if(index < 0)
 			return;
-		emp.setCity(selectedEmployee.getCity());
-		emp.setFirstName(selectedEmployee.getFirstName());
-		emp.setLastName(selectedEmployee.getLastName());
-		emp.setRole(selectedEmployee.getRole());
-		emp.setZipcode(selectedEmployee.getZipcode());
+		employees.get(index).setCity(selectedEmployee.getCity());
+		employees.get(index).setFirstName(selectedEmployee.getFirstName());
+		employees.get(index).setLastName(selectedEmployee.getLastName());
+		employees.get(index).setRole(selectedEmployee.getRole());
+		employees.get(index).setZipcode(selectedEmployee.getZipcode());
 	}
 
 }
