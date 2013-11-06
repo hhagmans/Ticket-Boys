@@ -61,3 +61,11 @@ body {
 	background-color: transparent;
 	background-image: none;
 }
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)) repeat scroll 0 0 #85B2CB;
+    border: 1px solid #7096AB;
+    color: #1C4257;
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
