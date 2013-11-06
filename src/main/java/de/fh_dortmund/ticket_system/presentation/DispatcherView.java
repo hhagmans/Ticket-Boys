@@ -5,19 +5,18 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
-import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.Employees;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.entity.ShiftCalculator;
+import de.fh_dortmund.ticket_system.entity.ShiftsData;
 
 @ManagedBean
 @SessionScoped
 public class DispatcherView
 {
 	@ManagedProperty("#{shiftCalculator}")
-	ShiftCalculator		shifts;
+	private
+	ShiftsData	shifts;
 
 	@ManagedProperty("#{employees}")
 	Employees			employees;
@@ -87,12 +86,12 @@ public class DispatcherView
 		this.employees = employees;
 	}
 
-	public ShiftCalculator getShifts()
+	public ShiftsData getShifts()
 	{
 		return shifts;
 	}
 
-	public void setShifts(ShiftCalculator shifts)
+	public void setShifts(ShiftsData shifts)
 	{
 		this.shifts = shifts;
 	}

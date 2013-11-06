@@ -50,3 +50,14 @@ body {
 .evonik_warm_grey {
 	color: #c5c2bb;
 }
+
+/* Override classes for menubar  */
+.ui-menu.ui-widget a {
+	color: black;
+}
+
+.ui-menu.ui-widget li > .ui-menuitem-link.ui-state-hover{
+	color: #9a1d85;
+	background-color: transparent;
+	background-image: none;
+}
