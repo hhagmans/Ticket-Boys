@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.fh_dortmund.ticket_system.business.Employees;
+import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 
@@ -29,8 +29,8 @@ public class AuthenticationTest
 	public void setUp() throws Exception
 	{
 		auth = new NoAuthentication();
-		auth.setEmployees(new Employees());
-		auth.getEmployees().setEmployees(new ArrayList<Employee>()
+		auth.setEmployeeData(new EmployeeData());
+		auth.getEmployeeData().setEmployees(new ArrayList<Employee>()
 		{
 			{
 				add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE));

@@ -16,6 +16,8 @@ else {
 	
 if (toomuch) {
 	$( "tr[aria-selected='false'][role='row']" ).removeClass("ui-datatable-selectable");
+	$( "tr[aria-selected='false'][role='row']" ).removeClass("ui-state-hover");
+	$( ".ui-chkbox-box" ).removeClass("ui-state-hover");
 }
 else {
 	$( "tr[role='row']" ).addClass("ui-datatable-selectable");
