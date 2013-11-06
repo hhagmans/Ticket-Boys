@@ -3,6 +3,9 @@ package de.fh_dortmund.ticket_system.entity;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import org.primefaces.model.SelectableDataModel;
 
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
@@ -12,7 +15,7 @@ import javax.faces.bean.ManagedBean;
  */
 
 @ManagedBean
-public class Employee implements Serializable {
+public class Employee implements  Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +25,11 @@ public class Employee implements Serializable {
 	private String city;
 	private int zipcode;
 	private Role role;
+	
+
+	public Employee() {
+		super();
+	}
 
 	public String getKonzernID() {
 		return konzernID;
@@ -73,7 +81,6 @@ public class Employee implements Serializable {
 
 	public Employee(String konzernID, String firstName, String lastName,
 			String city, int zipcode, Role role) {
-		super();
 		this.konzernID = konzernID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -81,5 +88,6 @@ public class Employee implements Serializable {
 		this.zipcode = zipcode;
 		this.role = role;
 	}
+
 
 }

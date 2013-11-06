@@ -7,7 +7,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.ListDataModel;
+
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
+import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ViewAccessScoped;
+import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.SelectableDataModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,20 +31,23 @@ import com.google.gson.reflect.TypeToken;
  * 
  */
 
+
+
 @ManagedBean
-public class Employees implements Serializable {
+@SessionScoped
+public class Employees 
+{
 
 	private static final long serialVersionUID = 1L;
 	private List<Employee> employees;
 	private Employee selectedEmployee;
 
 	public Employees() {
-		super();
-		this.setEmployees(new ArrayList<Employee>());
-		fillEmployees();
 	}
-
+	
+	@PostConstruct
 	private void fillEmployees() {
+		this.setEmployees(new ArrayList<Employee>());
 
 		List<Employee> empList = null;
 
@@ -51,6 +66,8 @@ public class Employees implements Serializable {
 		empList = new Gson().fromJson(json, type);
 
 		setEmployees(empList);
+		
+		setSelectedEmployee(getEmployees().get(0));
 	}
 
 	public List<Employee> getEmployees() {
@@ -93,5 +110,18 @@ public class Employees implements Serializable {
 		employees.get(index).setRole(selectedEmployee.getRole());
 		employees.get(index).setZipcode(selectedEmployee.getZipcode());
 	}
+	
+	public void onEdit(RowEditEvent event) {  
+        FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());  
+  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
+      
+    public void onCancel(RowEditEvent event) {  
+        FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());  
+  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
+
 
 }
