@@ -24,22 +24,22 @@ import com.google.gson.reflect.TypeToken;
  * 
  */
 
-
-
 @ManagedBean
 @SessionScoped
-public class Employees 
+public class Employees
 {
 
-	private static final long serialVersionUID = 1L;
-	private List<Employee> employees;
-	private Employee selectedEmployee;
+	private static final long	serialVersionUID	= 1L;
+	private List<Employee>		employees;
+	private Employee			selectedEmployee;
 
-	public Employees() {
+	public Employees()
+	{
 	}
-	
+
 	@PostConstruct
-	private void fillEmployees() {
+	private void fillEmployees()
+	{
 		this.setEmployees(new ArrayList<Employee>());
 
 		List<Employee> empList = null;
@@ -48,54 +48,74 @@ public class Employees
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
-		try {
+		try
+		{
 			is.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
-		
+
 		// Serialisieren in eine Liste von Employees
-		Type type = new TypeToken<List<Employee>>(){}.getType();
+		Type type = new TypeToken<List<Employee>>()
+		{
+		}.getType();
 		empList = new Gson().fromJson(json, type);
 
 		setEmployees(empList);
-		
+
 		setSelectedEmployee(getEmployees().get(0));
 	}
 
-	public List<Employee> getEmployees() {
+	public Employee findEmployeeByID(String konzernID)
+	{
+		for (Employee employee : employees)
+		{
+			if (employee.getKonzernID().equals(konzernID))
+				return employee;
+		}
+
+		return null;
+	}
+
+	public List<Employee> getEmployees()
+	{
 		return employees;
 	}
 
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(List<Employee> employees)
+	{
 		this.employees = employees;
 	}
 
-	public Employee getSelectedEmployee() {
+	public Employee getSelectedEmployee()
+	{
 		return selectedEmployee;
 	}
 
-	public void setSelectedEmployee(Employee selectedEmployee) {
+	public void setSelectedEmployee(Employee selectedEmployee)
+	{
 		this.selectedEmployee = selectedEmployee;
 	}
-	
+
 	private int getIndexOfEmployeeByKonzernID(String konzernID)
 	{
-		for(Employee e : employees)
+		for (Employee e : employees)
 		{
-			if(e.getKonzernID().equals(konzernID))
+			if (e.getKonzernID().equals(konzernID))
 			{
 				return employees.indexOf(e);
 			}
 		}
 		return -1;
 	}
-	
+
 	public void saveChanges()
 	{
 		;
 		int index = getIndexOfEmployeeByKonzernID(selectedEmployee.getKonzernID());
-		if(index < 0)
+		if (index < 0)
 			return;
 		employees.get(index).setCity(selectedEmployee.getCity());
 		employees.get(index).setFirstName(selectedEmployee.getFirstName());
@@ -103,18 +123,19 @@ public class Employees
 		employees.get(index).setRole(selectedEmployee.getRole());
 		employees.get(index).setZipcode(selectedEmployee.getZipcode());
 	}
-	
-	public void onEdit(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getFullName());  
-  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
-      
-    public void onCancel(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getFullName());  
-  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
 
+	public void onEdit(RowEditEvent event)
+	{
+		FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCancel(RowEditEvent event)
+	{
+		FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
 
 }
