@@ -6,7 +6,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
-import de.fh_dortmund.ticket_system.business.Employees;
+import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
@@ -20,8 +20,8 @@ public abstract class Authentication implements Serializable
 	private boolean				loggedIn;
 	private Employee			employee;
 
-	@ManagedProperty("#{employees}")
-	Employees					employees;
+	@ManagedProperty("#{employeeData}")
+	EmployeeData					employeeData;
 
 	/**
 	 * Hier kommt die Authentifizierung statt.
@@ -50,7 +50,7 @@ public abstract class Authentication implements Serializable
 
 	private boolean findEmploye()
 	{
-		Employee employee = getEmployees().findEmployeeByID(name);
+		Employee employee = getEmployeeData().findEmployeeByID(name);
 		if (employee == null)
 		{
 			MessageUtil.showE("User nicht gefunden!");
@@ -112,13 +112,13 @@ public abstract class Authentication implements Serializable
 		this.employee = employee;
 	}
 
-	public Employees getEmployees()
+	public EmployeeData getEmployeeData()
 	{
-		return employees;
+		return employeeData;
 	}
 
-	public void setEmployees(Employees employees)
+	public void setEmployeeData(EmployeeData employeeData)
 	{
-		this.employees = employees;
+		this.employeeData = employeeData;
 	}
 }

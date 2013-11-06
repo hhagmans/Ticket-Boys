@@ -12,13 +12,13 @@
 
 			<p:growl id="messages" showDetail="true" />
 
-			<p:dataTable var="employee" value="#{employees.employees}"
+			<p:dataTable var="employee" value="#{employeeData.employees}"
 				id="employeeList" editable="true">
 
 
-				<p:ajax event="rowEdit" listener="#{employees.onEdit}"
+				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
 					update=":employeeListMainform:messages" />
-				<p:ajax event="rowEditCancel" listener="#{employees.onCancel}"
+				<p:ajax event="rowEditCancel" listener="#{employeeView.onCancel}"
 					update=":employeeListMainform:messages" />
 
 				<p:column headerText="Vorname" style="width:30%">
