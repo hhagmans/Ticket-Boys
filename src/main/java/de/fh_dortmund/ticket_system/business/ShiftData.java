@@ -1,10 +1,11 @@
-package de.fh_dortmund.ticket_system.entity;
+package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import de.fh_dortmund.ticket_system.entity.ShiftModel;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOImpl;
 
@@ -18,7 +19,7 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDAOImpl;
 
 @ManagedBean
 @SessionScoped
-public class ShiftsData implements Serializable {
+public class ShiftData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,15 +27,20 @@ public class ShiftsData implements Serializable {
 	private ShiftModel shiftModel;
 	private ShiftDAO shiftDAO;
 	
-	public ShiftsData() {
+	public ShiftData() {
 		shiftDAO = new ShiftDAOImpl();
-		shiftModel = new ShiftModel(shiftDAO.getAllShifts());
+		setShiftModel(new ShiftModel(shiftDAO.getAllShifts()));
 		
 	}
 
 
 	public ShiftModel getShiftModel() {
 		return shiftModel;
+	}
+
+
+	public void setShiftModel(ShiftModel shiftModel) {
+		this.shiftModel = shiftModel;
 	}
 	
 }

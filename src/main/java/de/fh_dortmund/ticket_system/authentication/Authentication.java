@@ -13,8 +13,8 @@ import javax.faces.webapp.FacesServlet;
 
 import com.sun.faces.util.MessageUtils;
 
+import de.fh_dortmund.ticket_system.business.Employees;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.Employees;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
 @ManagedBean(name = "auth")
