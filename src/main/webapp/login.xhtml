@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ui:composition template="/template/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -33,3 +34,40 @@
 	</ui:define>
 
 </ui:composition>
+=======
+<ui:composition template="/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="title" value="Login" />
+
+	<ui:define name="header">
+		<ui:include src="/template/header.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:panel header="Login" styleClass="login">
+				<p:outputLabel> Names: </p:outputLabel>
+				<p:inputText value="#{auth.name}" placeholder="User1|User2 usw"/>
+				<br />
+				<p:outputLabel>Passwort: </p:outputLabel>
+				<p:password value="#{auth.passwort}" placeholder="egal"/>
+				<br />
+				<p:commandButton value="Submit" type="submit"
+					action="#{auth.login()}" ajax="FALSE" />
+				<br />
+				<p:messages />
+				<br />
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footer">
+		<ui:include src="/template/footer.xhtml" />
+	</ui:define>
+
+</ui:composition>
+>>>>>>> branch 'master' of https://github.com/hhagmans/Ticket-Boys.git
