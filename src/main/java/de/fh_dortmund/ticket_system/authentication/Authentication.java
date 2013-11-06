@@ -53,7 +53,7 @@ public abstract class Authentication implements Serializable
 		Employee employee = getEmployees().findEmployeeByID(name);
 		if (employee == null)
 		{
-			MessageUtil.show("User nicht gefunden!", FacesMessage.SEVERITY_ERROR);
+			MessageUtil.showE("User nicht gefunden!");
 			return false;
 		}
 
