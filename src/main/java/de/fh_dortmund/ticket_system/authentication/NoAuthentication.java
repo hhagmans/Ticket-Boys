@@ -7,9 +7,6 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class NoAuthentication extends Authentication
 {
-	/**
-		 * 
-		 */
 	private static final long	serialVersionUID	= -1084126377607196446L;
 
 	@Override
