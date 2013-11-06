@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<h:outputScript library="js" name="common.js" />
 
 	<ui:param name="title" value="Dispatcher" />
@@ -16,10 +16,11 @@
 				value="#{shiftData.shiftModel}" widgetVar="shiftTable"
 				selection="#{dispatcherView.selectedShifts}"
 				emptyMessage="Es wurden keine Treffer gefunden"
-				styleClass="dispatcherList">
-			
-			
-				<p:column selectionMode="multiple" style="width:2%" />  
+				draggableColumns="true"
+				styleClass="dispatcherList table-no-select-all">
+
+
+				<p:column selectionMode="multiple" style="width:2%" />
 
 				<p:column id="kwColumn" filterBy="weekNumber" sortBy="weekNumber"
 					headerText="Kalenderwoche" filterMatchMode="exact">

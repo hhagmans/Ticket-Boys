@@ -1,4 +1,4 @@
-html{
+html {
 	background-color: #c5c2bb;
 }
 
@@ -11,7 +11,8 @@ body {
 .login {
 	margin: 0 auto;
 }
-.dispatcherList{
+
+.dispatcherList {
 	margin: 0 auto;
 	background-color: aqua;
 }
@@ -56,7 +57,7 @@ body {
 	color: black;
 }
 
-.ui-menu.ui-widget li > .ui-menuitem-link.ui-state-hover{
+.ui-menu.ui-widget li>.ui-menuitem-link.ui-state-hover {
 	color: #9a1d85;
 	background-color: transparent;
 	background-image: none;
@@ -68,4 +69,10 @@ body {
     color: #1C4257;
     font-weight: bold;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+/*
+	Hides dispatcher select all checkbox.
+*/
+.table-no-select-all .ui-chkbox-all {
+     display: none !important;
 }
