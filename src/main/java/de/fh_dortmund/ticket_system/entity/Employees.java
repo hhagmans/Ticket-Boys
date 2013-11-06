@@ -67,28 +67,29 @@ public class Employees implements Serializable {
 		this.selectedEmployee = selectedEmployee;
 	}
 	
-	private Employee getEmployeeByKonzernID(String konzernID)
+	private int getIndexOfEmployeeByKonzernID(String konzernID)
 	{
 		for(Employee e : employees)
 		{
 			if(e.getKonzernID().equals(konzernID))
 			{
-				return e;
+				return employees.indexOf(e);
 			}
 		}
-		return null;
+		return -1;
 	}
 	
 	public void saveChanges()
 	{
 		;
-		if(getEmployeeByKonzernID(selectedEmployee.getKonzernID()) == null)
+		int index = getIndexOfEmployeeByKonzernID(selectedEmployee.getKonzernID());
+		if(index < 0)
 			return;
-		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setCity(selectedEmployee.getCity());
-		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setFirstName(selectedEmployee.getFirstName());
-		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setLastName(selectedEmployee.getLastName());
-		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setRole(selectedEmployee.getRole());
-		getEmployeeByKonzernID(selectedEmployee.getKonzernID()).setZipcode(selectedEmployee.getZipcode());
+		employees.get(index).setCity(selectedEmployee.getCity());
+		employees.get(index).setFirstName(selectedEmployee.getFirstName());
+		employees.get(index).setLastName(selectedEmployee.getLastName());
+		employees.get(index).setRole(selectedEmployee.getRole());
+		employees.get(index).setZipcode(selectedEmployee.getZipcode());
 	}
 
 }
