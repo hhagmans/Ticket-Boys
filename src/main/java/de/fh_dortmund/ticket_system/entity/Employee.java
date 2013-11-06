@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.primefaces.model.SelectableDataModel;
-
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
  * 
@@ -15,72 +13,86 @@ import org.primefaces.model.SelectableDataModel;
  */
 
 @ManagedBean
-public class Employee implements  Serializable {
+@SessionScoped
+public class Employee implements Serializable
+{
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private String konzernID;
-	private String firstName;
-	private String lastName;
-	private String city;
-	private int zipcode;
-	private Role role;
-	
+	private String				konzernID;
+	private String				firstName;
+	private String				lastName;
+	private String				city;
+	private int					zipcode;
+	private Role				role;
 
-	public Employee() {
+	public Employee()
+	{
 		super();
 	}
 
-	public String getKonzernID() {
+	public String getKonzernID()
+	{
 		return konzernID;
 	}
 
-	public void setKonzernID(String konzernID) {
+	public void setKonzernID(String konzernID)
+	{
 		this.konzernID = konzernID;
 	}
 
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName)
+	{
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public String getLastName()
+	{
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(String lastName)
+	{
 		this.lastName = lastName;
 	}
 
-	public String getCity() {
+	public String getCity()
+	{
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(String city)
+	{
 		this.city = city;
 	}
 
-	public int getZipcode() {
+	public int getZipcode()
+	{
 		return zipcode;
 	}
 
-	public void setZipcode(int zipcode) {
+	public void setZipcode(int zipcode)
+	{
 		this.zipcode = zipcode;
 	}
 
-	public Role getRole() {
+	public Role getRole()
+	{
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(Role role)
+	{
 		this.role = role;
 	}
 
-	public Employee(String konzernID, String firstName, String lastName,
-			String city, int zipcode, Role role) {
+	public Employee(String konzernID, String firstName, String lastName, String city, int zipcode, Role role)
+	{
 		this.konzernID = konzernID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -89,9 +101,9 @@ public class Employee implements  Serializable {
 		this.role = role;
 	}
 
-	public String getFullName() {
+	public String getFullName()
+	{
 		return firstName + " " + lastName;
 	}
-
 
 }

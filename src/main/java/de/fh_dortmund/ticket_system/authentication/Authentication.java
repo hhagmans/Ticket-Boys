@@ -2,6 +2,7 @@ package de.fh_dortmund.ticket_system.authentication;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -26,13 +27,19 @@ public class Authentication implements Serializable
 	@ManagedProperty("#{employees}")
 	Employees					employees;
 
+	@PostConstruct
+	public void blub()
+	{
+
+	}
+
 	public String login()
 	{
 		if (authenticate(name, passwort))
 		{
 			setLoggedIn(true);
 
-			setEmployee(employees.findEmployeeByID(name));
+			setEmployee(getEmployees().findEmployeeByID(name));
 
 			return "/pages/index?faces-redirect=true";
 		}
@@ -106,5 +113,23 @@ public class Authentication implements Serializable
 	public void setEmployee(Employee employee)
 	{
 		this.employee = employee;
+	}
+
+	public Employees getEmployees()
+	{
+		if (employees == null)
+			employees = (Employees) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap()
+					.get("employees");
+
+		if (employees == null)
+			employees = (Employees) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+					.get("employees");
+
+		return employees;
+	}
+
+	public void setEmployees(Employees employees)
+	{
+		this.employees = employees;
 	}
 }

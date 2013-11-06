@@ -29,8 +29,8 @@ public class AuthenticationTest
 	public void setUp() throws Exception
 	{
 		auth = new Authentication();
-		auth.employees = new Employees();
-		auth.employees.setEmployees(new ArrayList<Employee>()
+		auth.setEmployees(new Employees());
+		auth.getEmployees().setEmployees(new ArrayList<Employee>()
 		{
 			{
 				add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE));

@@ -13,14 +13,11 @@ import de.fh_dortmund.ticket_system.entity.ShiftCalculator;
 @ViewScoped
 public class DispatcherView
 {
-	@ManagedProperty("#{auth}")
-	Authentication	auth;
+	@ManagedProperty("#{shiftCalculator}")
+	ShiftCalculator	shifts;
 
 	@ManagedProperty("#{employees}")
 	Employees		employees;
-
-	@ManagedProperty("#{shiftCalculator}")
-	ShiftCalculator	shifts;
 
 	private Shift	shift1;
 	private Shift	shift2;
