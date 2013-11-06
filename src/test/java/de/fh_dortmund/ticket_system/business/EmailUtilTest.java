@@ -13,6 +13,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.fh_dortmund.ticket_system.util.EmailUtil;
+
 public class EmailUtilTest
 {
 	private static final String	TEST_EMAIL1		= "test@test.de";
