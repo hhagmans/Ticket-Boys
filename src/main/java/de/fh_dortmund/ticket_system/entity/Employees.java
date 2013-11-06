@@ -105,13 +105,13 @@ public class Employees
 	}
 	
 	public void onEdit(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());  
+        FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getFullName());  
   
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
       
     public void onCancel(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());  
+        FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getFullName());  
   
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
