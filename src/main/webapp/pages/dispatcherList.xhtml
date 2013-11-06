@@ -11,10 +11,13 @@
 
 
 			<p:dataTable id="shiftTable" var="shift"
-				value="#{shiftCalculator.shifts}" widgetVar="shiftTable"
+				value="#{shiftCalculator.shiftModel}" widgetVar="shiftTable"
+				selection="#{shiftCalculator.selectedShifts}"
 				emptyMessage="Es wurden keine Treffer gefunden"
 				styleClass="dispatcherList">
-
+			
+			
+				<p:column selectionMode="multiple" style="width:2%" />  
 
 				<p:column id="kwColumn" filterBy="weekNumber" sortBy="weekNumber"
 					headerText="Kalenderwoche" filterMatchMode="exact">

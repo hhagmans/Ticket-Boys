@@ -89,5 +89,9 @@ public class Employee implements  Serializable {
 		this.role = role;
 	}
 
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
 
 }

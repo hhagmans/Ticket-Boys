@@ -16,7 +16,8 @@ import java.io.Serializable;
 public class Shift implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private String yearWeekCombi;
 	private int weekNumber;
 	private String dispatcherName;
 	private String substituteName;
@@ -26,15 +27,20 @@ public class Shift implements Serializable {
 	 * @param weekNumber Kalenderwoche der Schicht
 	 * @param dispatcherName vollständiger Name der dieser Schicht zugeteilten Dispatchers
 	 * @param substituteName vollständiger Name der dieser Schicht zugeteilten Vertreters des Dispatchers
+	 * @param yearWeekCombi KW-YYYY der Schicht
 	 */
-	public Shift(int weekNumber, String dispatcherName, String substituteName) {
+	
+	
+	public int getWeekNumber() {
+		return weekNumber;
+	}
+	public Shift(String yearWeekCombi, int weekNumber, String dispatcherName,
+			String substituteName) {
 		super();
+		this.yearWeekCombi = yearWeekCombi;
 		this.weekNumber = weekNumber;
 		this.dispatcherName = dispatcherName;
 		this.substituteName = substituteName;
-	}
-	public int getWeekNumber() {
-		return weekNumber;
 	}
 	public void setWeekNumber(int weekNumber) {
 		this.weekNumber = weekNumber;
@@ -50,6 +56,12 @@ public class Shift implements Serializable {
 	}
 	public void setSubstituteName(String substituteName) {
 		this.substituteName = substituteName;
+	}
+	public String getYearWeekCombi() {
+		return yearWeekCombi;
+	}
+	public void setYearWeekCombi(String yearWeekCombi) {
+		this.yearWeekCombi = yearWeekCombi;
 	}
 
 

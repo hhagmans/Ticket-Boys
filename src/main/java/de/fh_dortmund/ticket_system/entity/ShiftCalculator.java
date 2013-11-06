@@ -1,16 +1,17 @@
 package de.fh_dortmund.ticket_system.entity;
 
-import javax.faces.bean.ManagedBean;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
 /**
@@ -21,11 +22,15 @@ import java.util.List;
  */
 
 @ManagedBean
+@SessionScoped
 public class ShiftCalculator implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<Shift> shifts;
+	private List<Shift> selectedShifts;
+	
+	private ShiftModel shiftModel;
 	
 	public ShiftCalculator() {
 	setShifts(new ArrayList<Shift>());
@@ -33,6 +38,8 @@ public class ShiftCalculator implements Serializable {
 	}
 
 	private void fillDatShit() {		
+		
+		
 		
 		List<Employee> empList = null;
 		
@@ -62,12 +69,12 @@ public class ShiftCalculator implements Serializable {
 					actUsercounter = 0;
 				}
 				actEmp = empList.get(actUsercounter);
-				getShifts().add(new Shift(i + 1,actEmp.getFirstName(), actEmp.getLastName()));
+				getShifts().add(new Shift("2013-" + i + 1,i + 1,actEmp.getFirstName(), actEmp.getLastName()));
 				actUsercounter++;
 			}
 		}
-
 		
+		shiftModel = new ShiftModel(shifts);
 	 
 		
 	}
@@ -79,8 +86,16 @@ public class ShiftCalculator implements Serializable {
 	public void setShifts(List<Shift> shifts) {
 		this.shifts = shifts;
 	}
-	
-	
 
+	public List<Shift> getSelectedShifts() {
+		return selectedShifts;
+	}
 
+	public void setSelectedShifts(List<Shift> selectedShifts) {
+		this.selectedShifts = selectedShifts;
+	}
+
+	public ShiftModel getShiftModel() {
+		return shiftModel;
+	}
 }
