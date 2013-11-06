@@ -3,21 +3,24 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
+	<ui:param name="title" value="Login" />
+
 	<ui:define name="header">
 		<ui:include src="/template/header.xhtml" />
-	</ui:define>	
+	</ui:define>
 
 	<ui:define name="content">
 		<h:form>
 			<p:panel header="Login" styleClass="login">
-				<p:outputLabel > Names: </p:outputLabel>
-				<p:inputText value="#{auth.name}"  /> "test"
+				<p:outputLabel> Names: </p:outputLabel>
+				<p:inputText value="#{auth.name}" /> "test"
 				<br />
 				<p:outputLabel>Passwort: </p:outputLabel>
 				<p:password value="#{auth.passwort}" /> "test"
 				<br />
-				<p:commandButton value="Submit" type="submit" action="#{auth.login()}" ajax="FALSE"/>  
+				<p:commandButton value="Submit" type="submit"
+					action="#{auth.login()}" ajax="FALSE" />
 				<br />
 				<p:messages />
 				<br />
@@ -28,5 +31,5 @@
 	<ui:define name="footer">
 		<ui:include src="/template/footer.xhtml" />
 	</ui:define>
-	
+
 </ui:composition>
