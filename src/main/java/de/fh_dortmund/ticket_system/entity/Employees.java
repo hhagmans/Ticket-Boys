@@ -36,6 +36,7 @@ public class Employees implements Serializable {
 
 		List<Employee> empList = null;
 
+		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
@@ -45,6 +46,7 @@ public class Employees implements Serializable {
 			e.printStackTrace();
 		}
 		
+		// Serialisieren in eine Liste von Employees
 		Type type = new TypeToken<List<Employee>>(){}.getType();
 		empList = new Gson().fromJson(json, type);
 
