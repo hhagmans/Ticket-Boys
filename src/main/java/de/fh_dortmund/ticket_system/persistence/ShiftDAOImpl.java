@@ -8,82 +8,92 @@ import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.entity.ShiftModel;
 
 @ManagedBean
 @ApplicationScoped
-public class ShiftDAOImpl implements ShiftDAO{
+public class ShiftDAOImpl implements ShiftDAO
+{
 
-	
-	
+	@Override
 	public List<Shift> getAllShifts()
 	{
 		List<Employee> empList = null;
-		
+
 		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
-		try {
+		try
+		{
 			is.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
-		
+
 		// Serialisieren in eine Liste von Employees
-		Type type = new TypeToken<List<Employee>>(){}.getType();
+		Type type = new TypeToken<List<Employee>>()
+		{
+		}.getType();
 		empList = new Gson().fromJson(json, type);
-		
+
 		List<Shift> shifts = new ArrayList<Shift>();
 		// Verteilen der Employees auf die 52 "Shifts"
-		if (empList != null) {
-			
+		if (empList != null)
+		{
+
 			int usercount = empList.size();
 			int actUsercounter = 0;
 			Employee actEmp = null;
 			Employee actEmp2 = null;
-			
-			for (int i = 0; i < 52;i++) {
-				if (actUsercounter >= usercount) {
+
+			for (int i = 0; i < 52; i++)
+			{
+				if (actUsercounter >= usercount)
+				{
 					actUsercounter = 0;
 				}
 				actEmp = empList.get(actUsercounter);
-				
-				if(actUsercounter+1 < empList.size())
-				actEmp2 = empList.get(actUsercounter+1);
-				
-				
-				shifts.add(new Shift(2013,i + 1,actEmp, actEmp));
+
+				if ((actUsercounter + 1) < empList.size())
+				{
+					actEmp2 = empList.get(actUsercounter + 1);
+				}
+
+				shifts.add(new Shift(2013, i + 1, actEmp, actEmp));
 				actUsercounter++;
 			}
 		}
-		
+
 		return shifts;
-	 
+
 	}
 
 	@Override
-	public void updateShift(Shift shift) {
+	public void updateShift(Shift shift)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void deleteShift(Shift shift) {
+	public void deleteShift(Shift shift)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void addShift(Shift newShift) {
+	public void addShift(Shift newShift)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

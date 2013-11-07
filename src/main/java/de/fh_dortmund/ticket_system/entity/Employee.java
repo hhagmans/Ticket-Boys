@@ -2,9 +2,6 @@ package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
  * 
@@ -15,18 +12,31 @@ import javax.faces.bean.SessionScoped;
 public class Employee implements Serializable
 {
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
-	private String				konzernID;
-	private String				firstName;
-	private String				lastName;
-	private String				city;
-	private int					zipcode;
-	private Role				role;
+	private String konzernID;
+	private String firstName;
+	private String lastName;
+	private String city;
+	private int zipcode;
+	private Role role;
 
 	public Employee()
 	{
 		super();
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof Employee)
+		{
+			Employee emp = (Employee) obj;
+
+			return emp.getKonzernID().equals(this.getKonzernID());
+
+		}
+		return false;
 	}
 
 	public String getKonzernID()

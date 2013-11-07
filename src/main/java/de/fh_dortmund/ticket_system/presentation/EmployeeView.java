@@ -1,5 +1,7 @@
 package de.fh_dortmund.ticket_system.presentation;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -13,13 +15,14 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
 @SessionScoped
-public class EmployeeView {
+public class EmployeeView implements Serializable
+{
+
+	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty("#{employeeData}")
-	private
-	EmployeeData employeeData;
+	private EmployeeData employeeData;
 
-	
 	public void onEdit(RowEditEvent event)
 	{
 		FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
@@ -34,11 +37,13 @@ public class EmployeeView {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public EmployeeData getEmployeeData() {
+	public EmployeeData getEmployeeData()
+	{
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData) {
+	public void setEmployeeData(EmployeeData employeeData)
+	{
 		this.employeeData = employeeData;
 	}
 }

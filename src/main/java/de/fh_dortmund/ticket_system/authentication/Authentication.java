@@ -2,7 +2,6 @@ package de.fh_dortmund.ticket_system.authentication;
 
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
@@ -13,15 +12,15 @@ import de.fh_dortmund.ticket_system.util.MessageUtil;
 public abstract class Authentication implements Serializable
 {
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
-	private String				name;
-	private String				passwort;
-	private boolean				loggedIn;
-	private Employee			employee;
+	private String name;
+	private String passwort;
+	private boolean loggedIn;
+	private Employee employee;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData					employeeData;
+	EmployeeData employeeData;
 
 	/**
 	 * Hier kommt die Authentifizierung statt.
@@ -66,8 +65,11 @@ public abstract class Authentication implements Serializable
 	{
 		setLoggedIn(false);
 
-		if (FacesContext.getCurrentInstance() != null && FacesContext.getCurrentInstance().getExternalContext() != null)
+		if ((FacesContext.getCurrentInstance() != null)
+			&& (FacesContext.getCurrentInstance().getExternalContext() != null))
+		{
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		}
 
 		return "/login?faces-redirect=true";
 	}

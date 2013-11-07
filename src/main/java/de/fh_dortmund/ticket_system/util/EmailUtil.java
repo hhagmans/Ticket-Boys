@@ -2,7 +2,6 @@ package de.fh_dortmund.ticket_system.util;
 
 import javax.faces.bean.ManagedBean;
 
-import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
@@ -10,10 +9,10 @@ import org.apache.commons.mail.SimpleEmail;
 @ManagedBean
 public class EmailUtil
 {
-	public static final String	HOST		= "smtp.googlemail.com";
-	public static final Integer	SMTP_PORT	= 465;
-	public static final String	FROM		= "Ticket-Boys@fh-dortmund.de";
-	public static final String	SUBJECT		= "Ticket-Boys";
+	public static final String HOST = "smtp.googlemail.com";
+	public static final Integer SMTP_PORT = 465;
+	public static final String FROM = "Ticket-Boys@fh-dortmund.de";
+	public static final String SUBJECT = "Ticket-Boys";
 
 	public Email sendEmail(String msg, String... to) throws EmailException
 	{

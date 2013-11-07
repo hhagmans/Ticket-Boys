@@ -3,7 +3,6 @@ package de.fh_dortmund.ticket_system.persistence;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -11,10 +10,12 @@ import com.google.gson.reflect.TypeToken;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class EmployeeDAOImpl implements EmployeeDAO
+{
 
 	@Override
-	public List<Employee> getAllEmployees() {
+	public List<Employee> getAllEmployees()
+	{
 
 		List<Employee> empList = null;
 
@@ -40,21 +41,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
-	public void updateEmployee(Employee Employee) {
+	public void updateEmployee(Employee Employee)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void deleteEmployee(Employee Employee) {
+	public void deleteEmployee(Employee Employee)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void addEmployee(Employee newEmployee) {
+	public void addEmployee(Employee newEmployee)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
