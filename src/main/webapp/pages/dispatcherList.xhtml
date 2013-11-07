@@ -37,13 +37,13 @@
 				<p:column id="dispatcherNameColumn" filterBy="dispatcherName"
 					sortBy="dispatcherName" headerText="Name des Dispatchers"
 					filterMatchMode="contains">
-					<h:outputText value="#{shift.dispatcherName}" />
+					<h:outputText value="#{shift.dispatcher.getFullName()}" />
 				</p:column>
 
 				<p:column id="substituteNameColumn" filterBy="substituteName"
 					sortBy="substituteName" headerText="Vertreter"
 					filterMatchMode="contains">
-					<h:outputText value="#{shift.substituteName}" />
+					<h:outputText value="#{shift.substitutioner.getFullName()}" />
 				</p:column>
 			</p:dataTable>
 

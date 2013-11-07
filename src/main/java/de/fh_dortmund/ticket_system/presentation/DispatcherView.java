@@ -90,6 +90,16 @@ public class DispatcherView
 	public void setEmployeeData(EmployeeData employeeData) {
 		this.employeeData = employeeData;
 	}
+
+	public Authentication getAuthentication() {
+		return authentication;
+	}
+
+	public void setAuthentication(Authentication authentication) {
+		this.authentication = authentication;
+	}
+	
+	
 	
 	
 
