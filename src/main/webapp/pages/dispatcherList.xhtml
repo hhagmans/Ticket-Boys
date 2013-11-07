@@ -12,7 +12,8 @@
 	<ui:define name="content">
 		<h:form id="dispatcherListMainform">
 
-
+	<p:growl id="messages" showDetail="true" />
+	
 			<p:dataTable id="shiftTable" var="shift"
 				value="#{dispatcherView.shiftData.shiftModel}"
 				widgetVar="shiftTable" selection="#{dispatcherView.selectedShifts}"
@@ -23,7 +24,7 @@
 				<f:facet name="header">
 					<p:commandButton id="swapShifts" value="Ausgewählte Schichten tauschen"
 						action="#{dispatcherView.switchShifts()}"
-						icon="ui-icon-edit" update=":dispatcherListMainform:shiftTable"
+						icon="ui-icon-edit" update=":dispatcherListMainform:messages,:dispatcherListMainform:shiftTable"
 						oncomplete="PF('shiftTable').update" />
 				</f:facet>
 

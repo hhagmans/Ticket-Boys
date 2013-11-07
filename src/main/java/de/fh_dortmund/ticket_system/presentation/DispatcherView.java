@@ -1,10 +1,13 @@
 package de.fh_dortmund.ticket_system.presentation;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
@@ -21,8 +24,10 @@ import de.fh_dortmund.ticket_system.entity.Shift;
  */
 @ManagedBean
 @SessionScoped
-public class DispatcherView
+public class DispatcherView implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	@ManagedProperty("#{auth}")
 	Authentication authentication;
 
@@ -40,6 +45,7 @@ public class DispatcherView
 		Shift shift1 = getSelectedShifts().get(1);
 		if (!userIsAllowedToSwitchShifts(shift0, shift1))
 		{
+			showMessage("Verweigert", "Sie haben nicht die Berechtigung diese Schichten zu tauschen");
 			return;
 		}
 
@@ -60,6 +66,10 @@ public class DispatcherView
 
 		shift0.setDispatcher(shift1.getDispatcher());
 		shift1.setDispatcher(tempShift0.getDispatcher());
+
+		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
+			+ " wurden getauscht!");
+
 	}
 
 	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2)
@@ -119,6 +129,13 @@ public class DispatcherView
 	public void setAuthentication(Authentication authentication)
 	{
 		this.authentication = authentication;
+	}
+
+	public void showMessage(String summary, String detail)
+	{
+		FacesMessage msg = new FacesMessage(summary, detail);
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 }
