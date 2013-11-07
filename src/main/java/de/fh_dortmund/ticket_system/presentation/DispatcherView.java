@@ -10,6 +10,7 @@ import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
 
@@ -61,8 +62,13 @@ public class DispatcherView
 	{
 		Employee currentUser = authentication.getEmployee();
 		
+		if (currentUser.getRole() != Role.admin){
 		if(currentUser.getKonzernID().equals(shift1.getDispatcher().getKonzernID()) || currentUser.getKonzernID().equals(shift2.getDispatcher().getKonzernID()))
 		return true;
+		}
+		else {
+			return true;
+		}
 		
 		return false;
 	}
