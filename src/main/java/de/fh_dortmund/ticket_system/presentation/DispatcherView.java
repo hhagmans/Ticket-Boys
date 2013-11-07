@@ -61,7 +61,7 @@ public class DispatcherView
 	{
 		Employee currentUser = authentication.getEmployee();
 		
-		if(currentUser.equals(shift1.getDispatcher()) || currentUser.equals(shift2.getDispatcher()))
+		if(currentUser.getKonzernID().equals(shift1.getDispatcher().getKonzernID()) || currentUser.getKonzernID().equals(shift2.getDispatcher().getKonzernID()))
 		return true;
 		
 		return false;
