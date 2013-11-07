@@ -6,12 +6,21 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
+
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
+/**
+ * Die View zur Dispatcherliste
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @SessionScoped
 public class DispatcherView
@@ -34,14 +43,26 @@ public class DispatcherView
 		if(!userIsAllowedToSwitchShifts(shift0, shift1))
 			return;
 		
-		if (getSelectedShifts().size() != 2)
-			// TODO Exceptionhandling
+		if (getSelectedShifts().size() >= 2){
+			FacesMessage msg = new FacesMessage("You selected more than 2 shifts");  
+		  
+        	FacesContext.getCurrentInstance().addMessage(null, msg);   
 			return;
-
-
-		if (shift0 == null || shift1 == null)
-			// TODO Exceptionhandling
+		}
+		
+		if (getSelectedShifts().size() >= 2){
+			FacesMessage msg = new FacesMessage("You selected less than 2 shifts");  
+		  
+        	FacesContext.getCurrentInstance().addMessage(null, msg);   
 			return;
+		}
+
+		if (shift0 == null || shift1 == null){
+			FacesMessage msg = new FacesMessage("You selected invalid shifts");  
+		  
+    		FacesContext.getCurrentInstance().addMessage(null, msg);   
+			return;
+		}
 
 		Shift tempShift0 = new Shift(shift0.getYear(), shift0.getWeekNumber(), shift0.getDispatcher(),
 				shift0.getSubstitutioner());
