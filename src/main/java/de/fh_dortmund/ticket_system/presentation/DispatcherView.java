@@ -13,7 +13,6 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
-
 /**
  * Die View zur Dispatcherliste
  * 
@@ -26,53 +25,61 @@ public class DispatcherView
 {
 	@ManagedProperty("#{auth}")
 	Authentication authentication;
-	
+
 	@ManagedProperty("#{shiftData}")
-	ShiftData	shiftData;
+	ShiftData shiftData;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData			employeeData;
+	EmployeeData employeeData;
 
-	private List<Shift>	selectedShifts;
+	private List<Shift> selectedShifts;
 
 	public void switchShifts()
 	{
 		Shift shift0 = getSelectedShifts().get(0);
 		Shift shift1 = getSelectedShifts().get(1);
-		if(!userIsAllowedToSwitchShifts(shift0, shift1))
+		if (!userIsAllowedToSwitchShifts(shift0, shift1))
+		{
 			return;
-		
+		}
+
 		if (getSelectedShifts().size() != 2)
+		{
 			// TODO Exceptionhandling
 			return;
+		}
 
-
-		if (shift0 == null || shift1 == null)
+		if ((shift0 == null) || (shift1 == null))
+		{
 			// TODO Exceptionhandling
 			return;
+		}
 
 		Shift tempShift0 = new Shift(shift0.getYear(), shift0.getWeekNumber(), shift0.getDispatcher(),
-				shift0.getSubstitutioner());
+			shift0.getSubstitutioner());
 
 		shift0.setDispatcher(shift1.getDispatcher());
 		shift1.setDispatcher(tempShift0.getDispatcher());
 	}
-	
+
 	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2)
 	{
 		Employee currentUser = authentication.getEmployee();
-		
-		if (currentUser.getRole() != Role.admin){
-		if(currentUser.getKonzernID().equals(shift1.getDispatcher().getKonzernID()) || currentUser.getKonzernID().equals(shift2.getDispatcher().getKonzernID()))
-		return true;
+
+		if (currentUser.getRole() != Role.admin)
+		{
+			if (currentUser.equals(shift1.getDispatcher()) || currentUser.equals(shift2.getDispatcher()))
+			{
+				return true;
+			}
 		}
-		else {
+		else
+		{
 			return true;
 		}
-		
+
 		return false;
 	}
-
 
 	public List<Shift> getSelectedShifts()
 	{
@@ -84,36 +91,34 @@ public class DispatcherView
 		this.selectedShifts = selectedShifts;
 	}
 
-
-	public ShiftData getShiftData() {
+	public ShiftData getShiftData()
+	{
 		return shiftData;
 	}
 
-
-	public void setShiftData(ShiftData shiftData) {
+	public void setShiftData(ShiftData shiftData)
+	{
 		this.shiftData = shiftData;
 	}
 
-
-	public EmployeeData getEmployeeData() {
+	public EmployeeData getEmployeeData()
+	{
 		return employeeData;
 	}
 
-
-	public void setEmployeeData(EmployeeData employeeData) {
+	public void setEmployeeData(EmployeeData employeeData)
+	{
 		this.employeeData = employeeData;
 	}
 
-	public Authentication getAuthentication() {
+	public Authentication getAuthentication()
+	{
 		return authentication;
 	}
 
-	public void setAuthentication(Authentication authentication) {
+	public void setAuthentication(Authentication authentication)
+	{
 		this.authentication = authentication;
 	}
-	
-	
-	
-	
 
 }
