@@ -11,9 +11,15 @@
 		<h:form id="employeeListMainform">
 
 			<p:growl id="messages" showDetail="true" />
-
+	
+			   <p:contextMenu for="employeeList">  
+   			       <p:menuitem value="Löschen" update="employeeList" icon="ui-icon-close" actionListener="#{employeeView.deleteEmployee()}"/>  
+  			  </p:contextMenu> 
+	
 			<p:dataTable var="employee" value="#{employeeView.employeeData.employeeModel}"
-				id="employeeList" editable="true">
+				id="employeeList" editable="true"
+				selection="#{employeeView.selectedEmployee}"
+				>
 
 				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
 					update=":employeeListMainform:messages" />

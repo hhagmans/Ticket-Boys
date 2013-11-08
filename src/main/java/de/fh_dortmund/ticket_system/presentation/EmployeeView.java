@@ -23,6 +23,8 @@ public class EmployeeView implements Serializable
 	@ManagedProperty("#{employeeData}")
 	private EmployeeData employeeData;
 
+	private Employee selectedEmployee;
+
 	public void onEdit(RowEditEvent event)
 	{
 		FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
@@ -42,8 +44,23 @@ public class EmployeeView implements Serializable
 		return employeeData;
 	}
 
+	public void deleteEmployee()
+	{
+		employeeData.deleteEmployee(selectedEmployee);
+	}
+
 	public void setEmployeeData(EmployeeData employeeData)
 	{
 		this.employeeData = employeeData;
+	}
+
+	public Employee getSelectedEmployee()
+	{
+		return selectedEmployee;
+	}
+
+	public void setSelectedEmployee(Employee selectedEmployee)
+	{
+		this.selectedEmployee = selectedEmployee;
 	}
 }
