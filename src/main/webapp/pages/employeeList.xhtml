@@ -15,13 +15,24 @@
 			<p:dataTable var="employee" value="#{employeeView.employeeData.employeeModel}"
 				id="employeeList" editable="true">
 
-
 				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
 					update=":employeeListMainform:messages" />
 				<p:ajax event="rowEditCancel" listener="#{employeeView.onCancel}"
 					update=":employeeListMainform:messages" />
-
-				<p:column headerText="Vorname" style="width:30%">
+	
+				<p:column headerText="Konzern ID" style="width:20%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{employee.konzernID}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{employee.konzernID}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+	
+				<p:column headerText="Vorname" style="width:20%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.firstName}" />
@@ -44,7 +55,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Arbeitsort" style="width:24%">
+				<p:column headerText="Arbeitsort" style="width:20%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.city}" />
@@ -56,7 +67,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="PLZ" style="width:20%">
+				<p:column headerText="PLZ" style="width:14%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.zipcode}" />

@@ -86,7 +86,7 @@ public class Shift implements Serializable
 		this.substitutioner = substitutioner;
 	}
 
-	public Object getUniqueRowKey()
+	public String getUniqueRowKey()
 	{
 		// TODO Auto-generated method stub
 		return year + "-" + weekNumber;
