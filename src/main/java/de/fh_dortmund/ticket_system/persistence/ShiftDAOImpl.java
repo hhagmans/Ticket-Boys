@@ -49,31 +49,36 @@ public class ShiftDAOImpl implements ShiftDAO
 		if (empList != null)
 		{
 
-			int usercount = empList.size();
-			int actUsercounter = 0;
-			Employee actEmp = null;
-			Employee actEmp2 = null;
-
-			for (int i = 0; i < 52; i++)
-			{
-				if (actUsercounter >= usercount)
-				{
-					actUsercounter = 0;
-				}
-				actEmp = empList.get(actUsercounter);
-
-				if ((actUsercounter + 1) < empList.size())
-				{
-					actEmp2 = empList.get(actUsercounter + 1);
-				}
-
-				shifts.add(new Shift(2013, i + 1, actEmp, actEmp));
-				actUsercounter++;
-			}
+			generateDispatcherList(empList, shifts);
 		}
 
 		return shifts;
 
+	}
+
+	private void generateDispatcherList(List<Employee> empList, List<Shift> shifts)
+	{
+		int usercount = empList.size();
+		int actUsercounter = 0;
+		Employee actEmp = null;
+		Employee actEmp2 = null;
+
+		for (int i = 0; i < 52; i++)
+		{
+			if (actUsercounter >= usercount)
+			{
+				actUsercounter = 0;
+			}
+			actEmp = empList.get(actUsercounter);
+
+			if ((actUsercounter + 1) < empList.size())
+			{
+				actEmp2 = empList.get(actUsercounter + 1);
+			}
+
+			shifts.add(new Shift(2013, i + 1, actEmp, actEmp));
+			actUsercounter++;
+		}
 	}
 
 	@Override
