@@ -27,14 +27,18 @@ public class EmployeeView implements Serializable
 
 	public void onEdit(RowEditEvent event)
 	{
-		FacesMessage msg = new FacesMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
-
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		updateEmployee((Employee) event.getObject());
+		showMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
 	}
 
 	public void onCancel(RowEditEvent event)
 	{
-		FacesMessage msg = new FacesMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
+		showMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
+	}
+
+	private void showMessage(String summary, String detail)
+	{
+		FacesMessage msg = new FacesMessage(summary, detail);
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -44,9 +48,20 @@ public class EmployeeView implements Serializable
 		return employeeData;
 	}
 
-	public void deleteEmployee()
+	public void updateEmployee(Employee employee)
 	{
-		employeeData.deleteEmployee(selectedEmployee);
+		employeeData.updateEmployee(employee);
+	}
+
+	public void addEmployee(Employee employee)
+	{
+		employeeData.addEmployee(employee);
+	}
+
+	public void deleteEmployee(Employee employee)
+	{
+		employeeData.deleteEmployee(employee);
+		showMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
 	}
 
 	public void setEmployeeData(EmployeeData employeeData)

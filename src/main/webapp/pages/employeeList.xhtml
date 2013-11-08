@@ -9,17 +9,18 @@
 
 	<ui:define name="content">
 		<h:form id="employeeListMainform">
-
-			<p:growl id="messages" showDetail="true" />
 	
-			   <p:contextMenu for="employeeList">  
-   			       <p:menuitem value="Löschen" update="employeeList" icon="ui-icon-close" actionListener="#{employeeView.deleteEmployee()}"/>  
-  			  </p:contextMenu> 
+			<p:growl id="messages" showDetail="true" />
+			
+			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">  
+        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+    </p:confirmDialog> 
+			
 	
 			<p:dataTable var="employee" value="#{employeeView.employeeData.employeeModel}"
 				id="employeeList" editable="true"
-				selection="#{employeeView.selectedEmployee}"
-				>
+				 >
 
 				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
 					update=":employeeListMainform:messages" />
@@ -86,9 +87,12 @@
 				</p:column>
 
 				<p:column style="width:6%">
-					<p:rowEditor />
+					<p:rowEditor>
+					</p:rowEditor>
+					<p:commandButton id="deleteEmployeeButton" actionListener="#{employeeView.deleteEmployee(employee)}" update=":employeeListMainform:employeeList" icon="ui-icon-circle-close" title="Löschen">
+					<p:confirm header="Bestätigung" message="Möchten Sie diesen Mitarbeiter wirklich löschen?" icon="ui-icon-alert" />  
+					</p:commandButton>  
 				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

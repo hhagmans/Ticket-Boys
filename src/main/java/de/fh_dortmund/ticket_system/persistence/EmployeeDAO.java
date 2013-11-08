@@ -4,12 +4,15 @@ import java.util.List;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-public interface EmployeeDAO {
+public interface EmployeeDAO
+{
 
 	public List<Employee> getAllEmployees();
-	public void updateEmployee(Employee Employee);
-	public void deleteEmployee(Employee Employee);
-	public void addEmployee(Employee newEmployee);
-	
-	
+
+	public void updateEmployee(Employee employee);
+
+	public void deleteEmployee(Employee employee);
+
+	public void addEmployee(Employee employee);
+
 }

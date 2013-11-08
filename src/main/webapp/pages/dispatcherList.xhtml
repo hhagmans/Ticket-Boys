@@ -15,8 +15,8 @@
 	<p:growl id="messages" showDetail="true" />
 	
 	 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">  
-        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
-        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
     </p:confirmDialog> 
 	
 			<p:dataTable id="shiftTable" var="shift"
@@ -32,6 +32,7 @@
 						icon="ui-icon-edit" update=":dispatcherListMainform:messages,:dispatcherListMainform:shiftTable"
 						oncomplete="PF('shiftTable').update" >
 					<p:confirm header="Bestätigung" message="Möchten Sie diese Schichten wirklich tauschen?" icon="ui-icon-alert" />  
+
 					</p:commandButton>
 				</f:facet>
 

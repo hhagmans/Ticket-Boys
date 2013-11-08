@@ -30,10 +30,10 @@ public class EmployeeData implements Serializable
 	public EmployeeData()
 	{
 		employeeDAO = new EmployeeDAOImpl();
-		initializeEmployeeModel();
+		refreshEmployeeModel();
 	}
 
-	private void initializeEmployeeModel()
+	private void refreshEmployeeModel()
 	{
 		setEmployeeModel(new EmployeeModel(employeeDAO.getAllEmployees()));
 	}
@@ -53,4 +53,19 @@ public class EmployeeData implements Serializable
 		this.employeeModel = employeeModel;
 	}
 
+	public void addEmployee(Employee employee)
+	{
+
+	}
+
+	public void deleteEmployee(Employee employee)
+	{
+		employeeDAO.deleteEmployee(employee);
+		refreshEmployeeModel();
+	}
+
+	public void updateEmployee(Employee employee)
+	{
+		employeeDAO.updateEmployee(employee);
+	}
 }

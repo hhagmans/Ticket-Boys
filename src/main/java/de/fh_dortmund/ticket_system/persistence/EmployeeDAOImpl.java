@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.persistence;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -12,11 +13,17 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 public class EmployeeDAOImpl implements EmployeeDAO
 {
+	private ArrayList<Employee> database = (ArrayList<Employee>) getDatabase();
 
 	@Override
 	public List<Employee> getAllEmployees()
 	{
 
+		return database;
+	}
+
+	private List<Employee> getDatabase()
+	{
 		List<Employee> empList = null;
 
 		// Auslesen der json File
@@ -41,21 +48,21 @@ public class EmployeeDAOImpl implements EmployeeDAO
 	}
 
 	@Override
-	public void updateEmployee(Employee Employee)
+	public void updateEmployee(Employee employee)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deleteEmployee(Employee Employee)
+	public void deleteEmployee(Employee employee)
 	{
-		// TODO Auto-generated method stub
+		database.remove(employee);
 
 	}
 
 	@Override
-	public void addEmployee(Employee newEmployee)
+	public void addEmployee(Employee employee)
 	{
 		// TODO Auto-generated method stub
 
