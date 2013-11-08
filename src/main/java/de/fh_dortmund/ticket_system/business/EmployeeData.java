@@ -52,15 +52,22 @@ public class EmployeeData implements Serializable
 	{
 		this.employeeModel = employeeModel;
 	}
-	
+
 	public void updateEmployee(Employee employee)
 	{
-		
+
 	}
 
-	public void deleteEmployee(Employee employee) {
+	public void deleteEmployee(Employee employee)
+	{
 		employeeDAO.deleteEmployee(employee);
 		refreshEmployeeModel();
+	}
+
+	public void addEmployee(Employee employee)
+	{
+		//TODO Georg Berky: implement
+
 	}
 
 }
