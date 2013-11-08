@@ -1,5 +1,6 @@
 package de.fh_dortmund.ticket_system.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,10 @@ import org.primefaces.model.SelectableDataModel;
 
 @ManagedBean
 @SessionScoped
-public class ShiftModel extends ListDataModel<Shift> implements SelectableDataModel<Shift>
+public class ShiftModel extends ListDataModel<Shift> implements SelectableDataModel<Shift>, Serializable
 {
+
+	private static final long serialVersionUID = 1L;
 
 	public ShiftModel()
 	{

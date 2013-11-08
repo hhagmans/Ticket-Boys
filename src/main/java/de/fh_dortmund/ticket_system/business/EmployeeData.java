@@ -3,7 +3,6 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
@@ -26,12 +25,16 @@ public class EmployeeData implements Serializable
 	private static final long serialVersionUID = 1L;
 	private EmployeeDAO employeeDAO;
 
-	@ManagedProperty("#{employeeModel}")
-	EmployeeModel employeeModel;
+	private EmployeeModel employeeModel;
 
 	public EmployeeData()
 	{
 		employeeDAO = new EmployeeDAOImpl();
+		initializeEmployeeModel();
+	}
+
+	private void initializeEmployeeModel()
+	{
 		setEmployeeModel(new EmployeeModel(employeeDAO.getAllEmployees()));
 	}
 

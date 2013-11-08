@@ -3,7 +3,6 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import de.fh_dortmund.ticket_system.entity.ShiftModel;
@@ -24,8 +23,7 @@ public class ShiftData implements Serializable
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty("#{shiftModel}")
-	ShiftModel shiftModel;
+	private ShiftModel shiftModel;
 	private ShiftDAO shiftDAO;
 
 	public ShiftData()
