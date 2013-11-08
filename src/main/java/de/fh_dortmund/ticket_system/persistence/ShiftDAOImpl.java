@@ -25,6 +25,22 @@ public class ShiftDAOImpl implements ShiftDAO
 	{
 		List<Employee> empList = null;
 
+		empList = getEmployeeList();
+
+		// Verteilen der Employees auf die 52 "Shifts"
+		if (empList != null)
+		{
+
+			return generateDispatcherList(empList);
+		}
+
+		return null;
+
+	}
+
+	private List<Employee> getEmployeeList()
+	{
+		List<Employee> empList;
 		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
@@ -43,21 +59,12 @@ public class ShiftDAOImpl implements ShiftDAO
 		{
 		}.getType();
 		empList = new Gson().fromJson(json, type);
-
-		List<Shift> shifts = new ArrayList<Shift>();
-		// Verteilen der Employees auf die 52 "Shifts"
-		if (empList != null)
-		{
-
-			generateDispatcherList(empList, shifts);
-		}
-
-		return shifts;
-
+		return empList;
 	}
 
-	private void generateDispatcherList(List<Employee> empList, List<Shift> shifts)
+	private List<Shift> generateDispatcherList(List<Employee> empList)
 	{
+		List<Shift> shifts = new ArrayList<Shift>();
 		int usercount = empList.size();
 		int actUsercounter = 0;
 		Employee actEmp = null;
@@ -79,6 +86,7 @@ public class ShiftDAOImpl implements ShiftDAO
 			shifts.add(new Shift(2013, i + 1, actEmp, actEmp));
 			actUsercounter++;
 		}
+		return shifts;
 	}
 
 	@Override

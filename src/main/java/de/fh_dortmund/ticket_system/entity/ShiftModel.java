@@ -1,7 +1,6 @@
 package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -51,16 +50,4 @@ public class ShiftModel extends ListDataModel<Shift> implements SelectableDataMo
 		return Shift.getUniqueRowKey();
 	}
 
-	public void updateEmployee(Shift oldShift, Shift newShift)
-	{
-		ArrayList<Shift> al = (ArrayList<Shift>) getWrappedData();
-
-		int i = al.indexOf(getRowData(oldShift.getUniqueRowKey()));
-		if (i > 0)
-		{
-			al.set(i, newShift);
-		}
-		setWrappedData(al);
-
-	}
 }
