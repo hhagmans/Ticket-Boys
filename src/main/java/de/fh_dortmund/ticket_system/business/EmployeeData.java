@@ -53,4 +53,9 @@ public class EmployeeData implements Serializable
 		this.employeeModel = employeeModel;
 	}
 
+	public void deleteEmployee(Employee selectedEmployee) {
+		employeeDAO.deleteEmployee(selectedEmployee);
+		
+	}
+
 }
