@@ -3,7 +3,6 @@ package de.fh_dortmund.ticket_system.persistence;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
@@ -12,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.fh_dortmund.ticket_system.business.ShiftCalculator;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
@@ -31,7 +31,9 @@ public class ShiftDAOImpl implements ShiftDAO
 		if (empList != null)
 		{
 
-			return generateDispatcherList(empList);
+			ShiftCalculator sh = new ShiftCalculator();
+
+			return sh.generateDispatcherList(empList);
 		}
 
 		return null;
@@ -60,33 +62,6 @@ public class ShiftDAOImpl implements ShiftDAO
 		}.getType();
 		empList = new Gson().fromJson(json, type);
 		return empList;
-	}
-
-	private List<Shift> generateDispatcherList(List<Employee> empList)
-	{
-		List<Shift> shifts = new ArrayList<Shift>();
-		int usercount = empList.size();
-		int actUsercounter = 0;
-		Employee actEmp = null;
-		Employee actEmp2 = null;
-
-		for (int i = 0; i < 52; i++)
-		{
-			if (actUsercounter >= usercount)
-			{
-				actUsercounter = 0;
-			}
-			actEmp = empList.get(actUsercounter);
-
-			if ((actUsercounter + 1) < empList.size())
-			{
-				actEmp2 = empList.get(actUsercounter + 1);
-			}
-
-			shifts.add(new Shift(2013, i + 1, actEmp, actEmp2));
-			actUsercounter++;
-		}
-		return shifts;
 	}
 
 	@Override

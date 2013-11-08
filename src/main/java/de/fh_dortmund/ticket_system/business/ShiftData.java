@@ -29,6 +29,7 @@ public class ShiftData implements Serializable
 	public ShiftData()
 	{
 		shiftDAO = new ShiftDAOImpl();
+
 		setShiftModel(new ShiftModel(shiftDAO.getAllShifts()));
 
 	}

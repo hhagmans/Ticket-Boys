@@ -30,6 +30,7 @@ public class EmployeeData implements Serializable
 	public EmployeeData()
 	{
 		employeeDAO = new EmployeeDAOImpl();
+
 		refreshEmployeeModel();
 	}
 
