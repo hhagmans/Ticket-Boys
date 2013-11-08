@@ -89,7 +89,7 @@
 				<p:column style="width:6%">
 					<p:rowEditor>
 					</p:rowEditor>
-					<p:commandButton id="deleteEmployeeButton" actionListener="#{employeeView.deleteEmployee(employee)}" update=":employeeListMainform:employeeList" icon="ui-icon-circle-close" title="Löschen">
+					<p:commandButton id="deleteEmployeeButton" actionListener="#{employeeView.deleteEmployee(employee)}" update=":employeeListMainform:employeeList, :employeeListMainform:messages" icon="ui-icon-circle-close" title="Löschen">
 					<p:confirm header="Bestätigung" message="Möchten Sie diesen Mitarbeiter wirklich löschen?" icon="ui-icon-alert" />  
 					</p:commandButton>  
 				</p:column>

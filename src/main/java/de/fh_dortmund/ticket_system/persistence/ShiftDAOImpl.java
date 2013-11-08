@@ -83,7 +83,7 @@ public class ShiftDAOImpl implements ShiftDAO
 				actEmp2 = empList.get(actUsercounter + 1);
 			}
 
-			shifts.add(new Shift(2013, i + 1, actEmp, actEmp));
+			shifts.add(new Shift(2013, i + 1, actEmp, actEmp2));
 			actUsercounter++;
 		}
 		return shifts;

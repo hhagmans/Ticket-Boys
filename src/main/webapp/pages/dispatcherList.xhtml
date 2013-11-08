@@ -29,7 +29,7 @@
 				<f:facet name="header">
 					<p:commandButton id="swapShifts" value="Ausgewählte Schichten tauschen"
 						action="#{dispatcherView.switchShifts()}"
-						icon="ui-icon-edit" update=":dispatcherListMainform:messages,:dispatcherListMainform:shiftTable"
+						icon="ui-icon-copy" update=":dispatcherListMainform:messages,:dispatcherListMainform:shiftTable"
 						oncomplete="PF('shiftTable').update" >
 					<p:confirm header="Bestätigung" message="Möchten Sie diese Schichten wirklich tauschen?" icon="ui-icon-alert" />  
 
