@@ -41,23 +41,29 @@ public class DispatcherView implements Serializable
 
 	public void switchShifts()
 	{
+		if (getSelectedShifts().size() > 2)
+		{
+			showMessage("Verweigert", "Sie haben mehr als 2 Schichten ausgewählt!");
+			return;
+		}
+		else if (getSelectedShifts().size() < 2)
+		{
+			showMessage("Verweigert", "Sie haben weniger als 2 Schichten ausgewählt!");
+			return;
+		}
+
 		Shift shift0 = getSelectedShifts().get(0);
 		Shift shift1 = getSelectedShifts().get(1);
-		if (!userIsAllowedToSwitchShifts(shift0, shift1))
-		{
-			showMessage("Verweigert", "Sie haben nicht die Berechtigung diese Schichten zu tauschen");
-			return;
-		}
-
-		if (getSelectedShifts().size() != 2)
-		{
-			// TODO Exceptionhandling
-			return;
-		}
-
+		
 		if ((shift0 == null) || (shift1 == null))
 		{
-			// TODO Exceptionhandling
+			showMessage("Verweigert", "Sie haben nicht (mehr) vorhandene Schichten zum tauschen gewählt!");
+			return;
+		}
+		
+		if (!userIsAllowedToSwitchShifts(shift0, shift1))
+		{
+			showMessage("Verweigert", "Sie haben nicht die Berechtigung diese Schichten zu tauschen!");
 			return;
 		}
 
