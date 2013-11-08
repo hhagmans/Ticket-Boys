@@ -93,14 +93,12 @@ public class ShiftDAOImpl implements ShiftDAO
 	public void updateShift(Shift shift)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void deleteShift(Shift shift)
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
