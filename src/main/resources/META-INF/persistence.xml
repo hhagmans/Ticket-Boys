@@ -2,9 +2,7 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="sqlite" transaction-type="RESOURCE_LOCAL">
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>de.fh_dortmund.ticket_system.entity.Employee</class>
 		<properties>
-		<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite::resource:test/ticket-boys.sqlite"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
@@ -12,7 +10,7 @@
 			<property name="javax.persistence.jdbc.password" value=""/>
 			<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
       		<property name="hibernate.connection.charSet" value="UTF-8"/>
-      		<property name="hibernate.hbm2ddl.auto" value="create"/>
+      		<property name="hibernate.hbm2ddl.auto" value="update"/>
 		</properties>
 	</persistence-unit>
 </persistence>
