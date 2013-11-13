@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -31,8 +32,20 @@ public class EmployeeData implements Serializable
 	public EmployeeData()
 	{
 		employeeDAO = new EmployeeDAOsqlLite();
+		
+		addStuff();
 
 		refreshEmployeeModel();
+	}
+
+	private void addStuff() {
+		EmployeeDAO employeeDAOtemp = new  EmployeeDAOImpl();
+		
+		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
+		
+		for (Employee employee : allEmployees) {
+			employeeDAO.addEmployee(employee);
+		}
 	}
 
 	private void refreshEmployeeModel()
