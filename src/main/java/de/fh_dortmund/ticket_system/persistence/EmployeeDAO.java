@@ -7,7 +7,9 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 public interface EmployeeDAO
 {
 
-	public List<Employee> getAllEmployees();
+	public List<Employee> findAllEmployees();
+	
+	public Employee findEmployeeById(String id);
 
 	public void updateEmployee(Employee employee);
 

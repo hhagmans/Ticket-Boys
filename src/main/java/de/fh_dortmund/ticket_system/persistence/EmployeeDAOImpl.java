@@ -16,7 +16,7 @@ public class EmployeeDAOImpl implements EmployeeDAO
 	private ArrayList<Employee> database = (ArrayList<Employee>) getDatabase();
 
 	@Override
-	public List<Employee> getAllEmployees()
+	public List<Employee> findAllEmployees()
 	{
 
 		return database;
@@ -66,6 +66,12 @@ public class EmployeeDAOImpl implements EmployeeDAO
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Employee findEmployeeById(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

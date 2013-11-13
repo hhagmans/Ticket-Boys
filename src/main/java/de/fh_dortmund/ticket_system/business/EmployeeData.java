@@ -36,7 +36,7 @@ public class EmployeeData implements Serializable
 
 	private void refreshEmployeeModel()
 	{
-		setEmployeeModel(new EmployeeModel(employeeDAO.getAllEmployees()));
+		setEmployeeModel(new EmployeeModel(employeeDAO.findAllEmployees()));
 	}
 
 	public Employee findEmployeeByID(String konzernID)

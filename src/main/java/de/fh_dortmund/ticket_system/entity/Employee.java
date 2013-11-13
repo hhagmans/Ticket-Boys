@@ -2,6 +2,12 @@ package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
  * 
@@ -9,11 +15,16 @@ import java.io.Serializable;
  * 
  */
 
+@javax.persistence.Entity
+@Table(name = "employee")
+@NamedQueries({
+	@NamedQuery(name  = "Employee.findAll", query ="Select e from employee e")
+})
 public class Employee implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private String konzernID;
 	private String firstName;
 	private String lastName;
@@ -39,6 +50,7 @@ public class Employee implements Serializable
 		return false;
 	}
 
+	@Id
 	public String getKonzernID()
 	{
 		return konzernID;
@@ -89,6 +101,7 @@ public class Employee implements Serializable
 		this.zipcode = zipcode;
 	}
 
+	@OneToOne
 	public Role getRole()
 	{
 		return role;

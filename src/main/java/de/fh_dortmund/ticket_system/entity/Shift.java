@@ -2,6 +2,10 @@ package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Dieses Objekt repräsentiert eine Schicht Eine Schicht ist die Zuordnung einer Kalenderwoche zu
  * einem Dispatcher und seinem Vertreter
@@ -10,6 +14,8 @@ import java.io.Serializable;
  * 
  */
 
+@Entity
+@Table(name = "shift")
 public class Shift implements Serializable
 {
 
@@ -85,7 +91,8 @@ public class Shift implements Serializable
 		this.dispatcher = dispatcher;
 		this.substitutioner = substitutioner;
 	}
-
+	
+	@Id
 	public String getUniqueRowKey()
 	{
 		// TODO Auto-generated method stub
