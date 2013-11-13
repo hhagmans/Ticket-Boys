@@ -9,6 +9,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.EmployeeModel;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDAOImpl;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
 
 /**
  * Diese Klasse speichert und verwaltet alle bekannten Benutzer
@@ -29,7 +30,7 @@ public class EmployeeData implements Serializable
 
 	public EmployeeData()
 	{
-		employeeDAO = new EmployeeDAOImpl();
+		employeeDAO = new EmployeeDAOsqlLite();
 
 		refreshEmployeeModel();
 	}

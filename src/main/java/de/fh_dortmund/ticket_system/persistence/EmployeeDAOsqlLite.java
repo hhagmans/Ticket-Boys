@@ -3,16 +3,14 @@ package de.fh_dortmund.ticket_system.persistence;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 
 public class EmployeeDAOsqlLite implements EmployeeDAO {
-
-
-    @PersistenceContext
-    private EntityManager entityManager;
-	
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
+    EntityManager entityManager = emf.createEntityManager();
 
 	@Override
 	public List<Employee> findAllEmployees() {

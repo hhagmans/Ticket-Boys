@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.fh_dortmund.ticket_system.business.EmployeeData;
@@ -15,6 +16,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.EmployeeModel;
 import de.fh_dortmund.ticket_system.entity.Role;
 
+@Ignore
 public class AuthenticationTest
 {
 	private static final Role	ROLE		= Role.admin;
