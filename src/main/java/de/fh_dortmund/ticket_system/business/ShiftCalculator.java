@@ -41,6 +41,10 @@ public class ShiftCalculator
 			{
 				actEmp2 = empList.get(actUsercounter + 1);
 			}
+			else 
+			{
+				actEmp2 = empList.get(0);
+			}
 
 			shifts.add(new Shift(2013, i + 1, actEmp, actEmp2));
 			actUsercounter++;
