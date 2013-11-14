@@ -33,7 +33,7 @@ public class EmployeeData implements Serializable
 		employeeDAO = new EmployeeDAOsqlLite();
 		
 		addStuff();
-
+		
 		refreshEmployeeModel();
 	}
 
@@ -43,6 +43,7 @@ public class EmployeeData implements Serializable
 		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
 		
 		for (Employee employee : allEmployees) {
+			if (!employee.equals(employeeDAO.findEmployeeById(employee.getKonzernID())))
 			addEmployee(employee);
 		}
 	}
