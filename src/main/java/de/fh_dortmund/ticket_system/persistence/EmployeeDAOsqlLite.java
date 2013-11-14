@@ -24,6 +24,7 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 	@Override
 	public List<Employee> findAllEmployees()
 	{
+
 		List<Employee> resultList = entityManager.createNamedQuery("Employee.findAll", Employee.class).getResultList();
 		return resultList;
 	}
@@ -32,52 +33,35 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 	public void updateEmployee(Employee employee)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
-		try {
 		tx.begin();
 		entityManager.merge(employee);
 
 		entityManager.persist(employee);
 		tx.commit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}
 	}
 
 	@Override
 	public void deleteEmployee(Employee employee)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
-		try {
 		tx.begin();
 		entityManager.remove(employee);
 		tx.commit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}
 	}
 
 	@Override
 	public void addEmployee(Employee employee)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
-		try {
 		tx.begin();
 		entityManager.persist(employee);
 		tx.commit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}
 	}
 
 	@Override
 	public Employee findEmployeeById(String id)
 	{
+
 		return entityManager.find(Employee.class, id);
 	}
 

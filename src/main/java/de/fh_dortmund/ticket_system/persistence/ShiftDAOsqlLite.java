@@ -30,47 +30,29 @@ public class ShiftDAOsqlLite implements ShiftDAO
 	public void updateShift(Shift shift)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
-		try {
 		tx.begin();
 		entityManager.merge(shift);
 
 		entityManager.persist(shift);
 		tx.commit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}
 	}
 
 	@Override
 	public void deleteShift(Shift shift)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
-		try {
 		tx.begin();
 		entityManager.remove(shift);
 		tx.commit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}
 	}
 
 	@Override
 	public void addShift(Shift newShift)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
-		try {
 		tx.begin();
 		entityManager.persist(newShift);
 		tx.commit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}
 	}
 	
 	@Override

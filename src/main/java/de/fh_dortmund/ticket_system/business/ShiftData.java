@@ -31,8 +31,8 @@ public class ShiftData implements Serializable
 
 	public ShiftData()
 	{
-		shiftDAO = new ShiftDAOImpl();
-
+		shiftDAO = new ShiftDAOsqlLite();
+		fill();
 		setShiftModel(new ShiftModel(shiftDAO.findAllShifts()));
 
 	}
@@ -43,7 +43,8 @@ public class ShiftData implements Serializable
 		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
 		
 		for (Shift shift : allshifts) {
-			new ShiftDAOsqlLite().addShift(shift);
+			if (!shift.equals(shiftDAO.findShiftById(shift.getUniqueRowKey())))
+			shiftDAO.addShift(shift);
 		}
 	}
 
