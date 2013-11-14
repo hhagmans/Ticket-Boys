@@ -17,7 +17,7 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 @ApplicationScoped
-public class ShiftDAOImpl implements ShiftDAO
+public class ShiftDAOTestImpl implements ShiftDAO
 {
 
 	@Override

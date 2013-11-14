@@ -23,7 +23,9 @@
 						action="dispatcherList?faces-redirect=true" icon="ui-icon-clock" />
 					<p:menuitem value="Nutzer"
 						action="employeeList?faces-redirect=true" icon="ui-icon-person" />
-
+					<p:menuitem value="Abwesenheit"
+						action="personalVacationView?faces-redirect=true" icon="ui-icon-image" />
+					
 					<f:facet name="options">
 						<p:commandButton type="submit" value="Logout"
 							icon="ui-icon-extlink" action="#{auth.logout}" ajax="FALSE" />

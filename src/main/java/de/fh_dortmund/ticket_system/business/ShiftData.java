@@ -9,7 +9,7 @@ import javax.faces.bean.SessionScoped;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.ShiftModel;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
-import de.fh_dortmund.ticket_system.persistence.ShiftDAOImpl;
+import de.fh_dortmund.ticket_system.persistence.ShiftDAOTestImpl;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
 
 /**
@@ -38,7 +38,7 @@ public class ShiftData implements Serializable
 	}
 	
 	public void fill() {
-		ShiftDAO shiftDAOtemp = new  ShiftDAOImpl();
+		ShiftDAO shiftDAOtemp = new  ShiftDAOTestImpl();
 		
 		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
 		
