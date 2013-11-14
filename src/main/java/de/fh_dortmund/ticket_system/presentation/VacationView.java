@@ -35,12 +35,10 @@ public class VacationView implements Serializable
 		//TODO: load events from DB via DAO
 		eventModel = new VacationEventModel();
 		eventModel.addEvent(new VacationEvent("Urlaub", someDate(), anotherDate()));
-
 	}
 
 	private Date someDate()
 	{
-
 		Calendar t = (Calendar) today().clone();
 		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
 
@@ -123,7 +121,7 @@ public class VacationView implements Serializable
 	public void onEventMove(ScheduleEntryMoveEvent event)
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
-			+ event.getDayDelta());
+			+ event.getDayDelta() + " Tage.");
 
 		addMessage(message);
 	}
@@ -131,7 +129,7 @@ public class VacationView implements Serializable
 	public void onEventResize(ScheduleEntryResizeEvent event)
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
-			+ event.getDayDelta());
+			+ event.getDayDelta() + " Tage.");
 
 		addMessage(message);
 	}

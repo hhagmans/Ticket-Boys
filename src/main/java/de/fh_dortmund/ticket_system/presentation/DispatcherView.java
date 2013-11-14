@@ -41,6 +41,8 @@ public class DispatcherView implements Serializable
 
 	private List<Shift> selectedShifts;
 
+	private ShiftDAO shiftDAO = new ShiftDAOsqlLite();
+
 	public void switchShifts()
 	{
 		if (getSelectedShifts().size() > 2)
@@ -56,13 +58,13 @@ public class DispatcherView implements Serializable
 
 		Shift shift0 = getSelectedShifts().get(0);
 		Shift shift1 = getSelectedShifts().get(1);
-		
+
 		if ((shift0 == null) || (shift1 == null))
 		{
 			showMessage("Verweigert", "Sie haben nicht (mehr) vorhandene Schichten zum tauschen gewählt!");
 			return;
 		}
-		
+
 		if (!userIsAllowedToSwitchShifts(shift0, shift1))
 		{
 			showMessage("Verweigert", "Sie haben nicht die Berechtigung diese Schichten zu tauschen!");
@@ -74,14 +76,18 @@ public class DispatcherView implements Serializable
 
 		shift0.setDispatcher(shift1.getDispatcher());
 		shift1.setDispatcher(tempShift0.getDispatcher());
-		
-		ShiftDAO shiftDAO = new ShiftDAOsqlLite();
-		shiftDAO.updateShift(shift0);
-		shiftDAO.updateShift(shift1);
+
+		updateShifts(shift0);
+		updateShifts(shift1);
 
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
 			+ " wurden getauscht!");
 
+	}
+
+	private void updateShifts(Shift shift0)
+	{
+		shiftDAO.updateShift(shift0);
 	}
 
 	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2)

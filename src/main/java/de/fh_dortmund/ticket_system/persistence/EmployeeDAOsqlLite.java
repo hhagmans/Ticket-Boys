@@ -19,14 +19,14 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private EntityManagerFactory emf;
 	private EntityManager entityManager;
-	
-	public EmployeeDAOsqlLite () {
+
+	public EmployeeDAOsqlLite()
+	{
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
 		entityManager = emf.createEntityManager();
 	}
-	
+
 	@Override
 	public List<Employee> findAllEmployees()
 	{

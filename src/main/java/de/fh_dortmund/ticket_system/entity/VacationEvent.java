@@ -41,7 +41,7 @@ public class VacationEvent implements ScheduleEvent, Serializable
 
 	public VacationEvent()
 	{
-
+		this.id = null;
 	}
 
 	@Override
