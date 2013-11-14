@@ -32,17 +32,21 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 	@Override
 	public void updateEmployee(Employee employee)
 	{
-
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
 		entityManager.merge(employee);
 
 		entityManager.persist(employee);
+		tx.commit();
 	}
 
 	@Override
 	public void deleteEmployee(Employee employee)
 	{
-
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
 		entityManager.remove(employee);
+		tx.commit();
 	}
 
 	@Override
