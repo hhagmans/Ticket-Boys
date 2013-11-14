@@ -1,5 +1,6 @@
 package de.fh_dortmund.ticket_system.persistence;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -13,8 +14,10 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 @SessionScoped
-public class ShiftDAOsqlLite implements ShiftDAO
+public class ShiftDAOsqlLite implements ShiftDAO, Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
 	EntityManagerFactory emf;
 	EntityManager entityManager;
 	
@@ -36,8 +39,6 @@ public class ShiftDAOsqlLite implements ShiftDAO
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		entityManager.merge(shift);
-
-		entityManager.persist(shift);
 		tx.commit();
 	}
 

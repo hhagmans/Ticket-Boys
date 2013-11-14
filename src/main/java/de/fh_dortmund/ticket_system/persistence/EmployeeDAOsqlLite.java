@@ -39,8 +39,6 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		entityManager.merge(employee);
-
-		entityManager.persist(employee);
 		tx.commit();
 	}
 
