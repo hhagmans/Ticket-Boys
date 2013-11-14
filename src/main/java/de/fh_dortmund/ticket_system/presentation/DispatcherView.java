@@ -15,6 +15,8 @@ import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
+import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
+import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
 
 /**
  * Die View zur Dispatcherliste
@@ -72,6 +74,10 @@ public class DispatcherView implements Serializable
 
 		shift0.setDispatcher(shift1.getDispatcher());
 		shift1.setDispatcher(tempShift0.getDispatcher());
+		
+		ShiftDAO shiftDAO = new ShiftDAOsqlLite();
+		shiftDAO.updateShift(shift0);
+		shiftDAO.updateShift(shift1);
 
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
 			+ " wurden getauscht!");

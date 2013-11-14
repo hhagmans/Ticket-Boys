@@ -33,7 +33,7 @@ public abstract class Authentication implements Serializable
 
 	public String login()
 	{
-		if (authenticate(name, passwort) && findEmploye())
+		if (authenticate(name, passwort) && findEmployee())
 		{
 			setLoggedIn(true);
 
@@ -47,7 +47,7 @@ public abstract class Authentication implements Serializable
 		}
 	}
 
-	private boolean findEmploye()
+	private boolean findEmployee()
 	{
 		Employee employee = getEmployeeData().findEmployeeByID(name);
 		if (employee == null)

@@ -18,13 +18,17 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
-	EntityManager entityManager = emf.createEntityManager();
-
+	private EntityManagerFactory emf;
+	private EntityManager entityManager;
+	
+	public EmployeeDAOsqlLite () {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
+		entityManager = emf.createEntityManager();
+	}
+	
 	@Override
 	public List<Employee> findAllEmployees()
 	{
-
 		List<Employee> resultList = entityManager.createNamedQuery("Employee.findAll", Employee.class).getResultList();
 		return resultList;
 	}
@@ -61,8 +65,8 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 	@Override
 	public Employee findEmployeeById(String id)
 	{
-
-		return entityManager.find(Employee.class, id);
+		Employee emp = entityManager.find(Employee.class, id);
+		return emp;
 	}
 
 }

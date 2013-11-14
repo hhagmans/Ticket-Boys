@@ -103,4 +103,15 @@ public class Shift implements Serializable {
 	public void setUniqueRowKey(String uniqueRowKey) {
 		this.uniqueRowKey = uniqueRowKey;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Shift) {
+			Shift shift = (Shift) obj;
+
+			return shift.getUniqueRowKey().equals(this.getUniqueRowKey());
+
+		}
+		return false;
+	}
 }

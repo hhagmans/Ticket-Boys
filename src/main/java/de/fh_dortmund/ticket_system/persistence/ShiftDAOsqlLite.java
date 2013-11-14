@@ -15,9 +15,13 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 @SessionScoped
 public class ShiftDAOsqlLite implements ShiftDAO
 {
-
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
-	EntityManager entityManager = emf.createEntityManager();
+	EntityManagerFactory emf;
+	EntityManager entityManager;
+	
+	public ShiftDAOsqlLite () {
+		emf = Persistence.createEntityManagerFactory("sqlite");
+		entityManager = emf.createEntityManager();
+	}
 
 	@Override
 	public List<Shift> findAllShifts()
@@ -58,6 +62,7 @@ public class ShiftDAOsqlLite implements ShiftDAO
 	@Override
 	public Shift findShiftById(String id)
 	{
-		return entityManager.find(Shift.class, id);
+		Shift shift = entityManager.find(Shift.class, id);
+		return shift;
 	}
 }
