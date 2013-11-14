@@ -26,7 +26,7 @@
   
     <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
         <h:panelGrid id="eventDetails" columns="2">  
-            <h:outputLabel for="title" value="Title:" />  
+            <h:outputLabel for="title" value="Titel:" />  
             <p:inputText id="title" value="#{vacationView.event.title}" required="true"/>  
   
             <h:outputLabel for="from" value="Von:" />  
@@ -39,7 +39,7 @@
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
             </p:inputMask>  
   
-            <p:commandButton type="reset" value="Reset" />  
+            <p:commandButton type="reset" value="Zurücksetzen" />  
             <p:commandButton id="addButton" value="Speichern" actionListener="#{vacationView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
         </h:panelGrid>  
     </p:dialog>  

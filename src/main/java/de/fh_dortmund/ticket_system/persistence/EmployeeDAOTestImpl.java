@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-public class EmployeeDAOImpl implements EmployeeDAO
+public class EmployeeDAOTestImpl implements EmployeeDAO
 {
 	private ArrayList<Employee> database = (ArrayList<Employee>) getDatabase();
 

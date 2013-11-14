@@ -5,18 +5,22 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import de.fh_dortmund.ticket_system.business.VacationEvent;
+import de.fh_dortmund.ticket_system.business.VacationEventModel;
+import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
+@ManagedBean
+@SessionScoped
 public class VacationView implements Serializable
 {
 
@@ -28,15 +32,16 @@ public class VacationView implements Serializable
 
 	public VacationView()
 	{
-		eventModel = new DefaultScheduleModel();
-		eventModel.addEvent(new VacationEvent("Default Event", someDate(), anotherDate()));
+		//TODO: load events from DB via DAO
+		eventModel = new VacationEventModel();
+		eventModel.addEvent(new VacationEvent("Urlaub", someDate(), anotherDate()));
+
 	}
 
 	private Date someDate()
 	{
 
 		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
 		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
 
 		return t.getTime();
@@ -46,8 +51,7 @@ public class VacationView implements Serializable
 	{
 
 		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
+		t.set(Calendar.DATE, t.get(Calendar.DATE));
 
 		return t.getTime();
 	}
