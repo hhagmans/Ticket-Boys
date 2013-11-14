@@ -1,13 +1,16 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.ShiftModel;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOImpl;
+import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
 
 /**
  * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
@@ -30,8 +33,18 @@ public class ShiftData implements Serializable
 	{
 		shiftDAO = new ShiftDAOImpl();
 
-		setShiftModel(new ShiftModel(shiftDAO.getAllShifts()));
+		setShiftModel(new ShiftModel(shiftDAO.findAllShifts()));
 
+	}
+	
+	public void fill() {
+		ShiftDAO shiftDAOtemp = new  ShiftDAOImpl();
+		
+		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
+		
+		for (Shift shift : allshifts) {
+			new ShiftDAOsqlLite().addShift(shift);
+		}
 	}
 
 	public ShiftModel getShiftModel()

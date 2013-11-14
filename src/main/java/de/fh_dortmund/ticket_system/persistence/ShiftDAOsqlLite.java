@@ -1,6 +1,5 @@
 package de.fh_dortmund.ticket_system.persistence;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,33 +9,32 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 @SessionScoped
-public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
+public class ShiftDAOsqlLite implements ShiftDAO
 {
-	private static final long serialVersionUID = 1L;
 
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
 	EntityManager entityManager = emf.createEntityManager();
 
 	@Override
-	public List<Employee> findAllEmployees()
+	public List<Shift> findAllShifts()
 	{
-		List<Employee> resultList = entityManager.createNamedQuery("Employee.findAll", Employee.class).getResultList();
+		List<Shift> resultList = entityManager.createNamedQuery("Shift.findAll", Shift.class).getResultList();
 		return resultList;
 	}
 
 	@Override
-	public void updateEmployee(Employee employee)
+	public void updateShift(Shift shift)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
 		try {
 		tx.begin();
-		entityManager.merge(employee);
+		entityManager.merge(shift);
 
-		entityManager.persist(employee);
+		entityManager.persist(shift);
 		tx.commit();
 		}
 		catch (Exception e) {
@@ -46,12 +44,12 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 	}
 
 	@Override
-	public void deleteEmployee(Employee employee)
+	public void deleteShift(Shift shift)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
 		try {
 		tx.begin();
-		entityManager.remove(employee);
+		entityManager.remove(shift);
 		tx.commit();
 		}
 		catch (Exception e) {
@@ -61,12 +59,12 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 	}
 
 	@Override
-	public void addEmployee(Employee employee)
+	public void addShift(Shift newShift)
 	{
 		EntityTransaction tx = entityManager.getTransaction();
 		try {
 		tx.begin();
-		entityManager.persist(employee);
+		entityManager.persist(newShift);
 		tx.commit();
 		}
 		catch (Exception e) {
@@ -74,11 +72,10 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 			tx.rollback();
 		}
 	}
-
+	
 	@Override
-	public Employee findEmployeeById(String id)
+	public Shift findShiftById(String id)
 	{
-		return entityManager.find(Employee.class, id);
+		return entityManager.find(Shift.class, id);
 	}
-
 }

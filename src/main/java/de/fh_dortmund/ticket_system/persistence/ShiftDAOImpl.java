@@ -21,7 +21,7 @@ public class ShiftDAOImpl implements ShiftDAO
 {
 
 	@Override
-	public List<Shift> getAllShifts()
+	public List<Shift> findAllShifts()
 	{
 		List<Employee> empList = null;
 
@@ -81,5 +81,11 @@ public class ShiftDAOImpl implements ShiftDAO
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Shift findShiftById(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
