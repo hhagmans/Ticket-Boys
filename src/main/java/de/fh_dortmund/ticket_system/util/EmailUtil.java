@@ -1,14 +1,10 @@
 package de.fh_dortmund.ticket_system.util;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-
-import de.fh_dortmund.ticket_system.business.EmployeeData;
-import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 public class EmailUtil
@@ -17,7 +13,8 @@ public class EmailUtil
 	public static final Integer SMTP_PORT = 465;
 	public static final String FROM = "Ticket-Boys@fh-dortmund.de";
 	public static final String SUBJECT = "Ticket-Boys";
-	public static String msg = "Hallo " + "#{employee.firstName}" + " " + "#{employee.lastName}" +",\n\n" + "Sie sind in KW " + "#{shift.weekNumber}" + " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.";
+	public static String msg = "Hallo " + "#{employee.firstName}" + " " + "#{employee.lastName}" + ",\n\n"
+		+ "Sie sind in KW " + "#{shift.weekNumber}" + " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.";
 
 	public Email sendEmail(String msg, String... to) throws EmailException
 	{
