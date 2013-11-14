@@ -44,7 +44,7 @@ public class EmployeeData implements Serializable
 		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
 		
 		for (Employee employee : allEmployees) {
-			employeeDAO.addEmployee(employee);
+			addEmployee(employee);
 		}
 	}
 
@@ -81,8 +81,7 @@ public class EmployeeData implements Serializable
 
 	public void addEmployee(Employee employee)
 	{
-		//TODO Georg Berky: implement
-
+		employeeDAO.addEmployee(employee);
 	}
 
 }
