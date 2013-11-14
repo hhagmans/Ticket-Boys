@@ -2,6 +2,7 @@ package de.fh_dortmund.ticket_system.persistence;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,10 @@ import com.google.gson.reflect.TypeToken;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-public class EmployeeDAOTestImpl implements EmployeeDAO
+public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
 {
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<Employee> database = (ArrayList<Employee>) getDatabase();
 
 	@Override
