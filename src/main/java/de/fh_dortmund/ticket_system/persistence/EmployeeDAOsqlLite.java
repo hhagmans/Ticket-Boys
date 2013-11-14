@@ -11,6 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 @SessionScoped
@@ -39,6 +40,19 @@ public class EmployeeDAOsqlLite implements EmployeeDAO, Serializable
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		entityManager.merge(employee);
+		List<Shift> shiftList = entityManager.createNamedQuery("Shift.findAll", Shift.class).getResultList();
+		for (Shift shift : shiftList) {
+			if (shift.getDispatcher().equals(employee))
+			{
+				shift.setDispatcher(employee);
+				entityManager.merge(shift);
+			}
+			else if (shift.getSubstitutioner().equals(employee))
+			{
+				shift.setSubstitutioner(employee);
+				entityManager.merge(shift);
+			}
+		}
 		tx.commit();
 	}
 

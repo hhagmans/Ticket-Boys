@@ -57,4 +57,31 @@ public class ShiftData implements Serializable
 		this.shiftModel = shiftModel;
 	}
 
+	private void refreshShiftModel()
+	{
+		setShiftModel(new ShiftModel(shiftDAO.findAllShifts()));
+	}
+
+	public Shift findShiftByID(String uniqueRowKey)
+	{
+		return getShiftModel().getRowData(uniqueRowKey);
+	}
+
+	public void updateShift(Shift shift)
+	{
+		shiftDAO.updateShift(shift);
+		refreshShiftModel();
+	}
+
+	public void deleteShift(Shift shift)
+	{
+		shiftDAO.deleteShift(shift);
+		refreshShiftModel();
+	}
+
+	public void addShift(Shift shift)
+	{
+		shiftDAO.addShift(shift);
+		refreshShiftModel();
+	}
 }
