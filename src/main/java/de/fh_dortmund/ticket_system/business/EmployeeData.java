@@ -7,9 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.EmployeeModel;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAOImpl;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDAOTestImpl;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
 
 /**
@@ -39,7 +38,7 @@ public class EmployeeData implements Serializable
 	}
 
 	private void addStuff() {
-		EmployeeDAO employeeDAOtemp = new  EmployeeDAOImpl();
+		EmployeeDAO employeeDAOtemp = new  EmployeeDAOTestImpl();
 		
 		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
 		

@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.entity.ShiftModel;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOTestImpl;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
