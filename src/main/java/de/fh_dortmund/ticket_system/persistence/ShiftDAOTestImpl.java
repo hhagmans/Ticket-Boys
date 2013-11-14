@@ -2,6 +2,7 @@ package de.fh_dortmund.ticket_system.persistence;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -17,9 +18,10 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 @ApplicationScoped
-public class ShiftDAOTestImpl implements ShiftDAO
+public class ShiftDAOTestImpl implements ShiftDAO, Serializable
 {
-
+	private static final long serialVersionUID = 1L;
+	
 	@Override
 	public List<Shift> findAllShifts()
 	{

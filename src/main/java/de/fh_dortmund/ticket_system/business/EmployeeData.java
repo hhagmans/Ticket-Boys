@@ -70,7 +70,8 @@ public class EmployeeData implements Serializable
 
 	public void updateEmployee(Employee employee)
 	{
-
+		employeeDAO.updateEmployee(employee);
+		refreshEmployeeModel();
 	}
 
 	public void deleteEmployee(Employee employee)
@@ -82,6 +83,7 @@ public class EmployeeData implements Serializable
 	public void addEmployee(Employee employee)
 	{
 		employeeDAO.addEmployee(employee);
+		refreshEmployeeModel();
 	}
 
 }

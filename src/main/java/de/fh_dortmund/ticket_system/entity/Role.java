@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "role")
 public enum Role { admin("Admin"), guest("Gast"), dispatcher("Dispatcher"), vacationer("Urlauber");
 	
 	private String roleName;
