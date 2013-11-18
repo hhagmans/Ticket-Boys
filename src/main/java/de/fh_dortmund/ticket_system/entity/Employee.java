@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,6 +30,7 @@ public class Employee implements Serializable
 	private String city;
 	private int zipcode;
 	private Role role;
+	private Set<String> myEvents;
 
 	public Employee()
 	{
@@ -124,6 +126,14 @@ public class Employee implements Serializable
 	public String getFullName()
 	{
 		return firstName + " " + lastName;
+	}
+
+	public Set<String> getMyEvents() {
+		return myEvents;
+	}
+
+	public void setMyEvents(Set<String> myEvents) {
+		this.myEvents = myEvents;
 	}
 
 }
