@@ -1,12 +1,13 @@
 package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +31,8 @@ public class Employee implements Serializable
 	private String city;
 	private int zipcode;
 	private Role role;
-	private Set<String> myEvents;
+	@OneToMany
+	private List<VacationEvent> myEvents;
 
 	public Employee()
 	{
@@ -128,12 +130,14 @@ public class Employee implements Serializable
 		return firstName + " " + lastName;
 	}
 
-	public Set<String> getMyEvents() {
+	public List<VacationEvent> getMyEvents() {
 		return myEvents;
 	}
 
-	public void setMyEvents(Set<String> myEvents) {
+	public void setMyEvents(List<VacationEvent> myEvents) {
 		this.myEvents = myEvents;
 	}
+
+
 
 }
