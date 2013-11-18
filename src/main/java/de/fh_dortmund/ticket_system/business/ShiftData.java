@@ -41,9 +41,12 @@ public class ShiftData implements Serializable
 		
 		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
 		
+		if (shiftDAO.findAllShifts().isEmpty())
+		{
 		for (Shift shift : allshifts) {
 			if (!shift.equals(shiftDAO.findShiftById(shift.getUniqueRowKey())))
 			shiftDAO.addShift(shift);
+		}
 		}
 	}
 
