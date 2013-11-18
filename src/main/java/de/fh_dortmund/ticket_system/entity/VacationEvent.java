@@ -3,8 +3,18 @@ package de.fh_dortmund.ticket_system.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.primefaces.model.ScheduleEvent;
 
+@Entity
+@Table(name = "vacationEvent")
+@NamedQueries({ @NamedQuery(name = "VacationEvent.findAll", query = "SELECT v FROM VacationEvent v") })
 public class VacationEvent implements ScheduleEvent, Serializable
 {
 
@@ -21,8 +31,6 @@ public class VacationEvent implements ScheduleEvent, Serializable
 	private boolean allDay = true;
 
 	private String styleClass;
-
-	private Object data;
 
 	private boolean editable = true;
 
@@ -44,6 +52,7 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		this.id = null;
 	}
 
+	@Id
 	@Override
 	public String getId()
 	{
@@ -111,15 +120,11 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		this.styleClass = styleClass;
 	}
 
+	@Transient
 	@Override
 	public Object getData()
 	{
-		return data;
-	}
-
-	public void setData(Object data)
-	{
-		this.data = data;
+		return null;
 	}
 
 	@Override
