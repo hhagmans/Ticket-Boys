@@ -18,9 +18,6 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 @ManagedBean
 public class ShiftCalculator
 {
-
-	private List<Employee> employees;
-
 	public List<Shift> generateDispatcherList(List<Employee> empList)
 	{
 		List<Shift> shifts = new ArrayList<Shift>();
@@ -41,7 +38,7 @@ public class ShiftCalculator
 			{
 				actEmp2 = empList.get(actUsercounter + 1);
 			}
-			else 
+			else
 			{
 				actEmp2 = empList.get(0);
 			}
@@ -63,15 +60,5 @@ public class ShiftCalculator
 	public ShiftCalculator()
 	{
 
-	}
-
-	public List<Employee> getEmployees()
-	{
-		return employees;
-	}
-
-	public void setEmployees(List<Employee> employees)
-	{
-		this.employees = employees;
 	}
 }

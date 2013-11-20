@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.persistence;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
@@ -12,58 +13,49 @@ import javax.persistence.Persistence;
 
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
-@ManagedBean
-@SessionScoped
-public class VacationEventDAOsqlLite implements VacationEventDAO, Serializable
+public class VacationEventDAOsqlLite extends BaseDAO implements VacationEventDAO, Serializable
 {
-	private static final long serialVersionUID = 1L;
-
-	private EntityManager entityManager;
-
-	public VacationEventDAOsqlLite()
-	{
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sqlite");
-		entityManager = emf.createEntityManager();
-	}
+	private static final long	serialVersionUID	= 1L;
 
 	@Override
 	public List<VacationEvent> findAllVacationEvents()
 	{
-		List<VacationEvent> resultList = entityManager.createNamedQuery("VacationEvent.findAll", VacationEvent.class).getResultList();
+		List<VacationEvent> resultList = getEm().createNamedQuery("VacationEvent.findAll", VacationEvent.class)
+				.getResultList();
 		return resultList;
 	}
 
 	@Override
 	public void updateVacationEvent(VacationEvent vacationEvent)
 	{
-		EntityTransaction tx = entityManager.getTransaction();
+		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		entityManager.merge(vacationEvent);
+		getEm().merge(vacationEvent);
 		tx.commit();
 	}
 
 	@Override
 	public void deleteVacationEvent(VacationEvent vacationEvent)
 	{
-		EntityTransaction tx = entityManager.getTransaction();
+		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		entityManager.remove(vacationEvent);
+		getEm().remove(vacationEvent);
 		tx.commit();
 	}
 
 	@Override
 	public void addVacationEvent(VacationEvent vacationEvent)
 	{
-		EntityTransaction tx = entityManager.getTransaction();
+		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		entityManager.persist(vacationEvent);
+		getEm().persist(vacationEvent);
 		tx.commit();
 	}
 
 	@Override
 	public VacationEvent findVacationEventById(String id)
 	{
-		VacationEvent emp = entityManager.find(VacationEvent.class, id);
+		VacationEvent emp = getEm().find(VacationEvent.class, id);
 		return emp;
 	}
 

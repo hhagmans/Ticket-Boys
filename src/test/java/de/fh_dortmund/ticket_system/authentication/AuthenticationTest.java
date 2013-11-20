@@ -33,13 +33,7 @@ public class AuthenticationTest
 	{
 		auth = new NoAuthentication();
 		auth.setEmployeeData(new EmployeeData());
-		auth.getEmployeeData().setEmployeeModel(new EmployeeModel( new ArrayList<Employee>()
-		{
-			{
-				add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE));
-			}
-		})
-		);
+		auth.getEmployeeData().addEmployee(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE));
 	}
 
 	@Test

@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -19,71 +20,58 @@ import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
  */
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class EmployeeData implements Serializable
 {
+	private static final long	serialVersionUID	= 1L;
 
-	private static final long serialVersionUID = 1L;
-	private EmployeeDAO employeeDAO;
-
-	private EmployeeModel employeeModel;
+	private EmployeeDAO			employeeDAO;
 
 	public EmployeeData()
 	{
 		employeeDAO = new EmployeeDAOsqlLite();
-		
+
 		addStuff();
-		
-		refreshEmployeeModel();
 	}
 
-	private void addStuff() {
-		EmployeeDAO employeeDAOtemp = new  EmployeeDAOTestImpl();
-		
-		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
-		
-		for (Employee employee : allEmployees) {
-			if (!employee.equals(employeeDAO.findEmployeeById(employee.getKonzernID())))
-			addEmployee(employee);
-		}
-	}
-
-	private void refreshEmployeeModel()
+	private void addStuff()
 	{
-		setEmployeeModel(new EmployeeModel(employeeDAO.findAllEmployees()));
+		EmployeeDAO employeeDAOtemp = new EmployeeDAOTestImpl();
+
+		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
+
+		for (Employee employee : allEmployees)
+		{
+			if (!employee.equals(employeeDAO.findEmployeeById(employee.getKonzernID())))
+				addEmployee(employee);
+		}
+
+		System.out.println("Employees added " + allEmployees.size());
 	}
 
 	public Employee findEmployeeByID(String konzernID)
 	{
-		return getEmployeeModel().getRowData(konzernID);
-	}
-
-	public EmployeeModel getEmployeeModel()
-	{
-		return employeeModel;
-	}
-
-	public void setEmployeeModel(EmployeeModel employeeModel)
-	{
-		this.employeeModel = employeeModel;
+		Employee employee = employeeDAO.findEmployeeById(konzernID);
+		return employee;
 	}
 
 	public void updateEmployee(Employee employee)
 	{
 		employeeDAO.updateEmployee(employee);
-		refreshEmployeeModel();
 	}
 
 	public void deleteEmployee(Employee employee)
 	{
 		employeeDAO.deleteEmployee(employee);
-		refreshEmployeeModel();
 	}
 
 	public void addEmployee(Employee employee)
 	{
 		employeeDAO.addEmployee(employee);
-		refreshEmployeeModel();
 	}
 
+	public List<Employee> findAllEmployees()
+	{
+		return employeeDAO.findAllEmployees();
+	}
 }

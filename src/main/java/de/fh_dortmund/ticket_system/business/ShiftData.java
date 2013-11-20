@@ -3,8 +3,8 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
@@ -19,72 +19,58 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
  */
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class ShiftData implements Serializable
 {
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private ShiftModel shiftModel;
-	private ShiftDAO shiftDAO;
+	private ShiftDAO			shiftDAO;
 
 	public ShiftData()
 	{
 		shiftDAO = new ShiftDAOsqlLite();
 		fill();
-		setShiftModel(new ShiftModel(shiftDAO.findAllShifts()));
-
 	}
-	
-	public void fill() {
-		ShiftDAO shiftDAOtemp = new  ShiftDAOTestImpl();
-		
+
+	public void fill()
+	{
+		ShiftDAO shiftDAOtemp = new ShiftDAOTestImpl();
+
 		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
-		
+
 		if (shiftDAO.findAllShifts().isEmpty())
 		{
-		for (Shift shift : allshifts) {
-			if (!shift.equals(shiftDAO.findShiftById(shift.getUniqueRowKey())))
-			shiftDAO.addShift(shift);
+			for (Shift shift : allshifts)
+			{
+				if (!shift.equals(shiftDAO.findShiftById(shift.getUniqueRowKey())))
+					shiftDAO.addShift(shift);
+			}
 		}
-		}
-	}
-
-	public ShiftModel getShiftModel()
-	{
-		return shiftModel;
-	}
-
-	public void setShiftModel(ShiftModel shiftModel)
-	{
-		this.shiftModel = shiftModel;
-	}
-
-	private void refreshShiftModel()
-	{
-		setShiftModel(new ShiftModel(shiftDAO.findAllShifts()));
 	}
 
 	public Shift findShiftByID(String uniqueRowKey)
 	{
-		return getShiftModel().getRowData(uniqueRowKey);
+		return shiftDAO.findShiftById(uniqueRowKey);
 	}
 
 	public void updateShift(Shift shift)
 	{
 		shiftDAO.updateShift(shift);
-		refreshShiftModel();
 	}
 
 	public void deleteShift(Shift shift)
 	{
 		shiftDAO.deleteShift(shift);
-		refreshShiftModel();
 	}
 
 	public void addShift(Shift shift)
 	{
 		shiftDAO.addShift(shift);
-		refreshShiftModel();
+	}
+
+	public List<Shift> findAllShifts()
+	{
+		return shiftDAO.findAllShifts();
 	}
 }

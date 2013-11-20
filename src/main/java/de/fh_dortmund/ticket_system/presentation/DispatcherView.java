@@ -7,16 +7,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
-import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.Role;
+import de.fh_dortmund.ticket_system.business.ShiftModel;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
-import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
+import de.fh_dortmund.ticket_system.util.RightsManager;
 
 /**
  * Die View zur Dispatcherliste
@@ -25,23 +24,24 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
  * 
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DispatcherView implements Serializable
 {
-	private static final long serialVersionUID = 1L;
-
-	@ManagedProperty("#{auth}")
-	Authentication authentication;
+	private static final long	serialVersionUID	= 1L;
 
 	@ManagedProperty("#{shiftData}")
-	ShiftData shiftData;
+	ShiftData					shiftData;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData employeeData;
+	EmployeeData				employeeData;
 
-	private List<Shift> selectedShifts;
+	@ManagedProperty("#{rightsManager}")
+	private
+	RightsManager				rightsManager;
 
-	private ShiftDAO shiftDAO = new ShiftDAOsqlLite();
+	private ShiftModel			shiftModel;
+
+	private List<Shift>			selectedShifts;
 
 	public void switchShifts()
 	{
@@ -65,14 +65,14 @@ public class DispatcherView implements Serializable
 			return;
 		}
 
-		if (!userIsAllowedToSwitchShifts(shift0, shift1))
+		if (!getRightsManager().userIsAllowedToSwitchShifts(shift0, shift1))
 		{
 			showMessage("Verweigert", "Sie haben nicht die Berechtigung diese Schichten zu tauschen!");
 			return;
 		}
 
 		Shift tempShift0 = new Shift(shift0.getYear(), shift0.getWeekNumber(), shift0.getDispatcher(),
-			shift0.getSubstitutioner());
+				shift0.getSubstitutioner());
 
 		shift0.setDispatcher(shift1.getDispatcher());
 		shift1.setDispatcher(tempShift0.getDispatcher());
@@ -81,32 +81,13 @@ public class DispatcherView implements Serializable
 		updateShifts(shift1);
 
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
-			+ " wurden getauscht!");
+				+ " wurden getauscht!");
 
 	}
 
 	private void updateShifts(Shift shift0)
 	{
-		shiftDAO.updateShift(shift0);
-	}
-
-	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2)
-	{
-		Employee currentUser = authentication.getEmployee();
-
-		if (currentUser.getRole() != Role.admin)
-		{
-			if (currentUser.equals(shift1.getDispatcher()) || currentUser.equals(shift2.getDispatcher()))
-			{
-				return true;
-			}
-		}
-		else
-		{
-			return true;
-		}
-
-		return false;
+		shiftData.updateShift(shift0);
 	}
 
 	public List<Shift> getSelectedShifts()
@@ -139,21 +120,34 @@ public class DispatcherView implements Serializable
 		this.employeeData = employeeData;
 	}
 
-	public Authentication getAuthentication()
-	{
-		return authentication;
-	}
-
-	public void setAuthentication(Authentication authentication)
-	{
-		this.authentication = authentication;
-	}
-
 	public void showMessage(String summary, String detail)
 	{
 		FacesMessage msg = new FacesMessage(summary, detail);
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public ShiftModel getShiftModel()
+	{
+		if (shiftModel == null)
+			setShiftModel(new ShiftModel(shiftData.findAllShifts()));
+
+		return shiftModel;
+	}
+
+	public void setShiftModel(ShiftModel shiftModel)
+	{
+		this.shiftModel = shiftModel;
+	}
+
+	public RightsManager getRightsManager()
+	{
+		return rightsManager;
+	}
+
+	public void setRightsManager(RightsManager rightsManager)
+	{
+		this.rightsManager = rightsManager;
 	}
 
 }

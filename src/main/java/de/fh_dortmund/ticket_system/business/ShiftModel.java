@@ -11,17 +11,9 @@ import org.primefaces.model.SelectableDataModel;
 
 import de.fh_dortmund.ticket_system.entity.Shift;
 
-@ManagedBean
-@SessionScoped
 public class ShiftModel extends ListDataModel<Shift> implements SelectableDataModel<Shift>, Serializable
 {
-
-	private static final long serialVersionUID = 1L;
-
-	public ShiftModel()
-	{
-
-	}
+	private static final long	serialVersionUID	= 1L;
 
 	public ShiftModel(List<Shift> data)
 	{
@@ -31,7 +23,7 @@ public class ShiftModel extends ListDataModel<Shift> implements SelectableDataMo
 	@Override
 	public Shift getRowData(String rowKey)
 	{
-		//In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data  
+		// In a real app, a more efficient way like a query by rowKey should be implemented to deal with huge data
 
 		List<Shift> Shifts = (List<Shift>) getWrappedData();
 

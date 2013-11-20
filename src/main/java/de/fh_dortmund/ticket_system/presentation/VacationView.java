@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -20,19 +21,19 @@ import de.fh_dortmund.ticket_system.business.VacationEventModel;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class VacationView implements Serializable
 {
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private ScheduleModel eventModel;
+	private ScheduleModel		eventModel;
 
-	private ScheduleEvent event = new VacationEvent();
+	private ScheduleEvent		event				= new VacationEvent();
 
 	public VacationView()
 	{
-		//TODO: load events from DB via DAO
+		// TODO: load events from DB via DAO
 		eventModel = new VacationEventModel();
 		eventModel.addEvent(new VacationEvent("Urlaub", someDate(), anotherDate()));
 	}
@@ -58,7 +59,7 @@ public class VacationView implements Serializable
 	{
 		Calendar date = Calendar.getInstance();
 		date.setTime(base);
-		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); //set random day of month  
+		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random day of month
 
 		return date.getTime();
 	}
@@ -121,7 +122,7 @@ public class VacationView implements Serializable
 	public void onEventMove(ScheduleEntryMoveEvent event)
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
-			+ event.getDayDelta() + " Tage.");
+				+ event.getDayDelta() + " Tage.");
 
 		addMessage(message);
 	}
@@ -129,7 +130,7 @@ public class VacationView implements Serializable
 	public void onEventResize(ScheduleEntryResizeEvent event)
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
-			+ event.getDayDelta() + " Tage.");
+				+ event.getDayDelta() + " Tage.");
 
 		addMessage(message);
 	}

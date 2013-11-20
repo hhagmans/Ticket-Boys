@@ -1,29 +1,37 @@
 package de.fh_dortmund.ticket_system.presentation;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 
 import de.fh_dortmund.ticket_system.business.EmployeeData;
+import de.fh_dortmund.ticket_system.business.EmployeeModel;
 import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class EmployeeView implements Serializable
 {
+	private static final long	serialVersionUID	= 1L;
 
-	private static final long serialVersionUID = 1L;
+	private Employee			selectedEmployee;
 
 	@ManagedProperty("#{employeeData}")
-	private EmployeeData employeeData;
+	EmployeeData				employeeData;
 
-	private Employee selectedEmployee;
+	private EmployeeModel		employeeModel;
+
+	public EmployeeView()
+	{
+
+	}
 
 	public void onEdit(RowEditEvent event)
 	{
@@ -43,30 +51,20 @@ public class EmployeeView implements Serializable
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public EmployeeData getEmployeeData()
-	{
-		return employeeData;
-	}
-
 	public void updateEmployee(Employee employee)
 	{
-		employeeData.updateEmployee(employee);
+		getEmployeeData().updateEmployee(employee);
 	}
 
 	public void addEmployee(Employee employee)
 	{
-		employeeData.addEmployee(employee);
+		getEmployeeData().addEmployee(employee);
 	}
 
 	public void deleteEmployee(Employee employee)
 	{
-		employeeData.deleteEmployee(employee);
+		getEmployeeData().deleteEmployee(employee);
 		showMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
-	}
-
-	public void setEmployeeData(EmployeeData employeeData)
-	{
-		this.employeeData = employeeData;
 	}
 
 	public Employee getSelectedEmployee()
@@ -78,4 +76,33 @@ public class EmployeeView implements Serializable
 	{
 		this.selectedEmployee = selectedEmployee;
 	}
+
+	public EmployeeData getEmployeeData()
+	{
+		return employeeData;
+	}
+
+	public void setEmployeeData(EmployeeData employeeData)
+	{
+		this.employeeData = employeeData;
+	}
+
+	public EmployeeModel getEmployeeModel()
+	{
+		if (employeeModel == null)
+		{
+			List<Employee> findAllEmployees = getEmployeeData().findAllEmployees();
+			System.out.println("all employees: " + findAllEmployees.size());
+			EmployeeModel employeeModel2 = new EmployeeModel(findAllEmployees);
+			employeeModel = employeeModel2;
+		}
+
+		return employeeModel;
+	}
+
+	public void setEmployeeModel(EmployeeModel employeeModel)
+	{
+		this.employeeModel = employeeModel;
+	}
+
 }

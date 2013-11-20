@@ -5,14 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-@ManagedBean
-@SessionScoped
 public class VacationEventModel implements ScheduleModel, Serializable
 {
 
