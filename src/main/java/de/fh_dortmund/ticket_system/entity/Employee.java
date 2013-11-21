@@ -1,13 +1,21 @@
 package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+
+import org.hibernate.annotations.Cascade;
 
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
@@ -30,8 +38,8 @@ public class Employee implements Serializable
 	private String city;
 	private int zipcode;
 	private Role role;
-	@ManyToOne
-	private VacationEvent myEvents;
+	
+	private Set<VacationEvent> myEvents;
 
 	public Employee()
 	{
@@ -129,15 +137,28 @@ public class Employee implements Serializable
 		return firstName + " " + lastName;
 	}
 
-	public VacationEvent getMyEvents() {
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable
+	  (
+	     name="vacations",
+	     joinColumns = { @JoinColumn( name="employeeID") },
+	     inverseJoinColumns = { @JoinColumn( name="vacationID") }
+	  )
+	public Set<VacationEvent> getMyEvents() {
 		return myEvents;
 	}
 
-	public void setMyEvents(VacationEvent myEvents) {
+	public void setMyEvents(Set<VacationEvent> myEvents) {
 		this.myEvents = myEvents;
 	}
-
-
+	
+	public void addEvent(VacationEvent event) {
+		this.myEvents.add(event);
+	}
+	
+	public void deleteEvent(VacationEvent event){
+		
+	}
 
 
 }

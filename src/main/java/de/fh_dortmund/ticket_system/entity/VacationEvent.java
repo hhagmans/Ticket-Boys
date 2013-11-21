@@ -5,8 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -33,6 +37,8 @@ public class VacationEvent implements ScheduleEvent, Serializable
 	private String styleClass;
 
 	private boolean editable = true;
+	
+	private Employee employee;
 
 	public VacationEvent(String title, Date startDate, Date endDate)
 	{
@@ -135,6 +141,21 @@ public class VacationEvent implements ScheduleEvent, Serializable
 	public void setEditable(boolean editable)
 	{
 		this.editable = editable;
+	}
+	
+	@ManyToOne
+	@JoinTable
+	  (
+	     name="vacations",
+	     joinColumns = { @JoinColumn( name="vacationID") },
+	     inverseJoinColumns = { @JoinColumn( name="employeeID") }
+	  )
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	@Override

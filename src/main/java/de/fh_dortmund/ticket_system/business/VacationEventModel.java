@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.persistence.VacationEventDAO;
 import de.fh_dortmund.ticket_system.persistence.VacationEventDAOsqlLite;
@@ -30,6 +31,13 @@ public class VacationEventModel implements ScheduleModel, Serializable
 		vacEvent.setId(UUID.randomUUID().toString());
 		
 		vacationEventDAO.addVacationEvent(vacEvent);
+	}
+	
+	public void addEvent(VacationEvent event)
+	{
+		event.setId(UUID.randomUUID().toString());
+		
+		vacationEventDAO.addVacationEvent(event);
 	}
 
 	@Override

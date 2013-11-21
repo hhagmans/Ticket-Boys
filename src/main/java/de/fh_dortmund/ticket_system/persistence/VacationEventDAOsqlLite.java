@@ -11,7 +11,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.util.RightsManager;
 
 public class VacationEventDAOsqlLite extends BaseDAO implements VacationEventDAO, Serializable
 {
@@ -37,9 +39,11 @@ public class VacationEventDAOsqlLite extends BaseDAO implements VacationEventDAO
 	@Override
 	public boolean deleteVacationEvent(VacationEvent vacationEvent)
 	{
+		
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		getEm().remove(vacationEvent);
+		//vacationEvent.getEmployee().
 		tx.commit();
 		return true;
 	}

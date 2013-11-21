@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -18,7 +19,9 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.business.VacationEventModel;
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.util.RightsManager;
 
 @ManagedBean
 @ViewScoped
@@ -27,15 +30,16 @@ public class VacationView implements Serializable
 
 	private static final long	serialVersionUID	= 1L;
 
-	private ScheduleModel		eventModel;
+	private VacationEventModel		eventModel;
 
 	private ScheduleEvent		event				= new VacationEvent();
+	
+	@ManagedProperty("#{rightsManager}")
+	private RightsManager				rightsManager;
 
 	public VacationView()
 	{
-		// TODO: load events from DB via DAO
 		eventModel = new VacationEventModel();
-		eventModel.addEvent(new VacationEvent("Urlaub", someDate(), anotherDate()));
 	}
 
 	private Date someDate()
@@ -99,7 +103,9 @@ public class VacationView implements Serializable
 	{
 		if (event.getId() == null)
 		{
-			eventModel.addEvent(event);
+			VacationEvent vacEvent = (VacationEvent) event;
+			vacEvent.setEmployee(rightsManager.getCurrentUser());
+			eventModel.addEvent(vacEvent);
 		}
 		else
 		{
@@ -109,6 +115,16 @@ public class VacationView implements Serializable
 		event = new VacationEvent();
 	}
 
+	public RightsManager getRightsManager()
+	{
+		return rightsManager;
+	}
+
+	public void setRightsManager(RightsManager rightsManager)
+	{
+		this.rightsManager = rightsManager;
+	}
+	
 	public void onEventSelect(SelectEvent selectEvent)
 	{
 		event = (ScheduleEvent) selectEvent.getObject();
