@@ -8,87 +8,77 @@ import java.util.UUID;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.persistence.VacationEventDAO;
+import de.fh_dortmund.ticket_system.persistence.VacationEventDAOsqlLite;
+
 public class VacationEventModel implements ScheduleModel, Serializable
 {
 
 	private static final long serialVersionUID = 1L;
-	private List<ScheduleEvent> events;
+	private VacationEventDAO vacationEventDAO;
 
 	public VacationEventModel()
 	{
-		events = new ArrayList<ScheduleEvent>();
-	}
-
-	public VacationEventModel(List<ScheduleEvent> events)
-	{
-		this.events = events;
+		vacationEventDAO = new VacationEventDAOsqlLite();
 	}
 
 	@Override
 	public void addEvent(ScheduleEvent event)
 	{
-		event.setId(UUID.randomUUID().toString());
-
-		events.add(event);
+		VacationEvent vacEvent = (VacationEvent) event;
+		vacEvent.setId(UUID.randomUUID().toString());
+		
+		vacationEventDAO.addVacationEvent(vacEvent);
 	}
 
 	@Override
 	public boolean deleteEvent(ScheduleEvent event)
 	{
-		return events.remove(event);
+		VacationEvent vacEvent = (VacationEvent) event;
+		return vacationEventDAO.deleteVacationEvent(vacEvent);
 	}
 
 	@Override
 	public List<ScheduleEvent> getEvents()
 	{
+		List<VacationEvent> vacEvents = vacationEventDAO.findAllVacationEvents();
+		List<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
+		
+		for (VacationEvent vacationEvent : vacEvents) {
+			events.add(vacationEvent);
+		}
 		return events;
 	}
 
 	@Override
 	public ScheduleEvent getEvent(String id)
 	{
-		for (ScheduleEvent event : events)
-		{
-			if (event.getId().equals(id))
-			{
-				return event;
-			}
-		}
-
-		return null;
+		return vacationEventDAO.findVacationEventById(id);
 	}
 
 	@Override
 	public void updateEvent(ScheduleEvent event)
 	{
-		int index = -1;
-
-		for (int i = 0; i < events.size(); i++)
-		{
-			if (events.get(i).getId().equals(event.getId()))
-			{
-				index = i;
-
-				break;
-			}
-		}
-
-		if (index >= 0)
-		{
-			events.set(index, event);
-		}
+		VacationEvent vacEvent = (VacationEvent) event;
+		
+		vacationEventDAO.updateVacationEvent(vacEvent);
 	}
 
 	@Override
 	public int getEventCount()
 	{
+		List<VacationEvent> events = vacationEventDAO.findAllVacationEvents();
 		return events.size();
 	}
 
 	@Override
 	public void clear()
 	{
-		events = new ArrayList<ScheduleEvent>();
+		List<VacationEvent> events = vacationEventDAO.findAllVacationEvents();
+		for (VacationEvent vacationEvent : events) {
+			vacationEventDAO.deleteVacationEvent(vacationEvent);
+		}
 	}
 
 }

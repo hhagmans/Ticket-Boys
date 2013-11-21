@@ -13,7 +13,7 @@ public interface VacationEventDAO
 
 	public void updateVacationEvent(VacationEvent vacationEvent);
 
-	public void deleteVacationEvent(VacationEvent vacationEvent);
+	public boolean deleteVacationEvent(VacationEvent vacationEvent);
 
 	public void addVacationEvent(VacationEvent vacationEvent);
 

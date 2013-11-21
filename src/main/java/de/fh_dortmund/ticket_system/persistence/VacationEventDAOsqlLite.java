@@ -35,12 +35,13 @@ public class VacationEventDAOsqlLite extends BaseDAO implements VacationEventDAO
 	}
 
 	@Override
-	public void deleteVacationEvent(VacationEvent vacationEvent)
+	public boolean deleteVacationEvent(VacationEvent vacationEvent)
 	{
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		getEm().remove(vacationEvent);
 		tx.commit();
+		return true;
 	}
 
 	@Override
