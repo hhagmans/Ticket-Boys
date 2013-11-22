@@ -132,7 +132,12 @@ public class VacationView implements Serializable
 
 	public void onDateSelect(SelectEvent selectEvent)
 	{
-		event = new VacationEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+		Date selectedDate = (Date) selectEvent.getObject();
+		Calendar c = Calendar.getInstance();
+		c.setTime(selectedDate);
+		c.add(Calendar.DATE, 1);
+		selectedDate = c.getTime();
+		event = new VacationEvent("", selectedDate, selectedDate);
 	}
 
 	public void onEventMove(ScheduleEntryMoveEvent event)
