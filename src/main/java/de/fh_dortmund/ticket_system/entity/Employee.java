@@ -39,6 +39,7 @@ public class Employee implements Serializable
 	private int zipcode;
 	private Role role;
 	private int score;
+	private int vacationCount;
 
 	private Set<VacationEvent> myEvents;
 
@@ -137,6 +138,22 @@ public class Employee implements Serializable
 		this.score--;
 	}
 
+	public int getVacationCount() {
+		return vacationCount;
+	}
+
+	public void setVacationCount(int vacationCount) {
+		this.vacationCount = vacationCount;
+	}
+	
+	public void incrementVacationCouint(int value) {
+		this.vacationCount += value;
+	}
+	
+	public void decrementVacationCouint(int value) {
+		this.vacationCount -= value;
+	}
+	
 	public Employee(String konzernID, String firstName, String lastName, String city, int zipcode, Role role)
 	{
 		this.konzernID = konzernID;
@@ -146,6 +163,7 @@ public class Employee implements Serializable
 		this.zipcode = zipcode;
 		this.role = role;
 		this.score = 0;
+		this.vacationCount = 0;
 	}
 
 	@javax.persistence.Transient

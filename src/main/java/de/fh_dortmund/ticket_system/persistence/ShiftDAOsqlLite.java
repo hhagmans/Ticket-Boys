@@ -40,6 +40,9 @@ public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		getEm().remove(shift);
+		Employee emp = shift.getDispatcher();
+		emp.decrementScore();
+		getEm().merge(emp);
 		tx.commit();
 	}
 
