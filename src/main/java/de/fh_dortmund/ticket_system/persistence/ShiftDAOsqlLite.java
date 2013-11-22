@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
 public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
@@ -48,6 +49,9 @@ public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		getEm().persist(newShift);
+		Employee emp = newShift.getDispatcher();
+		emp.incrementScore();
+		getEm().merge(emp);
 		tx.commit();
 	}
 
