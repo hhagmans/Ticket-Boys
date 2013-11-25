@@ -18,7 +18,7 @@ public class RightsManager implements Serializable
 	private static final long	serialVersionUID	= 3813512294586726838L;
 
 	@ManagedProperty("#{auth}")
-	private static Authentication		auth;
+	private Authentication		auth;
 
 	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2)
 	{
@@ -39,12 +39,12 @@ public class RightsManager implements Serializable
 		return false;
 	}
 	
-	public static Employee getCurrentUser(){
+	public Employee getCurrentUser(){
 		
 		return getAuth().getEmployee();
 	}
 
-	public static Authentication getAuth()
+	public Authentication getAuth()
 	{
 		return auth;
 	}

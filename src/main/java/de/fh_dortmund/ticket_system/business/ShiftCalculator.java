@@ -52,7 +52,7 @@ public class ShiftCalculator
 		return shifts;
 	}
 
-	public static List<Shift> getDispatcherShifts()
+	public List<Shift> getDispatcherShifts()
 	{
 		List<Shift> shifts = new ArrayList<Shift>();
 
