@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.persistence.VacationEventDAO;
 import de.fh_dortmund.ticket_system.persistence.VacationEventDAOsqlLite;
