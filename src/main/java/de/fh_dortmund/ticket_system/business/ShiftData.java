@@ -73,4 +73,14 @@ public class ShiftData implements Serializable
 	{
 		return shiftDAO.findAllShifts();
 	}
+	
+	public Shift findShiftByWeekNumber(int weekNumber) {
+		List<Shift> findAllShifts = findAllShifts();
+		
+	for (Shift shift : findAllShifts) {
+		if(shift.getWeekNumber()==weekNumber)
+			return shift;
+	}
+	return null;
+	}
 }
