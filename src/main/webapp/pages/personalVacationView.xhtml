@@ -39,7 +39,7 @@
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
             </p:inputMask>  
   
-            <p:commandButton type="reset" value="Zurücksetzen" />  
+            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{vacationView.deleteEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
             <p:commandButton id="addButton" value="Speichern" actionListener="#{vacationView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
         </h:panelGrid>  
     </p:dialog>  

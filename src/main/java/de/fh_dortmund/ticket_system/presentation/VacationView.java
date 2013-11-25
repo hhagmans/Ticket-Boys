@@ -114,6 +114,20 @@ public class VacationView implements Serializable
 
 		event = new VacationEvent();
 	}
+	
+	public void deleteEvent(ActionEvent actionEvent)
+	{
+		if (eventModel.getEvent(event.getId()) == null)
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis nicht vorhanden", "Ereignis nicht vorhanden und daher nicht löschbar.");
+
+			addMessage(message);
+		}
+		else
+		{
+			eventModel.deleteEvent(event);
+		}
+	}
 
 	public RightsManager getRightsManager()
 	{
