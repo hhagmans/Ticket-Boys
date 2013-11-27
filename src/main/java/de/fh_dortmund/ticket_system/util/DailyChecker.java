@@ -23,27 +23,35 @@ public class DailyChecker
 	
 	static GregorianCalendar cal = new GregorianCalendar();
 	static int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
+	static int currentyear = cal.get(GregorianCalendar.YEAR);
 	
 	
 	public static Employee getLatestEmployee(ShiftData shiftData) {
 		Employee latestEmployee = null;
-		List<Shift> shifts = shiftData.findAllShifts();
-		for (int i=0; i<shifts.size(); i++) {
-			if (shifts.get(i).getWeekNumber() == currentweek+2) {
-				latestEmployee = shifts.get(i).getDispatcher();
-			}
+		if (currentweek > 50) {
+			currentweek = currentweek - 50;
+			currentyear++;
 		}
+		else {
+			currentweek = currentweek + 2;
+		}
+		String currentRowKey = currentyear + "-" + currentweek;
+		System.out.println(currentRowKey);
+		latestEmployee = shiftData.findShiftByID(currentRowKey).getDispatcher();
 		return latestEmployee;
 	}
 	
 	public static int getLatestKW(ShiftData shiftData) {
 		int latestKW = 0;
-		List<Shift> shifts = shiftData.findAllShifts();
-		for (int i=0; i<shifts.size(); i++) {
-			if (shifts.get(i).getWeekNumber() == currentweek+2) {
-				latestKW = shifts.get(i).getWeekNumber();
-			}
+		if (currentweek > 50) {
+			currentweek = currentweek - 50;
+			currentyear++;
 		}
+		else {
+			currentweek = currentweek + 2;
+		}
+		String currentRowKey = currentyear + "-" + currentweek;
+		latestKW = shiftData.findShiftByID(currentRowKey).getWeekNumber();
 		return latestKW;
 	}
 	
