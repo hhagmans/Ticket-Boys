@@ -25,7 +25,7 @@ public class ShiftData implements Serializable
 
 	private static final long	serialVersionUID	= 1L;
 
-	private ShiftDAO			shiftDAO;
+	private static ShiftDAO			shiftDAO;
 
 	public ShiftData()
 	{
@@ -69,7 +69,7 @@ public class ShiftData implements Serializable
 		shiftDAO.addShift(shift);
 	}
 
-	public List<Shift> findAllShifts()
+	public static List<Shift> findAllShifts()
 	{
 		return shiftDAO.findAllShifts();
 	}
