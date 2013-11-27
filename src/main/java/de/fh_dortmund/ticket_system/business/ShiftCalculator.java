@@ -16,7 +16,6 @@ import de.fh_dortmund.ticket_system.entity.Shift;
  * @author Ticket-Boys
  * 
  */
-
 @ManagedBean
 public class ShiftCalculator
 {
@@ -64,18 +63,7 @@ public class ShiftCalculator
 		return shifts;
 	}
 
-	public List<Shift> getDispatcherShifts()
-	{
-		List<Shift> shifts = new ArrayList<Shift>();
-
-		return shifts;
-
-	}
-
 	public ShiftCalculator()
 	{
-
 	}
-	
-	
 }
