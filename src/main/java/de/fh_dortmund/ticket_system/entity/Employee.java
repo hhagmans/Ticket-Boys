@@ -5,17 +5,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
-
-import org.hibernate.annotations.Cascade;
 
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
@@ -29,18 +25,18 @@ import org.hibernate.annotations.Cascade;
 public class Employee implements Serializable
 {
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private String konzernID;
-	private String firstName;
-	private String lastName;
-	private String city;
-	private int zipcode;
-	private Role role;
-	private int score;
-	private int vacationCount;
+	private String				konzernID;
+	private String				firstName;
+	private String				lastName;
+	private String				city;
+	private int					zipcode;
+	private Role				role;
+	private int					score;
+	private int					vacationCount;
 
-	private Set<VacationEvent> myEvents;
+	private Set<VacationEvent>	myEvents;
 
 	public Employee()
 	{
@@ -120,39 +116,47 @@ public class Employee implements Serializable
 	{
 		this.role = role;
 	}
-	
-	public int getScore() {
+
+	public int getScore()
+	{
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(int score)
+	{
 		this.score = score;
 	}
-	
-	public void incrementScore(){
+
+	public void incrementScore()
+	{
 		this.score++;
 	}
-	
-	public void decrementScore(){
+
+	public void decrementScore()
+	{
 		this.score--;
 	}
 
-	public int getVacationCount() {
+	public int getVacationCount()
+	{
 		return vacationCount;
 	}
 
-	public void setVacationCount(int vacationCount) {
+	public void setVacationCount(int vacationCount)
+	{
 		this.vacationCount = vacationCount;
 	}
-	
-	public void incrementVacationCouint(int value) {
+
+	public void incrementVacationCouint(int value)
+	{
 		this.vacationCount += value;
 	}
-	
-	public void decrementVacationCouint(int value) {
+
+	public void decrementVacationCouint(int value)
+	{
 		this.vacationCount -= value;
 	}
-	
+
 	public Employee(String konzernID, String firstName, String lastName, String city, int zipcode, Role role)
 	{
 		this.konzernID = konzernID;
@@ -172,27 +176,27 @@ public class Employee implements Serializable
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable
-	  (
-	     name="vacations",
-	     joinColumns = { @JoinColumn( name="employeeID") },
-	     inverseJoinColumns = { @JoinColumn( name="vacationID") }
-	  )
-	public Set<VacationEvent> getMyEvents() {
+	@JoinTable(name = "vacations", joinColumns =
+	{ @JoinColumn(name = "employeeID") }, inverseJoinColumns =
+	{ @JoinColumn(name = "vacationID") })
+	public Set<VacationEvent> getMyEvents()
+	{
 		return myEvents;
 	}
 
-	public void setMyEvents(Set<VacationEvent> myEvents) {
+	public void setMyEvents(Set<VacationEvent> myEvents)
+	{
 		this.myEvents = myEvents;
 	}
-	
-	public void addEvent(VacationEvent event) {
+
+	public void addEvent(VacationEvent event)
+	{
 		this.myEvents.add(event);
 	}
-	
-	public void deleteEvent(VacationEvent event){
-		
-	}
 
+	public void deleteEvent(VacationEvent event)
+	{
+
+	}
 
 }

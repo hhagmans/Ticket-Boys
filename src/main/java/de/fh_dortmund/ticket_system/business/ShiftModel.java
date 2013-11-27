@@ -25,11 +25,11 @@ public class ShiftModel extends ListDataModel<Shift> implements SelectableDataMo
 
 		List<Shift> Shifts = (List<Shift>) getWrappedData();
 
-		for (Shift Shift : Shifts)
+		for (Shift shift : Shifts)
 		{
-			if (Shift.getUniqueRowKey().equals(rowKey))
+			if (shift.getUniqueRowKey().equals(rowKey))
 			{
-				return Shift;
+				return shift;
 			}
 		}
 

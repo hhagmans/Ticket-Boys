@@ -18,16 +18,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "shift")
+@NamedQueries(
+{ @NamedQuery(name = "findByDispatcher", query = "SELECT c FROM Shift c WHERE c.dispatcher = :dispatcher") })
 public class Shift implements Serializable
 {
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private int year;
-	private int weekNumber;
-	private Employee dispatcher;
-	private Employee substitutioner;
-	private String uniqueRowKey;
+	private int					year;
+	private int					weekNumber;
+	private Employee			dispatcher;
+	private Employee			substitutioner;
+	private String				uniqueRowKey;
 
 	public Shift()
 	{
@@ -183,17 +185,17 @@ public class Shift implements Serializable
 		return true;
 	}
 
-	//	@Override
-	//	public boolean equals(Object obj)
-	//	{
-	//		if (obj instanceof Shift)
-	//		{
-	//			Shift shift = (Shift) obj;
+	// @Override
+	// public boolean equals(Object obj)
+	// {
+	// if (obj instanceof Shift)
+	// {
+	// Shift shift = (Shift) obj;
 	//
-	//			return shift.getUniqueRowKey().equals(this.getUniqueRowKey());
+	// return shift.getUniqueRowKey().equals(this.getUniqueRowKey());
 	//
-	//		}
-	//		return false;
-	//	}
+	// }
+	// return false;
+	// }
 
 }

@@ -18,6 +18,7 @@ public abstract class BaseDaoSqlite<T> implements BaseDao<T>
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public Class<T> getEntityBeanTyp()
 	{
 		return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
@@ -41,7 +42,6 @@ public abstract class BaseDaoSqlite<T> implements BaseDao<T>
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T findById(String id)
 	{
 		T emp = getEm().find(getEntityBeanTyp(), id);
@@ -66,6 +66,7 @@ public abstract class BaseDaoSqlite<T> implements BaseDao<T>
 		tx.commit();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll()
 	{

@@ -25,11 +25,11 @@ public class EmployeeModel extends ListDataModel<Employee> implements Selectable
 
 		List<Employee> Employees = (List<Employee>) getWrappedData();
 		System.out.println("Employees isnull?" + Employees != null);
-		for (Employee Employee : Employees)
+		for (Employee employee : Employees)
 		{
-			if (Employee.getKonzernID().equals(rowKey))
+			if (employee.getKonzernID().equals(rowKey))
 			{
-				return Employee;
+				return employee;
 			}
 		}
 

@@ -96,4 +96,11 @@ public class ShiftDaoTestImpl implements ShiftDao, Serializable
 	{
 		return findAllShifts();
 	}
+
+	@Override
+	public List<Shift> findByEmployee(Employee employee)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

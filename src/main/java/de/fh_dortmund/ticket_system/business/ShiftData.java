@@ -9,10 +9,9 @@ import javax.faces.bean.ManagedBean;
 import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
-import de.fh_dortmund.ticket_system.persistence.ShiftDaoTestImpl;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
+import de.fh_dortmund.ticket_system.persistence.ShiftDaoTestImpl;
 
 /**
  * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
@@ -25,6 +24,8 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 @ApplicationScoped
 public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 {
+	private static final long	serialVersionUID	= -5407101199319373331L;
+
 	public ShiftData()
 	{
 		dao = new ShiftDaoSqlite();
@@ -59,4 +60,8 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 		return null;
 	}
 
+	public List<Shift> findShiftByEmployee(Employee employee)
+	{
+		return dao.findByEmployee(employee);
+	}
 }

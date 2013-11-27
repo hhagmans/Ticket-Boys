@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
@@ -51,5 +52,12 @@ public class ShiftDaoSqlite extends BaseDaoSqlite<Shift> implements ShiftDao, Se
 	{
 		Shift shift = getEm().find(Shift.class, id);
 		return shift;
+	}
+
+	@Override
+	public List<Shift> findByEmployee(Employee employee)
+	{
+		Query setParameter = getEm().createNamedQuery("findByDispatcher").setParameter("dispatcher", employee);
+		return (List<Shift>) setParameter.getResultList();
 	}
 }
