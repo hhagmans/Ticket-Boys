@@ -99,7 +99,7 @@ public class DispatcherView implements Serializable
 
 	private void updateShifts(Shift shift0)
 	{
-		shiftData.updateShift(shift0);
+		shiftData.update(shift0);
 	}
 
 	public List<Shift> getSelectedShifts()
@@ -142,7 +142,7 @@ public class DispatcherView implements Serializable
 	public ShiftModel getShiftModel()
 	{
 		if (shiftModel == null)
-			setShiftModel(new ShiftModel(shiftData.findAllShifts()));
+			setShiftModel(new ShiftModel(shiftData.findAll()));
 
 		return shiftModel;
 	}

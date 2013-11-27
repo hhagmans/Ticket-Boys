@@ -53,17 +53,17 @@ public class EmployeeView implements Serializable
 
 	public void updateEmployee(Employee employee)
 	{
-		getEmployeeData().updateEmployee(employee);
+		getEmployeeData().update(employee);
 	}
 
 	public void addEmployee(Employee employee)
 	{
-		getEmployeeData().addEmployee(employee);
+		getEmployeeData().add(employee);
 	}
 
 	public void deleteEmployee(Employee employee)
 	{
-		getEmployeeData().deleteEmployee(employee);
+		getEmployeeData().delete(employee);
 		showMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
 	}
 
@@ -91,7 +91,7 @@ public class EmployeeView implements Serializable
 	{
 		if (employeeModel == null)
 		{
-			List<Employee> findAllEmployees = getEmployeeData().findAllEmployees();
+			List<Employee> findAllEmployees = getEmployeeData().findAll();
 			System.out.println("all employees: " + findAllEmployees.size());
 			EmployeeModel employeeModel2 = new EmployeeModel(findAllEmployees);
 			employeeModel = employeeModel2;

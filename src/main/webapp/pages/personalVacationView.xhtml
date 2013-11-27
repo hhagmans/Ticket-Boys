@@ -16,6 +16,8 @@
   
     <p:growl id="messages" showDetail="true" />  
   
+  <p:panel id="panel" header="Eigene Abwesenheiten">  
+  
     <p:schedule id="schedule" value="#{personalVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
   
         <p:ajax event="dateSelect" listener="#{personalVacationView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
@@ -24,7 +26,7 @@
         <p:ajax event="eventResize" listener="#{personalVacationView.onEventResize}" update="messages" />  
   
     </p:schedule>  
-    
+    </p:panel>    
     <script type="text/javascript">  
     PrimeFaces.locales['de'] = {  
         closeText: 'close',  

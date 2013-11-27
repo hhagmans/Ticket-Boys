@@ -15,12 +15,14 @@
 	<h:form id="form">  
   
     <p:growl id="messages" showDetail="true" />  
-  
-    <p:schedule id="schedule" draggable="false" value="#{teamVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
-  
+
+	
+  <p:panel id="panel" header="Team-Abwesenheiten" style="background-color: #9a1d85;">  
+    <p:schedule id="schedule"  draggable="false" value="#{teamVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
+  	
         <p:ajax event="eventSelect" listener="#{teamVacationView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
     </p:schedule>  
-    
+    </p:panel>
     <script type="text/javascript">  
     PrimeFaces.locales['de'] = {  
         closeText: 'close',  

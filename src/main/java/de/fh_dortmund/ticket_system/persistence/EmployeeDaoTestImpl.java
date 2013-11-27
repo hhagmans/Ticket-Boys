@@ -12,16 +12,14 @@ import com.google.gson.reflect.TypeToken;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
+public class EmployeeDaoTestImpl implements EmployeeDao, Serializable
 {
-	private static final long serialVersionUID = 1L;
-	
-	private ArrayList<Employee> database = (ArrayList<Employee>) getDatabase();
+	private static final long	serialVersionUID	= 1L;
 
-	@Override
+	private ArrayList<Employee>	database			= (ArrayList<Employee>) getDatabase();
+
 	public List<Employee> findAllEmployees()
 	{
-
 		return database;
 	}
 
@@ -51,30 +49,37 @@ public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
 	}
 
 	@Override
-	public void updateEmployee(Employee employee)
+	public void update(Employee employee)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deleteEmployee(Employee employee)
+	public void delete(Employee employee)
 	{
 		database.remove(employee);
 
 	}
 
 	@Override
-	public void addEmployee(Employee employee)
+	public void add(Employee employee)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Employee findEmployeeById(String id) {
+	public Employee findById(String id)
+	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Employee> findAll()
+	{
+		return findAllEmployees();
 	}
 
 }

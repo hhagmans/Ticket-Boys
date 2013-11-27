@@ -3,30 +3,18 @@ package de.fh_dortmund.ticket_system.persistence;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
+import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
-public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
+public class ShiftDaoSqlite extends BaseDaoSqlite<Shift> implements ShiftDao, Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
 	@Override
-	public List<Shift> findAllShifts()
-	{
-		List<Shift> resultList = getEm().createNamedQuery("Shift.findAll", Shift.class).getResultList();
-		return resultList;
-	}
-
-	@Override
-	public void updateShift(Shift shift)
+	public void update(Shift shift)
 	{
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
@@ -35,7 +23,7 @@ public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
 	}
 
 	@Override
-	public void deleteShift(Shift shift)
+	public void delete(Shift shift)
 	{
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
@@ -47,7 +35,7 @@ public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
 	}
 
 	@Override
-	public void addShift(Shift newShift)
+	public void add(Shift newShift)
 	{
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
@@ -59,7 +47,7 @@ public class ShiftDAOsqlLite extends BaseDAO implements ShiftDAO, Serializable
 	}
 
 	@Override
-	public Shift findShiftById(String id)
+	public Shift findById(String id)
 	{
 		Shift shift = getEm().find(Shift.class, id);
 		return shift;

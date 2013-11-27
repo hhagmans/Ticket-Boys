@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
+import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAOTestImpl;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDaoTestImpl;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
 
 /**
  * Diese Klasse speichert und verwaltet alle bekannten Benutzer
@@ -21,57 +21,29 @@ import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
 
 @ManagedBean
 @ApplicationScoped
-public class EmployeeData implements Serializable
+public class EmployeeData extends BaseData<Employee, EmployeeDao> implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
-	private EmployeeDAO			employeeDAO;
-
 	public EmployeeData()
 	{
-		employeeDAO = new EmployeeDAOsqlLite();
+		dao = new EmployeeDaoSqlite();
 
 		addStuff();
 	}
 
 	private void addStuff()
 	{
-		EmployeeDAO employeeDAOtemp = new EmployeeDAOTestImpl();
+		EmployeeDao employeeDAOtemp = new EmployeeDaoTestImpl();
 
-		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
+		List<Employee> allEmployees = employeeDAOtemp.findAll();
 
 		for (Employee employee : allEmployees)
 		{
-			if (!employee.equals(employeeDAO.findEmployeeById(employee.getKonzernID())))
-				addEmployee(employee);
+			if (!employee.equals(dao.findById(employee.getKonzernID())))
+				dao.add(employee);
 		}
 
 		System.out.println("Employees added " + allEmployees.size());
-	}
-
-	public Employee findEmployeeByID(String konzernID)
-	{
-		Employee employee = employeeDAO.findEmployeeById(konzernID);
-		return employee;
-	}
-
-	public void updateEmployee(Employee employee)
-	{
-		employeeDAO.updateEmployee(employee);
-	}
-
-	public void deleteEmployee(Employee employee)
-	{
-		employeeDAO.deleteEmployee(employee);
-	}
-
-	public void addEmployee(Employee employee)
-	{
-		employeeDAO.addEmployee(employee);
-	}
-
-	public List<Employee> findAllEmployees()
-	{
-		return employeeDAO.findAllEmployees();
 	}
 }

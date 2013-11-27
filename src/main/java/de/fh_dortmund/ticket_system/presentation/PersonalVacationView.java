@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -18,8 +17,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import de.fh_dortmund.ticket_system.business.VacationEventModel;
-import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
@@ -30,7 +28,7 @@ public class PersonalVacationView implements Serializable
 
 	private static final long	serialVersionUID	= 1L;
 
-	private VacationEventModel		eventModel;
+	private PersonalVacationEventModel		eventModel;
 
 	private ScheduleEvent		event				= new VacationEvent();
 	
@@ -39,24 +37,7 @@ public class PersonalVacationView implements Serializable
 
 	public PersonalVacationView()
 	{
-		eventModel = new VacationEventModel();
-	}
-
-	private Date someDate()
-	{
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-
-		return t.getTime();
-	}
-
-	private Date anotherDate()
-	{
-
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.DATE, t.get(Calendar.DATE));
-
-		return t.getTime();
+		eventModel = new PersonalVacationEventModel();
 	}
 
 	public Date getRandomDate(Date base)
