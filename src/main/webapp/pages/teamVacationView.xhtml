@@ -8,7 +8,7 @@
 	<h:outputScript library="js" name="common.js" />
 	
 	
-	<ui:param name="title" value="Urlaub" />
+	<ui:param name="title" value="Team-Abwesenheiten" />
 
 	<ui:define name="content">
 	
@@ -16,13 +16,9 @@
   
     <p:growl id="messages" showDetail="true" />  
   
-    <p:schedule id="schedule" value="#{vacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
+    <p:schedule id="schedule" draggable="false" value="#{teamVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
   
-        <p:ajax event="dateSelect" listener="#{vacationView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
-        <p:ajax event="eventSelect" listener="#{vacationView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
-        <p:ajax event="eventMove" listener="#{vacationView.onEventMove}" update="messages" />  
-        <p:ajax event="eventResize" listener="#{vacationView.onEventResize}" update="messages" />  
-  
+        <p:ajax event="eventSelect" listener="#{teamVacationView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
     </p:schedule>  
     
     <script type="text/javascript">  
@@ -53,21 +49,17 @@
   
     <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
         <h:panelGrid id="eventDetails" columns="2">  
-            <h:outputLabel for="title" value="Titel:" />  
-            <p:inputText id="title" value="#{vacationView.event.title}" required="true"/>  
-  
+
+            <h:outputLabel for="title" value="Titel:" /> 
+            <p:outputLabel id="title" value="#{teamVacationView.event.title}"/> 
             <h:outputLabel for="from" value="Von:" />  
-            <p:inputMask id="from" value="#{vacationView.event.startDate}" mask="99/99/9999">  
+            <p:outputLabel id="from" value="#{teamVacationView.event.startDate}"> 
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
-            </p:inputMask>  
-  
+                </p:outputLabel>
             <h:outputLabel for="to" value="Bis:" />  
-            <p:inputMask id="to" value="#{vacationView.event.endDate}" mask="99/99/9999">  
+            <p:outputLabel id="to" value="#{teamVacationView.event.endDate}"> 
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
-            </p:inputMask>  
-  
-            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{vacationView.deleteEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
-            <p:commandButton id="addButton" value="Speichern" actionListener="#{vacationView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
+                </p:outputLabel>
         </h:panelGrid>  
     </p:dialog>  
   

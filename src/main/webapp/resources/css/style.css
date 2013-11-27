@@ -62,6 +62,12 @@ body {
 	background-image: none;
 }
 
+.vacation, .urlaub .fc-event-skin, .urlaub a{
+    background-color: green;
+    color: black;
+    border-color: greenyellow;
+}
+
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
     background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)) repeat scroll 0 0 #85B2CB;
     border: 1px solid #7096AB;
