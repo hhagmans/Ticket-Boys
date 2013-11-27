@@ -1,6 +1,8 @@
 package de.fh_dortmund.ticket_system.presentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -26,6 +28,8 @@ import de.fh_dortmund.ticket_system.util.RightsManager;
 @ViewScoped
 public class DispatcherView implements Serializable
 {
+	private static final Calendar CALENDAR = Calendar.getInstance();
+
 	private static final long	serialVersionUID	= 1L;
 
 	@ManagedProperty("#{shiftData}")
@@ -127,9 +131,32 @@ public class DispatcherView implements Serializable
 	public ShiftModel getShiftModel()
 	{
 		if (shiftModel == null)
-			setShiftModel(new ShiftModel(shiftData.findAll()));
+			setShiftModel(new ShiftModel(findUpcomingShifts()));
 
 		return shiftModel;
+	}
+
+	/**
+	 * Returns a {@link List} of all upcoming {@link Shift}s, i.e. (year, week) after today.
+	 * 
+	 * @return a {@link List} of all upcoming {@link Shift}s
+	 */
+	private List<Shift> findUpcomingShifts() {
+		int currentYear = CALENDAR.get(Calendar.YEAR);
+		int currentWeekNumber = CALENDAR.get(Calendar.WEEK_OF_YEAR);
+
+		List<Shift> upcoming = new ArrayList<Shift>();
+		
+		for (Shift shift : shiftData.findAll()) {
+			int year = shift.getYear();
+			int weekNumber = shift.getWeekNumber();
+			
+			if (year > currentYear || year == currentYear && weekNumber >= currentWeekNumber) {
+				upcoming.add(shift);
+			}
+		}
+		
+		return upcoming;
 	}
 
 	public void setShiftModel(ShiftModel shiftModel)
