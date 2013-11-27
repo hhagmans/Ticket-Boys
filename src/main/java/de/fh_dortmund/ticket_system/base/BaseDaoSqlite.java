@@ -8,12 +8,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public abstract class BaseDAOSqlite<T> implements BaseDao<T>
+public abstract class BaseDaoSqlite<T> implements BaseDao<T>
 {
 	protected static EntityManagerFactory	emf	= Persistence.createEntityManagerFactory("sqlite");
 	private static EntityManager			em;
 
-	protected BaseDAOSqlite()
+	protected BaseDaoSqlite()
 	{
 
 	}

@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.persistence.EntityTransaction;
 
-import de.fh_dortmund.ticket_system.base.BaseDAOSqlite;
+import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
-public class VacationEventDaoSqlite extends BaseDAOSqlite<VacationEvent> implements VacationEventDao, Serializable
+public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent> implements VacationEventDao, Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
