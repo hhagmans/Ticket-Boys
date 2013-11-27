@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.util;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.faces.bean.ManagedProperty;
 
@@ -24,27 +25,29 @@ public class DailyChecker
 	@ManagedProperty("#{EmailUtil}")
 	static EmailUtil emailUtil;
 	
+	static GregorianCalendar cal = new GregorianCalendar();
+	static int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
+	
 	
 	public static Employee getLatestEmployee() {
-		Shift latestShift = null;
 		Employee latestEmployee = null;
-		GregorianCalendar cal = new GregorianCalendar();
-		int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
-		latestShift = shiftData.findShiftByWeekNumber(currentweek+2);
-		latestEmployee = latestShift.getDispatcher();
+		List<Shift> shifts = ShiftData.findAllShifts();
+		for (int i=0; i<shifts.size(); i++) {
+			if (shifts.get(i).getWeekNumber() == currentweek+2) {
+				latestEmployee = shifts.get(i).getDispatcher();
+			}
+		}
 		return latestEmployee;
 	}
 	
 	public static int getLatestKW() {
 		int latestKW = 0;
-//		GregorianCalendar cal = new GregorianCalendar();
-//		int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
-//		currentweek = StringUtils.leftPad(currentweek, 2, "0");
-//		for (int i=0; i<shiftData.findAllShifts().size(); i++) {
-//			if (currentweek == (shiftData.findAllShifts().get(i).getWeekNumber() +2)) {
-//				latestKW = shiftData.findAllShifts().get(i).getWeekNumber();
-//			}
-//		}
+		List<Shift> shifts = ShiftData.findAllShifts();
+		for (int i=0; i<shifts.size(); i++) {
+			if (shifts.get(i).getWeekNumber() == currentweek+2) {
+				latestKW = shifts.get(i).getWeekNumber();
+			}
+		}
 		return latestKW;
 	}
 	
