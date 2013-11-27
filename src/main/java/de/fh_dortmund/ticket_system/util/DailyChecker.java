@@ -36,7 +36,6 @@ public class DailyChecker
 			currentweek = currentweek + 2;
 		}
 		String currentRowKey = currentyear + "-" + currentweek;
-		System.out.println(currentRowKey);
 		latestEmployee = shiftData.findShiftByID(currentRowKey).getDispatcher();
 		return latestEmployee;
 	}
