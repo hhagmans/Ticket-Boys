@@ -18,7 +18,6 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
-import de.fh_dortmund.ticket_system.business.VacationEventModel;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
