@@ -15,6 +15,7 @@ import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.business.ShiftModel;
 import de.fh_dortmund.ticket_system.entity.Shift;
+import de.fh_dortmund.ticket_system.util.DailyChecker;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
 /**
