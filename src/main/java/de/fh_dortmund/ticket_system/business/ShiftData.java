@@ -9,10 +9,10 @@ import javax.faces.bean.ManagedBean;
 import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
-import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
-import de.fh_dortmund.ticket_system.persistence.ShiftDAOTestImpl;
-import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
+import de.fh_dortmund.ticket_system.persistence.ShiftDao;
+import de.fh_dortmund.ticket_system.persistence.ShiftDaoTestImpl;
+import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 
 /**
  * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
@@ -23,17 +23,17 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
 
 @ManagedBean
 @ApplicationScoped
-public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
+public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 {
 	public ShiftData()
 	{
-		dao = new ShiftDAOsqlLite();
+		dao = new ShiftDaoSqlite();
 		fill();
 	}
 
 	public void fill()
 	{
-		ShiftDAO shiftDAOtemp = new ShiftDAOTestImpl();
+		ShiftDao shiftDAOtemp = new ShiftDaoTestImpl();
 
 		List<Shift> allshifts = shiftDAOtemp.findAll();
 

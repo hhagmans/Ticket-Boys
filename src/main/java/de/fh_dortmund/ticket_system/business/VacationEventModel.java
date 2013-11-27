@@ -13,22 +13,22 @@ import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDAO;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDAOsqlLite;
+import de.fh_dortmund.ticket_system.persistence.VacationEventDao;
+import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
 public class VacationEventModel implements ScheduleModel, Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
-	private VacationEventDAO	vacationEventDAO;
+	private VacationEventDao	vacationEventDAO;
 
 	@ManagedProperty("auth")
 	private Authentication		auth;
 
 	public VacationEventModel()
 	{
-		vacationEventDAO = new VacationEventDAOsqlLite();
+		vacationEventDAO = new VacationEventDaoSqlite();
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import de.fh_dortmund.ticket_system.base.BaseDAOSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
-public class ShiftDAOsqlLite extends BaseDAOSqlite<Shift> implements ShiftDAO, Serializable
+public class ShiftDaoSqlite extends BaseDAOSqlite<Shift> implements ShiftDao, Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 

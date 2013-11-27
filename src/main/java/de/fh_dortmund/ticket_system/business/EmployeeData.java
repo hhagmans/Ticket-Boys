@@ -8,9 +8,9 @@ import javax.faces.bean.ManagedBean;
 
 import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAOTestImpl;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDaoTestImpl;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
 
 /**
  * Diese Klasse speichert und verwaltet alle bekannten Benutzer
@@ -21,20 +21,20 @@ import de.fh_dortmund.ticket_system.persistence.EmployeeDAOsqlLite;
 
 @ManagedBean
 @ApplicationScoped
-public class EmployeeData extends BaseData<Employee, EmployeeDAO> implements Serializable
+public class EmployeeData extends BaseData<Employee, EmployeeDao> implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
 	public EmployeeData()
 	{
-		dao = new EmployeeDAOsqlLite();
+		dao = new EmployeeDaoSqlite();
 
 		addStuff();
 	}
 
 	private void addStuff()
 	{
-		EmployeeDAO employeeDAOtemp = new EmployeeDAOTestImpl();
+		EmployeeDao employeeDAOtemp = new EmployeeDaoTestImpl();
 
 		List<Employee> allEmployees = employeeDAOtemp.findAll();
 

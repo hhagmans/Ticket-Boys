@@ -4,29 +4,46 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.fh_dortmund.ticket_system.business.ShiftCalculator;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Shift;
 
-public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
+@ManagedBean
+@ApplicationScoped
+public class ShiftDaoTestImpl implements ShiftDao, Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
-	private ArrayList<Employee>	database			= (ArrayList<Employee>) getDatabase();
-
-	public List<Employee> findAllEmployees()
-	{
-		return database;
-	}
-
-	private List<Employee> getDatabase()
+	public List<Shift> findAllShifts()
 	{
 		List<Employee> empList = null;
 
+		empList = getEmployeeList();
+
+		// Verteilen der Employees auf die 52 "Shifts"
+		if (empList != null)
+		{
+
+			ShiftCalculator sh = new ShiftCalculator();
+
+			return sh.generateDispatcherList(empList);
+		}
+
+		return null;
+
+	}
+
+	private List<Employee> getEmployeeList()
+	{
+		List<Employee> empList;
 		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
@@ -49,37 +66,34 @@ public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
 	}
 
 	@Override
-	public void update(Employee employee)
+	public void update(Shift shift)
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void delete(Shift shift)
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void add(Shift newShift)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete(Employee employee)
-	{
-		database.remove(employee);
-
-	}
-
-	@Override
-	public void add(Employee employee)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Employee findById(String id)
+	public Shift findById(String id)
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Employee> findAll()
+	public List<Shift> findAll()
 	{
-		return findAllEmployees();
+		return findAllShifts();
 	}
-
 }
