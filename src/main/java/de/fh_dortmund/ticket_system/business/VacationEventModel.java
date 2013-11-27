@@ -1,106 +1,73 @@
 package de.fh_dortmund.ticket_system.business;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-import javax.faces.bean.ManagedProperty;
-
 import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
 
-import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDao;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
-import de.fh_dortmund.ticket_system.util.RightsManager;
 
-public class VacationEventModel implements ScheduleModel, Serializable
-{
+public class VacationEventModel extends PersonalVacationEventModel {
 
-	private static final long	serialVersionUID	= 1L;
-	private VacationEventDao	vacationEventDAO;
+	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty("auth")
-	private Authentication		auth;
-
-	public VacationEventModel()
-	{
-		vacationEventDAO = new VacationEventDaoSqlite();
+	public VacationEventModel() {
+		super();
 	}
 
 	@Override
-	public void addEvent(ScheduleEvent event)
-	{
+	public List<ScheduleEvent> getEvents() {
+		return new ArrayList<ScheduleEvent>(super.getData().findAll());
+	}
+
+	public void addEvent(ScheduleEvent event) {
 		VacationEvent vacEvent = (VacationEvent) event;
 		vacEvent.setId(UUID.randomUUID().toString());
 
-		vacationEventDAO.add(vacEvent);
+		getData().add(vacEvent);
 	}
 
-	public void addEvent(VacationEvent event)
-	{
+	public void addEvent(VacationEvent event) {
 		event.setId(UUID.randomUUID().toString());
 
-		vacationEventDAO.add(event);
+		getData().add(event);
 	}
 
 	@Override
-	public boolean deleteEvent(ScheduleEvent event)
-	{
+	public boolean deleteEvent(ScheduleEvent event) {
 		VacationEvent vacEvent = (VacationEvent) event;
-		vacationEventDAO.delete(vacEvent);
+		getData().delete(vacEvent);
 		return true;
 	}
 
 	@Override
-	public List<ScheduleEvent> getEvents()
-	{
-		List<VacationEvent> vacEvents = vacationEventDAO.findAll();
-		List<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
-
-		for (VacationEvent vacationEvent : vacEvents)
-		{
-			events.add(vacationEvent);
-		}
-		return events;
+	public ScheduleEvent getEvent(String id) {
+		return getData().findByID(id);
 	}
 
 	@Override
-	public ScheduleEvent getEvent(String id)
-	{
-		return vacationEventDAO.findById(id);
-	}
-
-	@Override
-	public void updateEvent(ScheduleEvent event)
-	{
+	public void updateEvent(ScheduleEvent event) {
 		VacationEvent vacEvent = (VacationEvent) event;
 
-		vacationEventDAO.update(vacEvent);
+		getData().update(vacEvent);
 	}
 
 	@Override
-	public int getEventCount()
-	{
-		List<VacationEvent> events = vacationEventDAO.findAll();
+	public int getEventCount() {
+		List<VacationEvent> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
-	public void clear()
-	{
-		List<VacationEvent> events = vacationEventDAO.findAll();
-		for (VacationEvent vacationEvent : events)
-		{
-			vacationEventDAO.delete(vacationEvent);
+	public void clear() {
+		List<VacationEvent> events = getData().findAll();
+		for (VacationEvent vacationEvent : events) {
+			getData().delete(vacationEvent);
 		}
 	}
 
-	public List<ScheduleEvent> getEventsForCurrentUser()
-	{
-		return new ArrayList<ScheduleEvent>(auth.getEmployee().getMyEvents());
+	public List<ScheduleEvent> getEventsForCurrentUser() {
+		return new ArrayList<ScheduleEvent>(super.getAuth().getEmployee().getMyEvents());
 	}
 }

@@ -17,9 +17,9 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
-import de.fh_dortmund.ticket_system.business.VacationEventModel;
+import de.fh_dortmund.ticket_system.authentication.Authentication;
+import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.util.RightsManager;
 
 @ManagedBean
 @ViewScoped
@@ -27,34 +27,18 @@ public class PersonalVacationView implements Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
-
-	private VacationEventModel		eventModel;
+	
+	@ManagedProperty("#{auth}")
+	private
+	Authentication auth;
+	
+	private PersonalVacationEventModel		eventModel;
 
 	private ScheduleEvent		event				= new VacationEvent();
 	
-	@ManagedProperty("#{rightsManager}")
-	private RightsManager				rightsManager;
-
 	public PersonalVacationView()
 	{
-		eventModel = new VacationEventModel();
-	}
-
-	private Date someDate()
-	{
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-
-		return t.getTime();
-	}
-
-	private Date anotherDate()
-	{
-
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.DATE, t.get(Calendar.DATE));
-
-		return t.getTime();
+		setEventModel(new PersonalVacationEventModel());
 	}
 
 	public Date getRandomDate(Date base)
@@ -102,12 +86,12 @@ public class PersonalVacationView implements Serializable
 		if (event.getId() == null)
 		{
 			VacationEvent vacEvent = (VacationEvent) event;
-			vacEvent.setEmployee(rightsManager.getCurrentUser());
-			eventModel.addEvent(vacEvent);
+			vacEvent.setEmployee(getAuth().getEmployee());
+			getEventModel().addEvent(vacEvent);
 		}
 		else
 		{
-			eventModel.updateEvent(event);
+			getEventModel().updateEvent(event);
 		}
 
 		event = new VacationEvent();
@@ -115,7 +99,7 @@ public class PersonalVacationView implements Serializable
 	
 	public void deleteEvent(ActionEvent actionEvent)
 	{
-		if (eventModel.getEvent(event.getId()) == null)
+		if (getEventModel().getEvent(event.getId()) == null)
 		{
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis nicht vorhanden", "Ereignis nicht vorhanden und daher nicht löschbar.");
 
@@ -123,20 +107,10 @@ public class PersonalVacationView implements Serializable
 		}
 		else
 		{
-			eventModel.deleteEvent(event);
+			getEventModel().deleteEvent(event);
 		}
 	}
 
-	public RightsManager getRightsManager()
-	{
-		return rightsManager;
-	}
-
-	public void setRightsManager(RightsManager rightsManager)
-	{
-		this.rightsManager = rightsManager;
-	}
-	
 	public void onEventSelect(SelectEvent selectEvent)
 	{
 		event = (ScheduleEvent) selectEvent.getObject();
@@ -167,5 +141,17 @@ public class PersonalVacationView implements Serializable
 	private void addMessage(FacesMessage message)
 	{
 		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
+	public Authentication getAuth() {
+		return auth;
+	}
+
+	public void setAuth(Authentication auth) {
+		this.auth = auth;
+	}
+
+	public void setEventModel(PersonalVacationEventModel eventModel) {
+		this.eventModel = eventModel;
 	}
 }
