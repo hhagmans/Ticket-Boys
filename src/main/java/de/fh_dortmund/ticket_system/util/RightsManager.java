@@ -39,11 +39,6 @@ public class RightsManager implements Serializable
 		return false;
 	}
 	
-	public Employee getCurrentUser(){
-		
-		return getAuth().getEmployee();
-	}
-
 	public Authentication getAuth()
 	{
 		return auth;

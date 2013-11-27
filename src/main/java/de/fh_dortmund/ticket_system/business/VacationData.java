@@ -21,9 +21,4 @@ public class VacationData extends BaseData<VacationEvent, VacationEventDao> impl
 	{
 		dao = new VacationEventDaoSqlite();
 	}
-
-	public List<VacationEvent> findAllVacationEvents()
-	{
-		return dao.findAll();
-	}
 }

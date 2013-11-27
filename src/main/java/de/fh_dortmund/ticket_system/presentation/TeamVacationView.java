@@ -7,19 +7,14 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.business.VacationEventModel;
-import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
@@ -34,9 +29,6 @@ public class TeamVacationView implements Serializable
 
 	private ScheduleEvent		event				= new VacationEvent();
 	
-	@ManagedProperty("#{rightsManager}")
-	private RightsManager				rightsManager;
-
 	public TeamVacationView()
 	{
 		eventModel = new VacationEventModel();
@@ -82,16 +74,6 @@ public class TeamVacationView implements Serializable
 		this.event = event;
 	}
 
-	public RightsManager getRightsManager()
-	{
-		return rightsManager;
-	}
-
-	public void setRightsManager(RightsManager rightsManager)
-	{
-		this.rightsManager = rightsManager;
-	}
-	
 	public void onEventSelect(SelectEvent selectEvent)
 	{
 		event = (ScheduleEvent) selectEvent.getObject();

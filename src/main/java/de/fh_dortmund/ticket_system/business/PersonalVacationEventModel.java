@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.faces.bean.ManagedProperty;
@@ -12,16 +13,19 @@ import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
 
 public class PersonalVacationEventModel implements ScheduleModel, Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty("auth")
+	@ManagedProperty("#{auth}")
 	private Authentication auth;
-	private VacationEventDaoSqlite dao = new VacationEventDaoSqlite();
+	
+	
+	@ManagedProperty("#{vacationData}")
+	private
+	VacationData data;
 	
 	public PersonalVacationEventModel()
 	{
@@ -34,20 +38,20 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 		VacationEvent vacEvent = (VacationEvent) event;
 		vacEvent.setId(UUID.randomUUID().toString());
 		
-		getDao().add(vacEvent);
+		getData().add(vacEvent);
 	}
 	
 	public void addEvent(VacationEvent event)
 	{
 		event.setId(UUID.randomUUID().toString());
 		
-		getDao().add(event);
+		getData().add(event);
 	}
 
 	public boolean deleteEvent(ScheduleEvent event)
 	{
 		VacationEvent vacEvent = (VacationEvent) event;
-		getDao().delete(vacEvent);
+		getData().delete(vacEvent);
 		//FIXME Return true... 
 		return true;
 	}
@@ -55,13 +59,21 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 	@Override
 	public List<ScheduleEvent> getEvents()
 	{
-		return new ArrayList<ScheduleEvent>(auth.getEmployee().getMyEvents());
+		Set<VacationEvent> myEvents = getAuth().getEmployee().getMyEvents();
+		ArrayList<ScheduleEvent> arrayList;
+		if(myEvents!=null){
+			arrayList = new ArrayList<ScheduleEvent>(myEvents);
+		}
+		else {
+			arrayList = new ArrayList<ScheduleEvent>();
+		}
+		return arrayList;
 	}
 
 	@Override
 	public ScheduleEvent getEvent(String id)
 	{
-		return getDao().findById(id);
+		return getData().findByID(id);
 	}
 
 	@Override
@@ -69,31 +81,39 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 	{
 		VacationEvent vacEvent = (VacationEvent) event;
 		
-		getDao().update(vacEvent);
+		getData().update(vacEvent);
 	}
 
 	@Override
 	public int getEventCount()
 	{
-		List<VacationEvent> events = getDao().findAll();
+		List<VacationEvent> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
 	public void clear()
 	{
-		List<VacationEvent> events = getDao().findAll();
+		List<VacationEvent> events = getData().findAll();
 		for (VacationEvent vacationEvent : events) {
-			getDao().delete(vacationEvent);
+			getData().delete(vacationEvent);
 		}
 	}
 
-	public VacationEventDaoSqlite getDao() {
-		return dao;
+	public VacationData getData() {
+		return data;
 	}
 
-	public void setDao(VacationEventDaoSqlite dao) {
-		this.dao = dao;
+	public void setData(VacationData data) {
+		this.data = data;
+	}
+
+	public Authentication getAuth() {
+		return auth;
+	}
+
+	public void setAuth(Authentication auth) {
+		this.auth = auth;
 	}
 	
 }
