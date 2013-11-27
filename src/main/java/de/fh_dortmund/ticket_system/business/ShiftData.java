@@ -69,7 +69,7 @@ public class ShiftData implements Serializable
 		shiftDAO.addShift(shift);
 	}
 
-	public static List<Shift> findAllShifts()
+	public List<Shift> findAllShifts()
 	{
 		return shiftDAO.findAllShifts();
 	}

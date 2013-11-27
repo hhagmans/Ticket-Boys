@@ -17,11 +17,7 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.util.*;
 
 public class DailyChecker
-{
-
-	@ManagedProperty("#{ShiftData}")
-	static ShiftData shiftData;
-	
+{	
 	@ManagedProperty("#{EmailUtil}")
 	static EmailUtil emailUtil;
 	
@@ -29,9 +25,9 @@ public class DailyChecker
 	static int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
 	
 	
-	public static Employee getLatestEmployee() {
+	public static Employee getLatestEmployee(ShiftData shiftData) {
 		Employee latestEmployee = null;
-		List<Shift> shifts = ShiftData.findAllShifts();
+		List<Shift> shifts = shiftData.findAllShifts();
 		for (int i=0; i<shifts.size(); i++) {
 			if (shifts.get(i).getWeekNumber() == currentweek+2) {
 				latestEmployee = shifts.get(i).getDispatcher();
@@ -40,9 +36,9 @@ public class DailyChecker
 		return latestEmployee;
 	}
 	
-	public static int getLatestKW() {
+	public static int getLatestKW(ShiftData shiftData) {
 		int latestKW = 0;
-		List<Shift> shifts = ShiftData.findAllShifts();
+		List<Shift> shifts = shiftData.findAllShifts();
 		for (int i=0; i<shifts.size(); i++) {
 			if (shifts.get(i).getWeekNumber() == currentweek+2) {
 				latestKW = shifts.get(i).getWeekNumber();
@@ -51,7 +47,7 @@ public class DailyChecker
 		return latestKW;
 	}
 	
-	public static void check()
+	public static void check(ShiftData shiftData)
 	{
 		/**
 		try
@@ -64,7 +60,9 @@ public class DailyChecker
 			scheduler.start();
 			*/
 			try {
-				EmailUtil.sendEmail("ticketboys1337@gmail.com");
+				String msg = "Hallo " + getLatestEmployee(shiftData).getFullName() + ",\n\n"
+						+ "Sie sind in KW " + getLatestKW(shiftData) + " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
+				EmailUtil.sendEmail(msg, "ticketboys1337@gmail.com");
 			} catch (EmailException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

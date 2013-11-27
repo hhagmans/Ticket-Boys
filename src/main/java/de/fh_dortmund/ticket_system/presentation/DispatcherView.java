@@ -89,7 +89,7 @@ public class DispatcherView implements Serializable
 		
 //		test email sending
 		try {
-			DailyChecker.check();
+			DailyChecker.check(getShiftData());
 			showMessage("Email versendet","");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
