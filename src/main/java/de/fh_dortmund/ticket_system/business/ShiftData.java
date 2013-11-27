@@ -11,7 +11,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
-import de.fh_dortmund.ticket_system.persistence.ShiftDaoTestImpl;
+import de.fh_dortmund.ticket_system.persistence.ShiftDaoTestdataProvider;
 
 /**
  * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
@@ -34,9 +34,8 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 
 	public void fill()
 	{
-		ShiftDao shiftDAOtemp = new ShiftDaoTestImpl();
-
-		List<Shift> allshifts = shiftDAOtemp.findAll();
+		ShiftDaoTestdataProvider dataProvider = new ShiftDaoTestdataProvider();
+		List<Shift> allshifts = dataProvider.findAllShifts();
 
 		if (dao.findAll().isEmpty())
 		{

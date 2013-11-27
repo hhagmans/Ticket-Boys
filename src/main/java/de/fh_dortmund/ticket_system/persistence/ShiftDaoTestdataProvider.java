@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -18,12 +19,9 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
-@ManagedBean
-@ApplicationScoped
-public class ShiftDaoTestImpl implements ShiftDao, Serializable
+public class ShiftDaoTestdataProvider
 {
-	private static final long	serialVersionUID	= 1L;
-
+	
 	/**
 	 * Fetches the list of dispatchers (employees with role =
 	 * {@link Role#dispatcher}). Calculates the shifts for those dispatchers
@@ -64,13 +62,21 @@ public class ShiftDaoTestImpl implements ShiftDao, Serializable
 		return dispatchers;
 	}
 
+	/**
+	 * Reads the list of employees from the file /test/UserList.json.
+	 * 
+	 * @return list of employees
+	 */
 	private List<Employee> getEmployeeList()
 	{
 		List<Employee> empList;
+
 		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
-		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+		@SuppressWarnings("resource") // XXX
+		java.util.Scanner s = new Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
+		
 		try
 		{
 			is.close();
@@ -81,49 +87,10 @@ public class ShiftDaoTestImpl implements ShiftDao, Serializable
 		}
 
 		// Serialisieren in eine Liste von Employees
-		Type type = new TypeToken<List<Employee>>()
-		{
-		}.getType();
+		Type type = new TypeToken<List<Employee>>(){}.getType();
 		empList = new Gson().fromJson(json, type);
+		
 		return empList;
 	}
 
-	@Override
-	public void update(Shift shift)
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void delete(Shift shift)
-	{
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void add(Shift newShift)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Shift findById(String id)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Shift> findAll()
-	{
-		return findAllShifts();
-	}
-
-	@Override
-	public List<Shift> findByEmployee(Employee employee)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
