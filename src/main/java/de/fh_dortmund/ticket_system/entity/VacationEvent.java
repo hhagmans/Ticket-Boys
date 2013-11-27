@@ -39,6 +39,8 @@ public class VacationEvent implements ScheduleEvent, Serializable
 	private boolean editable = true;
 	
 	private Employee employee;
+	
+	private VacationType vacationType;
 
 	public VacationEvent(String title, Date startDate, Date endDate)
 	{

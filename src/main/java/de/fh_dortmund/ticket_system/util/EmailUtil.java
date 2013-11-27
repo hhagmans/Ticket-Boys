@@ -19,11 +19,9 @@ public class EmailUtil
 	public static final String USERNAME = "ticketboys1337@gmail.com";
 	public static final String PASSWORD = "ticketboysevonik";
 	public static final String SUBJECT = "Ihr Dispatcher-Einsatz steht bevor";
-	public static String msg = "Hallo " + "testname" /** DailyChecker.getLatestEmployee().getFullName() */ + ",\n\n"
-		+ "Sie sind in KW " + DailyChecker.getLatestKW() + " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
 
 	
-	public static Email sendEmail(String... to) throws EmailException
+	public static Email sendEmail(String msg, String... to) throws EmailException
 	{
 		return sendEmailWithSubject(SUBJECT, msg, to);
 	}

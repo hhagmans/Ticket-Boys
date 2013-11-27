@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.util;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.faces.bean.ManagedProperty;
 
@@ -16,39 +17,44 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.util.*;
 
 public class DailyChecker
-{
-
-	@ManagedProperty("#{ShiftData}")
-	static ShiftData shiftData;
-	
+{	
 	@ManagedProperty("#{EmailUtil}")
 	static EmailUtil emailUtil;
 	
+	static GregorianCalendar cal = new GregorianCalendar();
+	static int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
+	static int currentyear = cal.get(GregorianCalendar.YEAR);
 	
-	public static Employee getLatestEmployee() {
-		Shift latestShift = null;
+	
+	public static Employee getLatestEmployee(ShiftData shiftData) {
 		Employee latestEmployee = null;
-		GregorianCalendar cal = new GregorianCalendar();
-		int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
-		latestShift = shiftData.findShiftByWeekNumber(currentweek+2);
-		latestEmployee = latestShift.getDispatcher();
+		if (currentweek > 50) {
+			currentweek = currentweek - 50;
+			currentyear++;
+		}
+		else {
+			currentweek = currentweek + 2;
+		}
+		String currentRowKey = currentyear + "-" + currentweek;
+		latestEmployee = shiftData.findByID(currentRowKey).getDispatcher();
 		return latestEmployee;
 	}
 	
-	public static int getLatestKW() {
+	public static int getLatestKW(ShiftData shiftData) {
 		int latestKW = 0;
-//		GregorianCalendar cal = new GregorianCalendar();
-//		int currentweek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
-//		currentweek = StringUtils.leftPad(currentweek, 2, "0");
-//		for (int i=0; i<shiftData.findAllShifts().size(); i++) {
-//			if (currentweek == (shiftData.findAllShifts().get(i).getWeekNumber() +2)) {
-//				latestKW = shiftData.findAllShifts().get(i).getWeekNumber();
-//			}
-//		}
+		if (currentweek > 50) {
+			currentweek = currentweek - 50;
+			currentyear++;
+		}
+		else {
+			currentweek = currentweek + 2;
+		}
+		String currentRowKey = currentyear + "-" + currentweek;
+		latestKW = shiftData.findByID(currentRowKey).getWeekNumber();
 		return latestKW;
 	}
 	
-	public static void check()
+	public static void check(ShiftData shiftData)
 	{
 		/**
 		try
@@ -61,7 +67,9 @@ public class DailyChecker
 			scheduler.start();
 			*/
 			try {
-				EmailUtil.sendEmail("ticketboys1337@gmail.com");
+				String msg = "Hallo " + getLatestEmployee(shiftData).getFullName() + ",\n\n"
+						+ "Sie sind in KW " + getLatestKW(shiftData) + " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
+				EmailUtil.sendEmail(msg, "ticketboys1337@gmail.com");
 			} catch (EmailException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

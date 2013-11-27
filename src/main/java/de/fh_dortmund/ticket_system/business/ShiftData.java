@@ -25,9 +25,6 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
 @ApplicationScoped
 public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
 {
-
-	private static final long	serialVersionUID	= 1L;
-
 	public ShiftData()
 	{
 		dao = new ShiftDAOsqlLite();
@@ -66,4 +63,5 @@ public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
 		}
 		return null;
 	}
+	
 }
