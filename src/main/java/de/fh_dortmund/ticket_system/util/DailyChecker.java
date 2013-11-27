@@ -28,28 +28,32 @@ public class DailyChecker
 	
 	public static Employee getLatestEmployee(ShiftData shiftData) {
 		Employee latestEmployee = null;
-		if (currentweek > 50) {
-			currentweek = currentweek - 50;
-			currentyear++;
+		int calcweek = currentweek;
+		int calcyear = currentyear;
+		if (calcweek > 50) {
+			calcweek = calcweek - 50;
+			calcyear++;
 		}
 		else {
-			currentweek = currentweek + 2;
+			calcweek = calcweek + 2;
 		}
-		String currentRowKey = currentyear + "-" + currentweek;
+		String currentRowKey = calcweek + "-" + calcweek;
 		latestEmployee = shiftData.findByID(currentRowKey).getDispatcher();
 		return latestEmployee;
 	}
 	
 	public static int getLatestKW(ShiftData shiftData) {
 		int latestKW = 0;
-		if (currentweek > 50) {
-			currentweek = currentweek - 50;
-			currentyear++;
+		int calcweek = currentweek;
+		int calcyear = currentyear;
+		if (calcweek > 50) {
+			calcweek = calcweek - 50;
+			calcyear++;
 		}
 		else {
-			currentweek = currentweek + 2;
+			calcweek = calcweek + 2;
 		}
-		String currentRowKey = currentyear + "-" + currentweek;
+		String currentRowKey = calcweek + "-" + calcweek;
 		latestKW = shiftData.findByID(currentRowKey).getWeekNumber();
 		return latestKW;
 	}
