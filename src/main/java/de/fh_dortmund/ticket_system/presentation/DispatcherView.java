@@ -1,24 +1,21 @@
 package de.fh_dortmund.ticket_system.presentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.mail.EmailException;
-
-import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.business.ShiftModel;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.util.DailyChecker;
-import de.fh_dortmund.ticket_system.util.EmailUtil;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
 /**
@@ -31,6 +28,8 @@ import de.fh_dortmund.ticket_system.util.RightsManager;
 @ViewScoped
 public class DispatcherView implements Serializable
 {
+	private static final Calendar CALENDAR = Calendar.getInstance();
+
 	private static final long	serialVersionUID	= 1L;
 
 	@ManagedProperty("#{shiftData}")
@@ -40,8 +39,7 @@ public class DispatcherView implements Serializable
 	EmployeeData				employeeData;
 
 	@ManagedProperty("#{rightsManager}")
-	private
-	RightsManager				rightsManager;
+	private RightsManager		rightsManager;
 
 	private ShiftModel			shiftModel;
 
@@ -86,20 +84,11 @@ public class DispatcherView implements Serializable
 
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
 				+ " wurden getauscht!");
-		
-//		test email sending
-		try {
-			DailyChecker.check(getShiftData());
-			showMessage("Email versendet","");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			showMessage(e.getMessage(), "fehler");
-		}
 	}
 
-	private void updateShifts(Shift shift0)
+	private void updateShifts(Shift shift)
 	{
-		shiftData.update(shift0);
+		shiftData.update(shift);
 	}
 
 	public List<Shift> getSelectedShifts()
@@ -142,9 +131,32 @@ public class DispatcherView implements Serializable
 	public ShiftModel getShiftModel()
 	{
 		if (shiftModel == null)
-			setShiftModel(new ShiftModel(shiftData.findAll()));
+			setShiftModel(new ShiftModel(findUpcomingShifts()));
 
 		return shiftModel;
+	}
+
+	/**
+	 * Returns a {@link List} of all upcoming {@link Shift}s, i.e. (year, week) after today.
+	 * 
+	 * @return a {@link List} of all upcoming {@link Shift}s
+	 */
+	private List<Shift> findUpcomingShifts() {
+		int currentYear = CALENDAR.get(Calendar.YEAR);
+		int currentWeekNumber = CALENDAR.get(Calendar.WEEK_OF_YEAR);
+
+		List<Shift> upcoming = new ArrayList<Shift>();
+		
+		for (Shift shift : shiftData.findAll()) {
+			int year = shift.getYear();
+			int weekNumber = shift.getWeekNumber();
+			
+			if (year > currentYear || year == currentYear && weekNumber >= currentWeekNumber) {
+				upcoming.add(shift);
+			}
+		}
+		
+		return upcoming;
 	}
 
 	public void setShiftModel(ShiftModel shiftModel)

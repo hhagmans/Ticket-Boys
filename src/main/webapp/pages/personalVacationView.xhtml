@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ui:composition template="/template/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -77,3 +78,82 @@
 	</ui:define>
 
 </ui:composition>
+=======
+<ui:composition template="/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:outputScript library="js" name="common.js" />
+	
+	
+	<ui:param name="title" value="Eigene Abwesenheiten" />
+
+	<ui:define name="content">
+	
+	<h:form id="form">  
+  
+    <p:growl id="messages" showDetail="true" />  
+  
+    <p:schedule id="schedule" value="#{personalVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
+  
+        <p:ajax event="dateSelect" listener="#{personalVacationView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
+        <p:ajax event="eventSelect" listener="#{personalVacationView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
+        <p:ajax event="eventMove" listener="#{personalVacationView.onEventMove}" update="messages" />  
+        <p:ajax event="eventResize" listener="#{personalVacationView.onEventResize}" update="messages" />  
+  
+    </p:schedule>  
+    
+    <script type="text/javascript">  
+    PrimeFaces.locales['de'] = {  
+        closeText: 'close',  
+        prevText: 'vorheriger',  
+        nextText: 'nächster',  
+        currentText: 'heute',  
+        monthNames: ['Januar','Februar','März','April','Mai','Juni',  
+        'Juli','August','September','Oktober','November','Dezember'],  
+        monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',  
+        'Jul','Aug','Sep','Okt','Nov','Dez'],  
+        dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],  
+        dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],  
+        dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],  
+        weekHeader: '',  
+        firstDay: 1,  
+        isRTL: false,  
+        showMonthAfterYear: false,  	
+        yearSuffix: '',  
+        month: 'Monat',  
+        week: 'Woche',  
+        day: 'Tag',  
+        allDayText : 'Ganztägig'  
+    };  
+</script> 
+    
+  
+    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">  
+        <h:panelGrid id="eventDetails" columns="2">  
+            <h:outputLabel for="title" value="Titel:" />  
+            <p:inputText id="title" value="#{personalVacationView.event.title}" required="true"/>  
+  
+            <h:outputLabel for="from" value="Von:" />  
+            <p:inputMask id="from" value="#{personalVacationView.event.startDate}" mask="99/99/9999">  
+                <f:convertDateTime pattern="dd/MM/yyyy" />  
+            </p:inputMask>  
+  
+            <h:outputLabel for="to" value="Bis:" />  
+            <p:inputMask id="to" value="#{personalVacationView.event.endDate}" mask="99/99/9999">  
+                <f:convertDateTime pattern="dd/MM/yyyy" />  
+            </p:inputMask>  
+  
+            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
+            <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
+        </h:panelGrid>  
+    </p:dialog>  
+  
+</h:form> 
+	</ui:define>
+
+</ui:composition>
+>>>>>>> branch 'master' of https://github.com/hhagmans/Ticket-Boys.git

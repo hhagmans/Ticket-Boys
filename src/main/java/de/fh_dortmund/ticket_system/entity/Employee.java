@@ -26,7 +26,6 @@ import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "employee")
-@NamedQueries({ @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e") })
 public class Employee implements Serializable
 {
 

@@ -18,7 +18,6 @@ import org.primefaces.model.ScheduleEvent;
 
 @Entity
 @Table(name = "vacationEvent")
-@NamedQueries({ @NamedQuery(name = "VacationEvent.findAll", query = "SELECT v FROM VacationEvent v") })
 public class VacationEvent implements ScheduleEvent, Serializable
 {
 
