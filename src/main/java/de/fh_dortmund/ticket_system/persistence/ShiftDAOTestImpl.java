@@ -22,7 +22,6 @@ public class ShiftDAOTestImpl implements ShiftDAO, Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
-	@Override
 	public List<Shift> findAllShifts()
 	{
 		List<Employee> empList = null;
@@ -90,5 +89,11 @@ public class ShiftDAOTestImpl implements ShiftDAO, Serializable
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Shift> findAll()
+	{
+		return findAllShifts();
 	}
 }

@@ -36,7 +36,7 @@ public class EmployeeData extends BaseData<Employee, EmployeeDAO> implements Ser
 	{
 		EmployeeDAO employeeDAOtemp = new EmployeeDAOTestImpl();
 
-		List<Employee> allEmployees = employeeDAOtemp.findAllEmployees();
+		List<Employee> allEmployees = employeeDAOtemp.findAll();
 
 		for (Employee employee : allEmployees)
 		{
@@ -45,10 +45,5 @@ public class EmployeeData extends BaseData<Employee, EmployeeDAO> implements Ser
 		}
 
 		System.out.println("Employees added " + allEmployees.size());
-	}
-
-	public List<Employee> findAllEmployees()
-	{
-		return dao.findAllEmployees();
 	}
 }

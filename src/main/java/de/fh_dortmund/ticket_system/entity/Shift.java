@@ -18,7 +18,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "shift")
-@NamedQueries({ @NamedQuery(name = "Shift.findAll", query = "SELECT s FROM Shift s") })
 public class Shift implements Serializable
 {
 

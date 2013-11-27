@@ -91,7 +91,7 @@ public class EmployeeView implements Serializable
 	{
 		if (employeeModel == null)
 		{
-			List<Employee> findAllEmployees = getEmployeeData().findAllEmployees();
+			List<Employee> findAllEmployees = getEmployeeData().findAll();
 			System.out.println("all employees: " + findAllEmployees.size());
 			EmployeeModel employeeModel2 = new EmployeeModel(findAllEmployees);
 			employeeModel = employeeModel2;

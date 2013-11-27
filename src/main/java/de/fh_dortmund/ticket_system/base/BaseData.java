@@ -1,5 +1,6 @@
 package de.fh_dortmund.ticket_system.base;
 
+import java.util.List;
 
 public class BaseData<Entity, Dao extends BaseDao<Entity>>
 {
@@ -24,5 +25,10 @@ public class BaseData<Entity, Dao extends BaseDao<Entity>>
 	public void add(Entity t)
 	{
 		dao.add(t);
+	}
+
+	public List<Entity> findAll()
+	{
+		return dao.findAll();
 	}
 }

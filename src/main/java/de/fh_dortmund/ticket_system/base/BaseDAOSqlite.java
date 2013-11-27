@@ -1,7 +1,7 @@
 package de.fh_dortmund.ticket_system.base;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,6 +16,11 @@ public abstract class BaseDAOSqlite<T> implements BaseDao<T>
 	protected BaseDAOSqlite()
 	{
 
+	}
+
+	public Class<T> getEntityBeanTyp()
+	{
+		return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 	}
 
 	public static EntityManager getEm()
@@ -39,9 +44,7 @@ public abstract class BaseDAOSqlite<T> implements BaseDao<T>
 	@SuppressWarnings("unchecked")
 	public T findById(String id)
 	{
-		Class<T> clazz = ((Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-
-		T emp = getEm().find(clazz, id);
+		T emp = getEm().find(getEntityBeanTyp(), id);
 		return emp;
 	}
 
@@ -61,5 +64,11 @@ public abstract class BaseDAOSqlite<T> implements BaseDao<T>
 		tx.begin();
 		getEm().remove(t);
 		tx.commit();
+	}
+
+	@Override
+	public List<T> findAll()
+	{
+		return getEm().createQuery("from " + getEntityBeanTyp().getName()).getResultList();
 	}
 }

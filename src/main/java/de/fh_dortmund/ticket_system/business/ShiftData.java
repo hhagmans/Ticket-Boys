@@ -35,9 +35,9 @@ public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
 	{
 		ShiftDAO shiftDAOtemp = new ShiftDAOTestImpl();
 
-		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
+		List<Shift> allshifts = shiftDAOtemp.findAll();
 
-		if (dao.findAllShifts().isEmpty())
+		if (dao.findAll().isEmpty())
 		{
 			for (Shift shift : allshifts)
 			{
@@ -47,14 +47,9 @@ public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
 		}
 	}
 
-	public List<Shift> findAllShifts()
-	{
-		return dao.findAllShifts();
-	}
-
 	public Shift findShiftByWeekNumber(int weekNumber)
 	{
-		List<Shift> findAllShifts = findAllShifts();
+		List<Shift> findAllShifts = findAll();
 
 		for (Shift shift : findAllShifts)
 		{
@@ -63,5 +58,5 @@ public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
 		}
 		return null;
 	}
-	
+
 }

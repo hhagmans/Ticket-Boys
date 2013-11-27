@@ -127,7 +127,7 @@ public class DispatcherView implements Serializable
 	public ShiftModel getShiftModel()
 	{
 		if (shiftModel == null)
-			setShiftModel(new ShiftModel(shiftData.findAllShifts()));
+			setShiftModel(new ShiftModel(shiftData.findAll()));
 
 		return shiftModel;
 	}

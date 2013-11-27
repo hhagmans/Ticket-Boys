@@ -24,8 +24,8 @@ public class VacationEventModel implements ScheduleModel, Serializable
 	private VacationEventDAO	vacationEventDAO;
 
 	@ManagedProperty("auth")
-	private Authentication auth;
-	
+	private Authentication		auth;
+
 	public VacationEventModel()
 	{
 		vacationEventDAO = new VacationEventDAOsqlLite();
@@ -58,7 +58,7 @@ public class VacationEventModel implements ScheduleModel, Serializable
 	@Override
 	public List<ScheduleEvent> getEvents()
 	{
-		List<VacationEvent> vacEvents = vacationEventDAO.findAllVacationEvents();
+		List<VacationEvent> vacEvents = vacationEventDAO.findAll();
 		List<ScheduleEvent> events = new ArrayList<ScheduleEvent>();
 
 		for (VacationEvent vacationEvent : vacEvents)
@@ -85,20 +85,20 @@ public class VacationEventModel implements ScheduleModel, Serializable
 	@Override
 	public int getEventCount()
 	{
-		List<VacationEvent> events = vacationEventDAO.findAllVacationEvents();
+		List<VacationEvent> events = vacationEventDAO.findAll();
 		return events.size();
 	}
 
 	@Override
 	public void clear()
 	{
-		List<VacationEvent> events = vacationEventDAO.findAllVacationEvents();
+		List<VacationEvent> events = vacationEventDAO.findAll();
 		for (VacationEvent vacationEvent : events)
 		{
 			vacationEventDAO.delete(vacationEvent);
 		}
 	}
-	
+
 	public List<ScheduleEvent> getEventsForCurrentUser()
 	{
 		return new ArrayList<ScheduleEvent>(auth.getEmployee().getMyEvents());

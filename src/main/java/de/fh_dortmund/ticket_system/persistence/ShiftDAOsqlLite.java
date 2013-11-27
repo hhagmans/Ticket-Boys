@@ -14,7 +14,7 @@ public class ShiftDAOsqlLite extends BaseDAOSqlite<Shift> implements ShiftDAO, S
 	private static final long	serialVersionUID	= 1L;
 
 	@Override
-	public List<Shift> findAllShifts()
+	public List<Shift> findAll()
 	{
 		List<Shift> resultList = getEm().createNamedQuery("Shift.findAll", Shift.class).getResultList();
 		return resultList;

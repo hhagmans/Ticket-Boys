@@ -24,6 +24,6 @@ public class VacationData extends BaseData<VacationEvent, VacationEventDAO> impl
 
 	public List<VacationEvent> findAllVacationEvents()
 	{
-		return dao.findAllVacationEvents();
+		return dao.findAll();
 	}
 }

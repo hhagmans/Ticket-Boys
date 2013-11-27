@@ -18,10 +18,8 @@ public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
 
 	private ArrayList<Employee>	database			= (ArrayList<Employee>) getDatabase();
 
-	@Override
 	public List<Employee> findAllEmployees()
 	{
-
 		return database;
 	}
 
@@ -76,6 +74,12 @@ public class EmployeeDAOTestImpl implements EmployeeDAO, Serializable
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Employee> findAll()
+	{
+		return findAllEmployees();
 	}
 
 }

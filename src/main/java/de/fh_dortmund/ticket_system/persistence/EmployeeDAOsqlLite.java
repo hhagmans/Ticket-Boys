@@ -14,13 +14,6 @@ public class EmployeeDAOsqlLite extends BaseDAOSqlite<Employee> implements Emplo
 	private static final long	serialVersionUID	= 1L;
 
 	@Override
-	public List<Employee> findAllEmployees()
-	{
-		List<Employee> resultList = getEm().createNamedQuery("Employee.findAll", Employee.class).getResultList();
-		return resultList;
-	}
-
-	@Override
 	public void update(Employee employee)
 	{
 		EntityTransaction tx = getEm().getTransaction();

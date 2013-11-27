@@ -15,14 +15,6 @@ public class VacationEventDAOsqlLite extends BaseDAOSqlite<VacationEvent> implem
 	private static final long	serialVersionUID	= 1L;
 
 	@Override
-	public List<VacationEvent> findAllVacationEvents()
-	{
-		List<VacationEvent> resultList = getEm().createNamedQuery("VacationEvent.findAll", VacationEvent.class)
-				.getResultList();
-		return resultList;
-	}
-
-	@Override
 	public void delete(VacationEvent vacationEvent)
 	{
 
