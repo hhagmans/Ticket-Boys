@@ -6,7 +6,10 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import de.fh_dortmund.ticket_system.base.BaseData;
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDAO;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAO;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOTestImpl;
 import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
@@ -20,16 +23,14 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDAOsqlLite;
 
 @ManagedBean
 @ApplicationScoped
-public class ShiftData implements Serializable
+public class ShiftData extends BaseData<Shift, ShiftDAO> implements Serializable
 {
 
 	private static final long	serialVersionUID	= 1L;
 
-	private ShiftDAO			shiftDAO;
-
 	public ShiftData()
 	{
-		shiftDAO = new ShiftDAOsqlLite();
+		dao = new ShiftDAOsqlLite();
 		fill();
 	}
 
@@ -39,48 +40,30 @@ public class ShiftData implements Serializable
 
 		List<Shift> allshifts = shiftDAOtemp.findAllShifts();
 
-		if (shiftDAO.findAllShifts().isEmpty())
+		if (dao.findAllShifts().isEmpty())
 		{
 			for (Shift shift : allshifts)
 			{
-				if (!shift.equals(shiftDAO.findShiftById(shift.getUniqueRowKey())))
-					shiftDAO.addShift(shift);
+				if (!shift.equals(dao.findById(shift.getUniqueRowKey())))
+					dao.add(shift);
 			}
 		}
 	}
 
-	public Shift findShiftByID(String uniqueRowKey)
-	{
-		return shiftDAO.findShiftById(uniqueRowKey);
-	}
-
-	public void updateShift(Shift shift)
-	{
-		shiftDAO.updateShift(shift);
-	}
-
-	public void deleteShift(Shift shift)
-	{
-		shiftDAO.deleteShift(shift);
-	}
-
-	public void addShift(Shift shift)
-	{
-		shiftDAO.addShift(shift);
-	}
-
 	public List<Shift> findAllShifts()
 	{
-		return shiftDAO.findAllShifts();
+		return dao.findAllShifts();
 	}
-	
-	public Shift findShiftByWeekNumber(int weekNumber) {
+
+	public Shift findShiftByWeekNumber(int weekNumber)
+	{
 		List<Shift> findAllShifts = findAllShifts();
-		
-	for (Shift shift : findAllShifts) {
-		if(shift.getWeekNumber()==weekNumber)
-			return shift;
-	}
-	return null;
+
+		for (Shift shift : findAllShifts)
+		{
+			if (shift.getWeekNumber() == weekNumber)
+				return shift;
+		}
+		return null;
 	}
 }

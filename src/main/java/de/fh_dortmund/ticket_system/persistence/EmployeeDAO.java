@@ -2,19 +2,10 @@ package de.fh_dortmund.ticket_system.persistence;
 
 import java.util.List;
 
+import de.fh_dortmund.ticket_system.base.BaseDao;
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-public interface EmployeeDAO
+public interface EmployeeDAO extends BaseDao<Employee>
 {
-
 	public List<Employee> findAllEmployees();
-	
-	public Employee findEmployeeById(String id);
-
-	public void updateEmployee(Employee employee);
-
-	public void deleteEmployee(Employee employee);
-
-	public void addEmployee(Employee employee);
-
 }

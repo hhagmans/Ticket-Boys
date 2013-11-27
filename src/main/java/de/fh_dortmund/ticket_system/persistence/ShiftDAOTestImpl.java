@@ -20,8 +20,8 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 @ApplicationScoped
 public class ShiftDAOTestImpl implements ShiftDAO, Serializable
 {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long	serialVersionUID	= 1L;
+
 	@Override
 	public List<Shift> findAllShifts()
 	{
@@ -67,26 +67,27 @@ public class ShiftDAOTestImpl implements ShiftDAO, Serializable
 	}
 
 	@Override
-	public void updateShift(Shift shift)
+	public void update(Shift shift)
 	{
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void deleteShift(Shift shift)
+	public void delete(Shift shift)
 	{
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void addShift(Shift newShift)
+	public void add(Shift newShift)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Shift findShiftById(String id) {
+	public Shift findById(String id)
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}

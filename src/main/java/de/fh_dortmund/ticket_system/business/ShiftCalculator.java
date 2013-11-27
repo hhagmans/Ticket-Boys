@@ -1,12 +1,9 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-
-import org.codehaus.plexus.util.StringUtils;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;

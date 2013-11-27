@@ -49,7 +49,7 @@ public abstract class Authentication implements Serializable
 
 	private boolean findEmployee()
 	{
-		Employee employee = getEmployeeData().findEmployeeByID(name);
+		Employee employee = getEmployeeData().findByID(name);
 		if (employee == null)
 		{
 			MessageUtil.showE("User nicht gefunden!");

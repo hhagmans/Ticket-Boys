@@ -6,19 +6,14 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.mail.EmailException;
-
-import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.business.ShiftModel;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.util.DailyChecker;
-import de.fh_dortmund.ticket_system.util.EmailUtil;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
 /**
@@ -40,8 +35,7 @@ public class DispatcherView implements Serializable
 	EmployeeData				employeeData;
 
 	@ManagedProperty("#{rightsManager}")
-	private
-	RightsManager				rightsManager;
+	private RightsManager		rightsManager;
 
 	private ShiftModel			shiftModel;
 
@@ -86,20 +80,23 @@ public class DispatcherView implements Serializable
 
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
 				+ " wurden getauscht!");
-		
-//		test email sending
-		try {
+
+		// test email sending
+		try
+		{
 			DailyChecker.check();
-			showMessage("Email versendet","");
-		} catch (Exception e) {
+			showMessage("Email versendet", "");
+		}
+		catch (Exception e)
+		{
 			// TODO Auto-generated catch block
 			showMessage(e.getMessage(), "fehler");
 		}
 	}
 
-	private void updateShifts(Shift shift0)
+	private void updateShifts(Shift shift)
 	{
-		shiftData.updateShift(shift0);
+		shiftData.update(shift);
 	}
 
 	public List<Shift> getSelectedShifts()

@@ -9,24 +9,25 @@
 
 	<ui:define name="content">
 		<h:form id="employeeListMainform">
-	
+
 			<p:growl id="messages" showDetail="true" />
-			
-			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">  
-        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
-        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
-    </p:confirmDialog> 
-			
-	
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Ja" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Nein" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+
 			<p:dataTable var="employee" value="#{employeeView.employeeModel}"
-				id="employeeList" editable="true"
-				 >
+				id="employeeList" editable="true">
 
 				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
 					update=":employeeListMainform:messages" />
 				<p:ajax event="rowEditCancel" listener="#{employeeView.onCancel}"
 					update=":employeeListMainform:messages" />
-	
+
 				<p:column headerText="Konzern ID" style="width:20%">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -37,8 +38,8 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				
-	
+
+
 				<p:column headerText="Vorname" style="width:20%">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -89,9 +90,14 @@
 				<p:column style="width:6%">
 					<p:rowEditor>
 					</p:rowEditor>
-					<p:commandButton id="deleteEmployeeButton" actionListener="#{employeeView.deleteEmployee(employee)}" update=":employeeListMainform:employeeList, :employeeListMainform:messages" icon="ui-icon-circle-close" title="Löschen">
-					<p:confirm header="Bestätigung" message="Möchten Sie diesen Mitarbeiter wirklich löschen?" icon="ui-icon-alert" />  
-					</p:commandButton>  
+					<p:commandButton id="deleteEmployeeButton"
+						actionListener="#{employeeView.deleteEmployee(employee)}"
+						update=":employeeListMainform:employeeList, :employeeListMainform:messages"
+						icon="ui-icon-circle-close" title="Löschen">
+						<p:confirm header="Bestätigung"
+							message="Möchten Sie diesen Mitarbeiter wirklich löschen?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
