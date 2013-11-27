@@ -37,7 +37,7 @@ public class DailyChecker
 		else {
 			calcweek = calcweek + 2;
 		}
-		String currentRowKey = calcweek + "-" + calcweek;
+		String currentRowKey = calcyear + "-" + calcweek;
 		latestEmployee = shiftData.findByID(currentRowKey).getDispatcher();
 		return latestEmployee;
 	}
@@ -53,7 +53,7 @@ public class DailyChecker
 		else {
 			calcweek = calcweek + 2;
 		}
-		String currentRowKey = calcweek + "-" + calcweek;
+		String currentRowKey = calcyear + "-" + calcweek;
 		latestKW = shiftData.findByID(currentRowKey).getWeekNumber();
 		return latestKW;
 	}
