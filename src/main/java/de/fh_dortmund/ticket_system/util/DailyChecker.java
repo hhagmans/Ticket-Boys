@@ -3,17 +3,13 @@ package de.fh_dortmund.ticket_system.util;
 import it.sauronsoftware.cron4j.Scheduler;
 
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.faces.bean.ManagedProperty;
 
 import org.apache.commons.mail.EmailException;
 
-import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.util.*;
 
 
 public class DailyChecker
