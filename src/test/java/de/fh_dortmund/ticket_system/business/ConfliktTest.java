@@ -20,11 +20,11 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
 public class ConfliktTest {
-	Conflikt conflikt;
+	Conflict conflikt;
 
 	@Before
 	public void setUp() throws Exception {
-		conflikt = new Conflikt();
+		conflikt = new Conflict();
 	}
 
 	@Test
