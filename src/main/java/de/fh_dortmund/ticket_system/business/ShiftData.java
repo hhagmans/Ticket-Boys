@@ -53,7 +53,7 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 
 		for (Shift shift : findAllShifts)
 		{
-			if (shift.getWeekNumber() == weekNumber)
+			if (shift.getWeek().getWeekNumber() == weekNumber)
 				return shift;
 		}
 		return null;

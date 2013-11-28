@@ -50,7 +50,7 @@ public class DailyChecker
 			calcweek = calcweek + 2;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
-		latestKW = shiftData.findByID(currentRowKey).getWeekNumber();
+		latestKW = shiftData.findByID(currentRowKey).getWeek().getWeekNumber();
 		return latestKW;
 	}
 	

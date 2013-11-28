@@ -73,7 +73,7 @@ public class DispatcherView implements Serializable
 			return;
 		}
 
-		Shift tempShift0 = new Shift(shift0.getYear(), shift0.getWeekNumber(), shift0.getDispatcher(),
+		Shift tempShift0 = new Shift(shift0.getWeek(), shift0.getDispatcher(),
 				shift0.getSubstitutioner());
 
 		shift0.setDispatcher(shift1.getDispatcher());
@@ -82,7 +82,7 @@ public class DispatcherView implements Serializable
 		updateShifts(shift0);
 		updateShifts(shift1);
 
-		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeekNumber() + " & " + shift0.getWeekNumber()
+		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeek().getWeekNumber() + " & " + shift0.getWeek().getWeekNumber()
 				+ " wurden getauscht!");
 		
 		//    test email sending
@@ -157,8 +157,8 @@ public class DispatcherView implements Serializable
 		List<Shift> upcoming = new ArrayList<Shift>();
 		
 		for (Shift shift : shiftData.findAll()) {
-			int year = shift.getYear();
-			int weekNumber = shift.getWeekNumber();
+			int year = shift.getWeek().getYear();
+			int weekNumber = shift.getWeek().getWeekNumber();
 			
 			if (year > currentYear || year == currentYear && weekNumber >= currentWeekNumber) {
 				upcoming.add(shift);

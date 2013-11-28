@@ -8,6 +8,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import de.fh_dortmund.ticket_system.base.Week;
+
 /**
  * Dieses Objekt repräsentiert eine Schicht Eine Schicht ist die Zuordnung einer Kalenderwoche zu
  * einem Dispatcher und seinem Vertreter
@@ -25,34 +27,13 @@ public class Shift implements Serializable
 
 	private static final long	serialVersionUID	= 1L;
 
-	private int					year;
-	private int					weekNumber;
+	private Week				week;
 	private Employee			dispatcher;
 	private Employee			substitutioner;
 	private String				uniqueRowKey;
 
 	public Shift()
 	{
-	}
-
-	public int getYear()
-	{
-		return year;
-	}
-
-	public void setYear(int year)
-	{
-		this.year = year;
-	}
-
-	public int getWeekNumber()
-	{
-		return weekNumber;
-	}
-
-	public void setWeekNumber(int weekNumber)
-	{
-		this.weekNumber = weekNumber;
 	}
 
 	public Employee getDispatcher()
@@ -79,7 +60,7 @@ public class Shift implements Serializable
 	public Object clone() throws CloneNotSupportedException
 	{
 
-		Shift newShift = new Shift(this.getYear(), this.getWeekNumber(), this.getDispatcher(), this.getSubstitutioner());
+		Shift newShift = new Shift(this.getWeek().getYear(), this.getWeek().getWeekNumber(), this.getDispatcher(), this.getSubstitutioner());
 
 		return newShift;
 	}
@@ -93,18 +74,30 @@ public class Shift implements Serializable
 	 */
 	public Shift(int year, int weekNumber, Employee dispatcher, Employee substitutioner)
 	{
+		this(new Week(year, weekNumber), dispatcher, substitutioner);
+	}
+
+
+	/**
+	 * 
+	 * @param weekNumber Kalenderwoche der Schicht
+	 * @param dispatcher vollständiger Name der dieser Schicht zugeteilten Dispatchers
+	 * @param substitutioner vollständiger Name der dieser Schicht zugeteilten Vertreters des
+	 *        Dispatchers
+	 */
+	public Shift(Week week, Employee dispatcher, Employee substitutioner)
+	{
 		super();
-		this.year = year;
-		this.weekNumber = weekNumber;
+		this.week = week;
 		this.dispatcher = dispatcher;
 		this.substitutioner = substitutioner;
 	}
-
+	
 	@Id
 	public String getUniqueRowKey()
 	{
 		// TODO Auto-generated method stub
-		return year + "-" + weekNumber;
+		return week.getYear() + "-" + week.getWeekNumber();
 	}
 
 	public void setUniqueRowKey(String uniqueRowKey)
@@ -120,8 +113,8 @@ public class Shift implements Serializable
 		result = (prime * result) + ((dispatcher == null) ? 0 : dispatcher.hashCode());
 		result = (prime * result) + ((substitutioner == null) ? 0 : substitutioner.hashCode());
 		result = (prime * result) + ((uniqueRowKey == null) ? 0 : uniqueRowKey.hashCode());
-		result = (prime * result) + weekNumber;
-		result = (prime * result) + year;
+		result = (prime * result) + week.getYear();
+		result = (prime * result) + week.getWeekNumber();
 		return result;
 	}
 
@@ -174,15 +167,20 @@ public class Shift implements Serializable
 		{
 			return false;
 		}
-		if (weekNumber != other.weekNumber)
+		if (!week.equals(other.week) )
 		{
 			return false;
 		}
-		if (year != other.year)
-		{
-			return false;
-		}
+		
 		return true;
+	}
+
+	public Week getWeek() {
+		return week;
+	}
+
+	public void setWeek(Week week) {
+		this.week = week;
 	}
 
 	// @Override
