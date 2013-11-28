@@ -59,7 +59,7 @@ public class Conflikt
 		return year;
 	}
 
-	public class KW
+	public static class KW
 	{
 		int	year;
 		int	kw;
@@ -83,18 +83,40 @@ public class Conflikt
 
 	public boolean checkEmployee(Employee employee)
 	{
+		// Get all KWs from employee
 		Set<KW> employeesKWs = getEmployeesKW(employee);
 
+		// Get all KWs from employees shifts
 		List<Shift> shifts = shiftData.findShiftByEmployee(employee);
 		Set<KW> shiftKWs = getShiftKW(shifts);
 
-		return true;
+		return checkForNoConflicts(employeesKWs, shiftKWs);
+	}
+
+	public boolean checkForNoConflicts(Set<KW> set1, Set<KW> set2)
+	{
+		// Check for conflikts
+		boolean ok = true;
+		for (KW kw : set1)
+		{
+			if (set2.contains(kw))
+			{
+				ok = false;
+				break;
+			}
+		}
+
+		return ok;
 	}
 
 	public Set<KW> getShiftKW(List<Shift> shifts)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Set<KW> kws = new HashSet<Conflikt.KW>();
+		for (Shift shift : shifts)
+		{
+			kws.add(new KW(shift.getYear(), shift.getWeekNumber()));
+		}
+		return kws;
 	}
 
 	public Set<KW> getEmployeesKW(Employee employee)
