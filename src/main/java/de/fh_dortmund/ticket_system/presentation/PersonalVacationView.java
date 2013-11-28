@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -40,7 +41,8 @@ public class PersonalVacationView implements Serializable
 	{
 		setEventModel(new PersonalVacationEventModel());
 	}
-
+	
+	
 	public Date getRandomDate(Date base)
 	{
 		Calendar date = Calendar.getInstance();
@@ -58,7 +60,7 @@ public class PersonalVacationView implements Serializable
 		return calendar.getTime();
 	}
 
-	public ScheduleModel getEventModel()
+	public PersonalVacationEventModel getEventModel()
 	{
 		return eventModel;
 	}

@@ -130,6 +130,14 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		return null;
 	}
 
+	public VacationType getVacationType() {
+		return vacationType;
+	}
+
+	public void setVacationType(VacationType vacationType) {
+		this.vacationType = vacationType;
+	}
+
 	@Override
 	public boolean isEditable()
 	{

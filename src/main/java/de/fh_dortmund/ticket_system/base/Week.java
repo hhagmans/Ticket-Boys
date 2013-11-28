@@ -1,5 +1,11 @@
 package de.fh_dortmund.ticket_system.base;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 /**
  * Represents a unique week in a year.
@@ -7,10 +13,21 @@ package de.fh_dortmund.ticket_system.base;
  * @author Alex Hofmann
  * 
  */
-public class Week {
+@Entity
+@Table(name = "week")
+public class Week implements Serializable {
+	
+	private static final long	serialVersionUID	= 1L;
 	private int year;
 	private int weekNumber;
+	private String uniqueRowKey;
 
+	
+	
+	public Week() {
+		
+	}
+	
 	/**
 	 * Creates a Week object with the given parameters.
 	 * 
@@ -19,7 +36,7 @@ public class Week {
 	 */
 	public Week(int year, int weekNumber) {
 		this.setYear(year);
-		this.setWeeknumber(weekNumber);
+		this.setWeekNumber(weekNumber);
 	}
 
 	@Override
@@ -68,7 +85,17 @@ public class Week {
 		return weekNumber;
 	}
 
-	public void setWeeknumber(int kw) {
+	public void setWeekNumber(int kw) {
 		this.weekNumber = kw;
+	}
+	
+	@Id
+	public String getUniqueRowKey()
+	{
+		return getYear() + "-" + getWeekNumber();
+	}
+	
+	public void setUniqueRowKey(String uniqueRowKey) {
+		this.uniqueRowKey = uniqueRowKey;
 	}
 }

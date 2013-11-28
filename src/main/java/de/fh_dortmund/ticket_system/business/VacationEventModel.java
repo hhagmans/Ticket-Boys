@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import org.primefaces.model.ScheduleEvent;
 
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
+@ManagedBean
+@ApplicationScoped
 public class VacationEventModel extends PersonalVacationEventModel {
 
 	private static final long serialVersionUID = 1L;
@@ -18,7 +24,8 @@ public class VacationEventModel extends PersonalVacationEventModel {
 
 	@Override
 	public List<ScheduleEvent> getEvents() {
-		return new ArrayList<ScheduleEvent>(super.getData().findAll());
+		//return new ArrayList<ScheduleEvent>(super.getData().findAll());
+		return new ArrayList<ScheduleEvent>();
 	}
 
 	public void addEvent(ScheduleEvent event) {

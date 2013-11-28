@@ -145,12 +145,12 @@ public class Employee implements Serializable
 		this.vacationCount = vacationCount;
 	}
 
-	public void incrementVacationCouint(int value)
+	public void incrementVacationCount(int value)
 	{
 		this.vacationCount += value;
 	}
 
-	public void decrementVacationCouint(int value)
+	public void decrementVacationCount(int value)
 	{
 		this.vacationCount -= value;
 	}
