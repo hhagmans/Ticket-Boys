@@ -2,11 +2,13 @@ package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import de.fh_dortmund.ticket_system.base.BaseData;
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.persistence.VacationEventDao;
 import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
@@ -20,5 +22,9 @@ public class VacationData extends BaseData<VacationEvent, VacationEventDao> impl
 	public VacationData()
 	{
 		dao = new VacationEventDaoSqlite();
+	}
+	
+	public List<VacationEvent> findByUser(Employee emp) {
+		return dao.findByUser(emp);
 	}
 }

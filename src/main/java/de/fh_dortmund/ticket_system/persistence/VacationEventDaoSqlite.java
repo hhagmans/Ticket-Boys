@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.persistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityTransaction;
 
 import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
 public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent> implements VacationEventDao, Serializable
@@ -64,7 +66,18 @@ public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent> impleme
 	
 	@Override
 	public List<VacationEvent> findAll() {
-		return getEm().createNativeQuery("SELECT v FROM VacationEvent v", VacationEvent.class).getResultList();
+		return getEm().createNamedQuery("findAll", VacationEvent.class).getResultList();
+	}
+	
+	public List<VacationEvent> findByUser(Employee emp) {
+		ArrayList<VacationEvent> completeList = new ArrayList<VacationEvent>(findAll());
+		ArrayList<VacationEvent> userList = new ArrayList<VacationEvent>();
+		for (VacationEvent vacationEvent : completeList) {
+			if (vacationEvent.getEmployee().equals(emp)) {
+				userList.add(vacationEvent);
+			}
+		}
+		return userList;
 	}
 	
 	private long calculateDayCount (VacationEvent vacationEvent) {

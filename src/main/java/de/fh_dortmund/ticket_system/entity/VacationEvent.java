@@ -3,11 +3,14 @@ package de.fh_dortmund.ticket_system.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,6 +18,8 @@ import org.primefaces.model.ScheduleEvent;
 
 @Entity
 @Table(name = "vacationEvent")
+@NamedQueries(
+{ @NamedQuery(name = "findAll", query = "SELECT v FROM VacationEvent v") })
 public class VacationEvent implements ScheduleEvent, Serializable
 {
 
@@ -149,7 +154,7 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		this.editable = editable;
 	}
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinTable
 	  (
 	     name="vacations",

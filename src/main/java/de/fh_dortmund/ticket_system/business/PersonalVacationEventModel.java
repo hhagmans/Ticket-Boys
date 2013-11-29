@@ -39,20 +39,6 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 	{
 
 	}
-	
-	@PostConstruct
-    public void init() {
-	if (this.auth == null) {    
-        FacesContext context = FacesContext.getCurrentInstance();    
-        Application app = context.getApplication();    
-        setAuth((Authentication) app.evaluateExpressionGet(context, "#{auth}", Authentication.class));    
-    	} 
-	if (this.data == null) {    
-        FacesContext context = FacesContext.getCurrentInstance();    
-        Application app = context.getApplication();    
-        setData((VacationData) app.evaluateExpressionGet(context, "#{vacationData}", VacationData.class));    
-    	}  
-	}
 
 	@Override
 	public void addEvent(ScheduleEvent event)
@@ -81,7 +67,8 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 	@Override
 	public List<ScheduleEvent> getEvents()
 	{
-		Set<VacationEvent> myEvents = null; //getAuth().getEmployee().getMyEvents();
+		System.out.println(getAuth().getEmployee().getMyEvents());
+		ArrayList<VacationEvent> myEvents = new ArrayList<VacationEvent>(getData().findByUser(getAuth().getEmployee()));
 		ArrayList<ScheduleEvent> arrayList;
 		if(myEvents!=null){
 			arrayList = new ArrayList<ScheduleEvent>(myEvents);

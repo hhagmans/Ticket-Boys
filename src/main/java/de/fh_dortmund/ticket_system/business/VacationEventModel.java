@@ -24,8 +24,8 @@ public class VacationEventModel extends PersonalVacationEventModel {
 
 	@Override
 	public List<ScheduleEvent> getEvents() {
-		//return new ArrayList<ScheduleEvent>(super.getData().findAll());
-		return new ArrayList<ScheduleEvent>();
+		return new ArrayList<ScheduleEvent>(getData().findAll());
+		//return new ArrayList<ScheduleEvent>();
 	}
 
 	public void addEvent(ScheduleEvent event) {

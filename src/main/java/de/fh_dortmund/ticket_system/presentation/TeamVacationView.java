@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -14,6 +15,9 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
+import de.fh_dortmund.ticket_system.authentication.Authentication;
+import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
+import de.fh_dortmund.ticket_system.business.VacationData;
 import de.fh_dortmund.ticket_system.business.VacationEventModel;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.util.RightsManager;
@@ -22,6 +26,14 @@ import de.fh_dortmund.ticket_system.util.RightsManager;
 @ViewScoped
 public class TeamVacationView implements Serializable
 {
+	
+	@ManagedProperty("#{auth}")
+	private
+	Authentication auth;
+	
+	@ManagedProperty("#{vacationData}")
+	private
+	VacationData data;
 
 	private static final long	serialVersionUID	= 1L;
 
@@ -31,7 +43,13 @@ public class TeamVacationView implements Serializable
 	
 	public TeamVacationView()
 	{
-		eventModel = new VacationEventModel();
+		setEventModel(new VacationEventModel());
+	}
+	
+	@PostConstruct
+	public void init(){
+		getEventModel().setAuth(getAuth());
+		getEventModel().setData(getData());
 	}
 
 	public Date getRandomDate(Date base)
@@ -51,9 +69,29 @@ public class TeamVacationView implements Serializable
 		return calendar.getTime();
 	}
 
-	public ScheduleModel getEventModel()
+	public VacationEventModel getEventModel()
 	{
 		return eventModel;
+	}
+
+	public Authentication getAuth() {
+		return auth;
+	}
+
+	public void setAuth(Authentication auth) {
+		this.auth = auth;
+	}
+
+	public VacationData getData() {
+		return data;
+	}
+
+	public void setData(VacationData data) {
+		this.data = data;
+	}
+
+	public void setEventModel(VacationEventModel eventModel) {
+		this.eventModel = eventModel;
 	}
 
 	private Calendar today()
