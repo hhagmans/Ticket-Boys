@@ -18,6 +18,7 @@ import de.fh_dortmund.ticket_system.base.Week;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.VacationType;
 
 public class ConfliktTest {
 	Conflict conflikt;
@@ -36,13 +37,14 @@ public class ConfliktTest {
 		Date startDate = createDate(2011, 8, 12);
 		Date endDate = createDate(2012, 4, 13);
 
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate);
+		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
+				true);
 		employee.addEvent(event);
 
 		// 1. Event hinzufügen: 27.11.13 bis 27.11.13
 		startDate = createDate(2013, 11, 27);
 		endDate = createDate(2013, 11, 27);
-		event = new VacationEvent("Abwesend", startDate, endDate);
+		event = new VacationEvent("Abwesend", startDate, endDate, true);
 		employee.addEvent(event);
 
 		Set<Week> count = conflikt.getEmployeesWeek(employee);
@@ -64,7 +66,8 @@ public class ConfliktTest {
 		Date startDate = createDate(2013, 11, 27);
 		Date endDate = createDate(2013, 11, 27);
 
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate);
+		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
+				true);
 		employee.addEvent(event);
 
 		Set<Week> count = conflikt.getEmployeesWeek(employee);
@@ -106,7 +109,8 @@ public class ConfliktTest {
 		Date startDate = createDate(2013, 11, 27);
 		Date endDate = createDate(2013, 11, 27);
 
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate);
+		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
+				true);
 		employee.addEvent(event);
 
 		Set<Week> set2 = conflikt.getEmployeesWeek(employee);
@@ -129,7 +133,8 @@ public class ConfliktTest {
 
 		Date startDate = createDate(2013, 11, 27);
 		Date endDate = createDate(2013, 11, 27);
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate);
+		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
+				true);
 		employee.addEvent(event);
 
 		Set<Week> set2 = conflikt.getEmployeesWeek(employee);

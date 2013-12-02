@@ -42,13 +42,14 @@ public class VacationEvent implements ScheduleEvent, Serializable
 	
 	private Employee employee;
 	
-	private VacationType vacationType;
+	private boolean isVacation = true;
 
-	public VacationEvent(String title, Date startDate, Date endDate)
+	public VacationEvent(String title, Date startDate, Date endDate, boolean vacation)
 	{
 		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.setIsVacation(vacation);
 	}
 
 	private String generateID(String title, Date startDate, Date endDate)
@@ -136,14 +137,6 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		return null;
 	}
 
-	public VacationType getVacationType() {
-		return vacationType;
-	}
-
-	public void setVacationType(VacationType vacationType) {
-		this.vacationType = vacationType;
-	}
-
 	@Override
 	public boolean isEditable()
 	{
@@ -213,6 +206,14 @@ public class VacationEvent implements ScheduleEvent, Serializable
 	public String toString()
 	{
 		return "VacationEvent{title=" + title + ",startDate=" + startDate + ",endDate=" + endDate + "}";
+	}
+
+	public boolean getIsVacation() {
+		return isVacation;
+	}
+
+	public void setIsVacation(boolean isVacation) {
+		this.isVacation = isVacation;
 	}
 
 }

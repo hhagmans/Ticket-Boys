@@ -22,6 +22,7 @@ import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
 import de.fh_dortmund.ticket_system.business.VacationData;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.VacationType;
 
 @ManagedBean
 @ViewScoped
@@ -131,7 +132,7 @@ public class PersonalVacationView implements Serializable
 	public void onDateSelect(SelectEvent selectEvent)
 	{
 		Date selectedDate = (Date) selectEvent.getObject();
-		event = new VacationEvent("", selectedDate, selectedDate);
+		event = new VacationEvent("", selectedDate, selectedDate, true);
 	}
 
 	public void onEventMove(ScheduleEntryMoveEvent event)

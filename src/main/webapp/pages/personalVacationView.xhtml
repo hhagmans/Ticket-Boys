@@ -64,7 +64,10 @@
             <h:outputLabel for="to" value="Bis:" />  
             <p:inputMask id="to" value="#{personalVacationView.event.endDate}" mask="99/99/9999">  
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
-            </p:inputMask>  
+            </p:inputMask>
+              
+            <h:outputLabel for="booleanVacation" value="Abwesenheitstyp:"/>
+            <p:selectBooleanButton id="booleanVacation" offLabel="Sonstige" onLabel="Urlaub" value="#{personalVacationView.event.isVacation}"/>
   
             <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
             <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
