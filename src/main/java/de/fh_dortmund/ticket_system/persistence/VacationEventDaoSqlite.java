@@ -40,8 +40,10 @@ public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
 		getEm().persist(vacationEvent);
 		if (vacationEvent.getIsVacation()) {
 			long diffDays = calculateDayCount(vacationEvent);
-			vacationEvent.getEmployee().incrementVacationCount(
+			Employee employee = vacationEvent.getEmployee();
+			employee.incrementVacationCount(
 					(int) diffDays + 1);
+			employee.refreshFreeVacationDays();
 		}
 		tx.commit();
 	}

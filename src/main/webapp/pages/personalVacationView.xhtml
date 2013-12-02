@@ -15,7 +15,9 @@
 	<h:form id="form">  
   
     <p:growl id="messages" showDetail="true" />  
-  
+    <h:outputLabel for="vacationDays" value="Anzahl freier Urlaubstage:"></h:outputLabel>
+  	<h:outputText  id="vacationDays" value="#{personalVacationView.employee.freeVacationCount}"/>
+     <p:panel id="panel" header="Eigene Abwesenheiten" >  
     <p:schedule id="schedule" value="#{personalVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
   
         <p:ajax event="dateSelect" listener="#{personalVacationView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
@@ -23,8 +25,9 @@
         <p:ajax event="eventMove" listener="#{personalVacationView.onEventMove}" update="messages" />  
         <p:ajax event="eventResize" listener="#{personalVacationView.onEventResize}" update="messages" />  
   
-    </p:schedule>  
+    </p:schedule>
     
+    </p:panel>
     <script type="text/javascript">  
     PrimeFaces.locales['de'] = {  
         closeText: 'close',  

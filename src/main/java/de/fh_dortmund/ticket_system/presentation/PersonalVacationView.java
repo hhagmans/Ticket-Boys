@@ -21,6 +21,7 @@ import org.primefaces.model.ScheduleModel;
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
 import de.fh_dortmund.ticket_system.business.VacationData;
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.entity.VacationType;
 
@@ -34,6 +35,8 @@ public class PersonalVacationView implements Serializable
 	@ManagedProperty("#{auth}")
 	private
 	Authentication auth;
+	
+	private Employee employee;
 	
 	@ManagedProperty("#{vacationData}")
 	private
@@ -52,6 +55,7 @@ public class PersonalVacationView implements Serializable
 	public void init(){
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
+		this.setEmployee(getAuth().getEmployee());
 	}
 	
 	public Date getRandomDate(Date base)
@@ -159,7 +163,7 @@ public class PersonalVacationView implements Serializable
 	public Authentication getAuth() {
 		return auth;
 	}
-
+	
 	public void setAuth(Authentication auth) {
 		this.auth = auth;
 	}
@@ -174,5 +178,13 @@ public class PersonalVacationView implements Serializable
 
 	public void setEventModel(PersonalVacationEventModel eventModel) {
 		this.eventModel = eventModel;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 }

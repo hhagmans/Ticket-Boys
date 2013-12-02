@@ -208,10 +208,11 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		return "VacationEvent{title=" + title + ",startDate=" + startDate + ",endDate=" + endDate + "}";
 	}
 
+	//needs that retarded name. Otherwise the property wont be found
 	public boolean getIsVacation() {
 		return isVacation;
 	}
-
+	
 	public void setIsVacation(boolean isVacation) {
 		this.isVacation = isVacation;
 	}
