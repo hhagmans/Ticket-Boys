@@ -85,14 +85,17 @@ public class DispatcherView implements Serializable
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeek().getWeekNumber() + " & " + shift0.getWeek().getWeekNumber()
 				+ " wurden getauscht!");
 		
+	
+	}
+	public void sendmail() {
 		//    test email sending
-		    try {
-		      DailyChecker.check(shiftData);
-		      showMessage("Email versendet","");
-		    } catch (Exception e) {
-		      // TODO Auto-generated catch block
-		      showMessage(e.getMessage(), "fehler");
-		    }
+	    try {
+	      DailyChecker.check(shiftData);
+//	      showMessage("Email versendet","");
+	    } catch (Exception e) {
+	      // TODO Auto-generated catch block
+//	      showMessage(e.getMessage(), "fehler");
+	    }
 	}
 
 	private void updateShifts(Shift shift)

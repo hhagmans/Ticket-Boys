@@ -4,6 +4,8 @@ import it.sauronsoftware.cron4j.Scheduler;
 
 import java.util.GregorianCalendar;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import org.apache.commons.mail.EmailException;
@@ -11,7 +13,8 @@ import org.apache.commons.mail.EmailException;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 
-
+@ManagedBean
+@ApplicationScoped
 public class DailyChecker
 {	
 	@ManagedProperty("#{EmailUtil}")
@@ -71,7 +74,9 @@ public class DailyChecker
 				s.start();
 				// Will run for ten minutes.
 				try {
-					Thread.sleep(1000L * 60L * 10L);
+					while (true) {
+						Thread.sleep(1000L * 60L * 10L);
+					}
 				} catch (InterruptedException e) {
 					;
 				}

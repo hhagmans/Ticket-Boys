@@ -34,6 +34,10 @@
 					<p:confirm header="Bestätigung" message="Möchten Sie diese Schichten wirklich tauschen?" icon="ui-icon-alert" />  
 
 					</p:commandButton>
+					<p:commandButton id="sendmail" value="Sendmail"
+						action="#{dispatcherView.sendmail()}"
+						icon="ui-icon-copy">
+					</p:commandButton>
 				</f:facet>
 
 				<p:column selectionMode="multiple" style="width:2%" />
