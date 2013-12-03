@@ -32,7 +32,7 @@ public class Employee implements Serializable {
 	private Role role;
 	private int score;
 	private int vacationCount;
-	private int maxVacationCount;
+	private int maxVacationCount=30;
 	private int freeVacationCount;
 
 	private Set<VacationEvent> myEvents;
