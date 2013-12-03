@@ -38,8 +38,6 @@ public class Employee implements Serializable {
 	private Set<VacationEvent> myEvents;
 
 	public Employee() {
-		freeVacationCount = 30;
-		maxVacationCount = 30;
 	}
 
 	@Override
@@ -135,15 +133,15 @@ public class Employee implements Serializable {
 	}
 
 	public Employee(String konzernID, String firstName, String lastName,
-			String city, int zipcode, Role role) {
+			String city, int zipcode, Role role, int score, int vacationCount) {
 		this.konzernID = konzernID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.city = city;
 		this.zipcode = zipcode;
 		this.role = role;
-		this.score = 0;
-		this.vacationCount = 0;
+		this.score = score;
+		this.vacationCount = vacationCount;
 	}
 
 	@javax.persistence.Transient

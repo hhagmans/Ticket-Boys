@@ -20,10 +20,10 @@
      <p:panel id="panel" header="Eigene Abwesenheiten" >  
     <p:schedule id="schedule" value="#{personalVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
   
-        <p:ajax event="dateSelect" listener="#{personalVacationView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
-        <p:ajax event="eventSelect" listener="#{personalVacationView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
-        <p:ajax event="eventMove" listener="#{personalVacationView.onEventMove}" update="messages" />  
-        <p:ajax event="eventResize" listener="#{personalVacationView.onEventResize}" update="messages" />  
+        <p:ajax event="dateSelect" listener="#{personalVacationView.onDateSelect}" update="eventDetails,vacationDays" oncomplete="PF('eventDialog').show()" />  
+        <p:ajax event="eventSelect" listener="#{personalVacationView.onEventSelect}" update="eventDetails, vacationDays" oncomplete="PF('eventDialog').show()" />  
+        <p:ajax event="eventMove" listener="#{personalVacationView.onEventMove}" update="messages, vacationDays" />  
+        <p:ajax event="eventResize" listener="#{personalVacationView.onEventResize}" update="messages, vacationDays" />  
   
     </p:schedule>
     
