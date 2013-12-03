@@ -53,7 +53,6 @@ public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
 		tx.begin();
 		VacationEvent oldEvent = getEm().find(VacationEvent.class,
 				vacationEvent.getId());
-		getEm().merge(vacationEvent);
 		if (vacationEvent.getIsVacation()) {
 
 			long newDiffDays = calculateDayCount(vacationEvent);
@@ -66,6 +65,8 @@ public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
 						(int) (newDiffDays - oldDiffDays + 1));
 			}
 		}
+		getEm().merge(vacationEvent);
+		getEm().merge(vacationEvent.getEmployee());
 		tx.commit();
 	}
 

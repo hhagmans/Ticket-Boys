@@ -72,8 +72,8 @@
             <h:outputLabel for="booleanVacation" value="Abwesenheitstyp:"/>
             <p:selectBooleanButton id="booleanVacation" offLabel="Sonstige" onLabel="Urlaub" value="#{personalVacationView.event.isVacation}"/>
   
-            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
-            <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
+            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" update="vacationDays" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
+            <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" update="vacationDays" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
         </h:panelGrid>  
     </p:dialog>  
   

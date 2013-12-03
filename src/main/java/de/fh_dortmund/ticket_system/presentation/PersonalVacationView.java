@@ -143,7 +143,7 @@ public class PersonalVacationView implements Serializable
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
 				+ event.getDayDelta() + " Tage.");
-
+		getEventModel().updateEvent(event.getScheduleEvent());
 		addMessage(message);
 	}
 
@@ -151,7 +151,7 @@ public class PersonalVacationView implements Serializable
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
 				+ event.getDayDelta() + " Tage.");
-
+		getEventModel().updateEvent(event.getScheduleEvent());
 		addMessage(message);
 	}
 
