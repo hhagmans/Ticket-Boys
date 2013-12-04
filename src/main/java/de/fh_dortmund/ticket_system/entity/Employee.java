@@ -31,13 +31,14 @@ public class Employee implements Serializable {
 	private int zipcode;
 	private Role role;
 	private int score;
-	private int vacationCount;
+	private int vacationCount=0;
 	private int maxVacationCount=30;
 	private int freeVacationCount;
 
 	private Set<VacationEvent> myEvents;
 
 	public Employee() {
+		this.freeVacationCount = maxVacationCount - vacationCount;
 	}
 
 	@Override
