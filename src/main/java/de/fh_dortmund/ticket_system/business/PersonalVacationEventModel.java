@@ -89,6 +89,12 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 		getData().update(vacEvent);
 	}
 
+	public void updateEvent(ScheduleEvent event, int dayDelta) {
+		VacationEvent vacEvent = (VacationEvent) event;
+
+		getData().update(vacEvent, dayDelta);
+	}
+
 	@Override
 	public int getEventCount() {
 		List<VacationEvent> events = getData().findAll();

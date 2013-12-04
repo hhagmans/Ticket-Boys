@@ -50,20 +50,33 @@ public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
 		tx.begin();
 		VacationEvent oldEvent = getEm().find(VacationEvent.class,
 				vacationEvent.getId());
+		Employee emp = vacationEvent.getEmployee();
 		if (vacationEvent.getIsVacation()) {
 
 			long newDiffDays = calculateDayCount(vacationEvent);
 			long oldDiffDays = calculateDayCount(oldEvent);
 			if (newDiffDays < oldDiffDays) {
-				vacationEvent.getEmployee().decrementVacationCount(
-						(int) (oldDiffDays - newDiffDays + 1));
+				emp.decrementVacationCount((int) (oldDiffDays - newDiffDays + 1));
 			} else if (newDiffDays > oldDiffDays) {
-				vacationEvent.getEmployee().incrementVacationCount(
-						(int) (newDiffDays - oldDiffDays + 1));
+				emp.incrementVacationCount((int) (newDiffDays - oldDiffDays + 1));
 			}
 		}
+		emp.refreshFreeVacationDays();
 		getEm().merge(vacationEvent);
-		getEm().merge(vacationEvent.getEmployee());
+		getEm().merge(emp);
+		tx.commit();
+	}
+
+	public void update(VacationEvent vacationEvent, int dayDelta) {
+		EntityTransaction tx = getEm().getTransaction();
+		tx.begin();
+		Employee emp = vacationEvent.getEmployee();
+		if (vacationEvent.getIsVacation()) {
+			emp.incrementVacationCount(dayDelta);
+		}
+		emp.refreshFreeVacationDays();
+		getEm().merge(vacationEvent);
+		getEm().merge(emp);
 		tx.commit();
 	}
 

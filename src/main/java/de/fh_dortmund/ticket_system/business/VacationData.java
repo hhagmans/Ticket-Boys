@@ -14,16 +14,19 @@ import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
 
 @ManagedBean
 @ApplicationScoped
-public class VacationData extends BaseData<VacationEvent, VacationEventDao> implements Serializable
-{
-	private static final long	serialVersionUID	= 1386350160944016195L;
+public class VacationData extends BaseData<VacationEvent, VacationEventDao>
+		implements Serializable {
+	private static final long serialVersionUID = 1386350160944016195L;
 
-	public VacationData()
-	{
+	public VacationData() {
 		dao = new VacationEventDaoSqlite();
 	}
-	
+
 	public List<VacationEvent> findByUser(Employee emp) {
 		return dao.findByUser(emp);
+	}
+
+	public void update(VacationEvent vacationEvent, int dayDelta) {
+		dao.update(vacationEvent, dayDelta);
 	}
 }
