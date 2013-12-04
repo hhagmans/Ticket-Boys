@@ -60,13 +60,11 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 			event.setPersonalTitle(event.getTitle());
 		}
 
-		if (conflictFinder.checkVacation(vacationEvent))
+		if (conflictFinder.checkVacation(event))
 			getData().add(event);
 		else
 		{
-			FacesMessage msg = new FacesMessage(summary, detail);
 
-			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
 	}
