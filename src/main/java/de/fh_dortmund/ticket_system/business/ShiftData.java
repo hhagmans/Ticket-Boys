@@ -29,13 +29,13 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 
 	public ShiftData()
 	{
-		dao = new ShiftDaoSqlite();
+		setDao(new ShiftDaoSqlite());
 	}
 
 	@PostConstruct
 	public void fill()
 	{
-		TestdataProvider.fillShift(dao);
+		TestdataProvider.fillShift(getDao());
 	}
 
 	public Shift findShiftByWeekNumber(int weekNumber)
@@ -52,6 +52,6 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 
 	public List<Shift> findShiftByEmployee(Employee employee)
 	{
-		return dao.findByEmployee(employee);
+		return getDao().findByEmployee(employee);
 	}
 }

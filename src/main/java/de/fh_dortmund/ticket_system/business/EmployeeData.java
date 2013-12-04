@@ -27,12 +27,12 @@ public class EmployeeData extends BaseData<Employee, EmployeeDao> implements Ser
 
 	public EmployeeData()
 	{
-		dao = new EmployeeDaoSqlite();
+		setDao(new EmployeeDaoSqlite());
 	}
 
 	@PostConstruct
 	private void fill()
 	{
-		TestdataProvider.fillEmployees(dao);
+		TestdataProvider.fillEmployees(getDao());
 	}
 }

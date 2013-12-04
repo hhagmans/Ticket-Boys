@@ -19,14 +19,14 @@ public class VacationData extends BaseData<VacationEvent, VacationEventDao>
 	private static final long serialVersionUID = 1386350160944016195L;
 
 	public VacationData() {
-		dao = new VacationEventDaoSqlite();
+		setDao(new VacationEventDaoSqlite());
 	}
 
 	public List<VacationEvent> findByUser(Employee emp) {
-		return dao.findByUser(emp);
+		return getDao().findByUser(emp);
 	}
 
 	public void update(VacationEvent vacationEvent, int dayDelta) {
-		dao.update(vacationEvent, dayDelta);
+		getDao().update(vacationEvent, dayDelta);
 	}
 }

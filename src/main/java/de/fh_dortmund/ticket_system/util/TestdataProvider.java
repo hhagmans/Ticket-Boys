@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.fh_dortmund.ticket_system.business.Conflict;
+import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftCalculator;
+import de.fh_dortmund.ticket_system.business.ShiftData;
+import de.fh_dortmund.ticket_system.business.VacationData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
+import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
+import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
 
 public class TestdataProvider
 {
@@ -93,6 +98,23 @@ public class TestdataProvider
 		if (dispatchers != null)
 		{
 			ShiftCalculator sh = new ShiftCalculator();
+
+			Conflict conflict = new Conflict();
+			
+			EmployeeData ed = new EmployeeData();
+			ed.setDao(new EmployeeDaoSqlite());
+			conflict.setEmployeeData(ed);
+			
+			ShiftData sd = new ShiftData();
+			sd.setDao(new ShiftDaoSqlite());
+			conflict.setShiftData(sd);
+			
+			VacationData vd = new VacationData();
+			vd.setDao(new VacationEventDaoSqlite());
+			conflict.setVacationData(vd);
+			
+			sh.setConflict(conflict);
+			
 			allshifts = sh.generateShiftList(dispatchers);
 		}
 

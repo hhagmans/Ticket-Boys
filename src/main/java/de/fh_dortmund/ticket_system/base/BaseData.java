@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BaseData<Entity, Dao extends BaseDao<Entity>>
 {
-	protected Dao	dao;
+	private Dao	dao;
 
 	public Entity findByID(String konzernID)
 	{
@@ -30,5 +30,15 @@ public class BaseData<Entity, Dao extends BaseDao<Entity>>
 	public List<Entity> findAll()
 	{
 		return dao.findAll();
+	}
+
+	public Dao getDao()
+	{
+		return dao;
+	}
+
+	public void setDao(Dao dao)
+	{
+		this.dao = dao;
 	}
 }

@@ -55,7 +55,8 @@ public class ShiftCalculator
 			Employee representative = i == 0 ? dispatchers.get(size - 1) : dispatchers.get((i - 1) % size);
 
 			Shift shift = new Shift(year, week, dispatcher, representative);
-			shifts.add(shift);
+			if (conflict.checkShift(shift))
+				shifts.add(shift);
 
 			if (++week > WEEKS_IN_A_YEAR)
 			{
