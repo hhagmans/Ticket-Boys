@@ -14,6 +14,11 @@ public abstract class BaseView
 	{
 		FacesMessage msg = new FacesMessage(summary, detail);
 
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		addMessage(msg);
+	}
+
+	protected void addMessage(String summary)
+	{
+		addMessage(summary, summary);
 	}
 }

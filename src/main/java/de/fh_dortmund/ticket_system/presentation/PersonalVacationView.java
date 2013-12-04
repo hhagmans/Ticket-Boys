@@ -18,6 +18,7 @@ import org.primefaces.model.ScheduleEvent;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.base.BaseView;
+import de.fh_dortmund.ticket_system.business.ConflictFinder;
 import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
 import de.fh_dortmund.ticket_system.business.VacationData;
 import de.fh_dortmund.ticket_system.entity.Employee;
@@ -41,6 +42,9 @@ public class PersonalVacationView extends BaseView implements Serializable
 	private PersonalVacationEventModel	eventModel;
 
 	private ScheduleEvent				event				= new VacationEvent();
+
+	@ManagedProperty("#{conflict}")
+	private ConflictFinder				conflictFinder;
 
 	public PersonalVacationView()
 	{
@@ -95,7 +99,14 @@ public class PersonalVacationView extends BaseView implements Serializable
 		{
 			VacationEvent vacEvent = (VacationEvent) event;
 			vacEvent.setEmployee(getAuth().getEmployee());
-			getEventModel().addEvent(vacEvent);
+			if (getConflictFinder().checkVacation(vacEvent))
+			{
+				getEventModel().addEvent(vacEvent);
+			}
+			else
+			{
+				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetretten.");
+			}
 		}
 		else
 		{
@@ -180,5 +191,15 @@ public class PersonalVacationView extends BaseView implements Serializable
 	public void setEmployee(Employee employee)
 	{
 		this.employee = employee;
+	}
+
+	public ConflictFinder getConflictFinder()
+	{
+		return conflictFinder;
+	}
+
+	public void setConflictFinder(ConflictFinder conflictFinder)
+	{
+		this.conflictFinder = conflictFinder;
 	}
 }

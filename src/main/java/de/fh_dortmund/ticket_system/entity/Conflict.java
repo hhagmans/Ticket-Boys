@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -24,6 +25,7 @@ public class Conflict implements Serializable
 	private Boolean				solved;
 
 	@Id
+	@GeneratedValue
 	public Integer getId()
 	{
 		return id;

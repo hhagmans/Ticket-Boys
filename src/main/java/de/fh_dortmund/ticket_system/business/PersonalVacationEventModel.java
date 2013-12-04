@@ -60,13 +60,7 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable
 			event.setPersonalTitle(event.getTitle());
 		}
 
-		if (conflictFinder.checkVacation(event))
-			getData().add(event);
-		else
-		{
-
-		}
-
+		getData().add(event);
 	}
 
 	public boolean deleteEvent(ScheduleEvent event)
