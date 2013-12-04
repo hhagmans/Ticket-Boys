@@ -151,7 +151,12 @@ public class Employee implements Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "vacations", joinColumns = { @JoinColumn(name = "employeeID") }, inverseJoinColumns = { @JoinColumn(name = "vacationID") })
+	@JoinTable
+	(
+		name = "vacations",
+		joinColumns = { @JoinColumn(name = "employeeID") },
+		inverseJoinColumns = { @JoinColumn(name = "vacationID") }
+	)
 	public Set<VacationEvent> getMyEvents() {
 		return myEvents;
 	}
