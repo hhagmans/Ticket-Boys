@@ -5,22 +5,25 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
 public abstract class Authentication implements Serializable
 {
+	private static Logger	log					= Logger.getLogger(Authentication.class);
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long		serialVersionUID	= 1L;
 
-	private String				name;
-	private String				passwort;
-	private boolean				loggedIn;
-	private Employee			employee;
+	private String					name;
+	private String					passwort;
+	private boolean					loggedIn;
+	private Employee				employee;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData				employeeData;
+	EmployeeData					employeeData;
 
 	/**
 	 * Hier kommt die Authentifizierung statt.
@@ -36,6 +39,7 @@ public abstract class Authentication implements Serializable
 		if (authenticate(name, passwort) && findEmployee())
 		{
 			setLoggedIn(true);
+			log.info("User mit dem Namen \"" + name + "\" hat sich eingeloggt.");
 
 			return "/pages/index?faces-redirect=true";
 		}
