@@ -19,13 +19,20 @@ public class VacationEventModel extends PersonalVacationEventModel {
 	private static final long serialVersionUID = 1L;
 
 	public VacationEventModel() {
-		super();
 	}
 
 	@Override
 	public List<ScheduleEvent> getEvents() {
-		return new ArrayList<ScheduleEvent>(getData().findAll());
-		//return new ArrayList<ScheduleEvent>();
+		ArrayList<VacationEvent> events = new ArrayList<VacationEvent>(getData().findAll());
+		for (VacationEvent scheduleEvent : events) {
+			if (scheduleEvent.getIsVacation()){
+			scheduleEvent.setTitle("Urlaub: " + scheduleEvent.getEmployee().getFullName());
+			}
+			else {
+				scheduleEvent.setTitle("Sonstiges: " + scheduleEvent.getEmployee().getFullName());
+			}
+		}
+		return new ArrayList<ScheduleEvent>(events);
 	}
 
 	public void addEvent(ScheduleEvent event) {
