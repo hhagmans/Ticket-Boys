@@ -1,5 +1,10 @@
 package de.fh_dortmund.ticket_system.business;
 
+import static de.fh_dortmund.ticket_system.util.DateUtil.createDate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -10,14 +15,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Event;
+import de.fh_dortmund.ticket_system.entity.EventType;
 import de.fh_dortmund.ticket_system.entity.Shift;
-import de.fh_dortmund.ticket_system.entity.VacationEvent;
 import de.fh_dortmund.ticket_system.entity.Week;
-import static de.fh_dortmund.ticket_system.util.DateUtil.createDate;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class ConfliktTest {
 	ConflictFinder conflikt;
@@ -30,20 +31,20 @@ public class ConfliktTest {
 	@Test
 	public void getEmployeesWeekSize() {
 		Employee employee = new Employee();
-		employee.setMyEvents(new HashSet<VacationEvent>());
+		employee.setMyEvents(new HashSet<Event>());
 
 		// 1. Event hinzufügen: 12.08.11 bis 13.04.12
 		Date startDate = createDate(2011, 8, 12);
 		Date endDate = createDate(2012, 4, 13);
 
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
-				true);
+		Event event = new Event("Abwesend", startDate, endDate,
+				EventType.vacation);
 		employee.addEvent(event);
 
 		// 1. Event hinzufügen: 27.11.13 bis 27.11.13
 		startDate = createDate(2013, 11, 27);
 		endDate = createDate(2013, 11, 27);
-		event = new VacationEvent("Abwesend", startDate, endDate, true);
+		event = new Event("Abwesend", startDate, endDate, EventType.vacation);
 		employee.addEvent(event);
 
 		Set<Week> count = conflikt.getEmployeesWeek(employee);
@@ -59,14 +60,14 @@ public class ConfliktTest {
 	@Test
 	public void getEmployeesWeek() {
 		Employee employee = new Employee();
-		employee.setMyEvents(new HashSet<VacationEvent>());
+		employee.setMyEvents(new HashSet<Event>());
 
 		// 1. Event hinzufügen: 12.08.11 bis 13.04.12
 		Date startDate = createDate(2013, 11, 27);
 		Date endDate = createDate(2013, 11, 27);
 
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
-				true);
+		Event event = new Event("Abwesend", startDate, endDate,
+				EventType.vacation);
 		employee.addEvent(event);
 
 		Set<Week> count = conflikt.getEmployeesWeek(employee);
@@ -103,13 +104,13 @@ public class ConfliktTest {
 
 		// Employees with Week 48
 		Employee employee = new Employee();
-		employee.setMyEvents(new HashSet<VacationEvent>());
+		employee.setMyEvents(new HashSet<Event>());
 
 		Date startDate = createDate(2013, 11, 27);
 		Date endDate = createDate(2013, 11, 27);
 
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
-				true);
+		Event event = new Event("Abwesend", startDate, endDate,
+				EventType.vacation);
 		employee.addEvent(event);
 
 		Set<Week> set2 = conflikt.getEmployeesWeek(employee);
@@ -128,12 +129,12 @@ public class ConfliktTest {
 
 		// Employees with Week 48
 		Employee employee = new Employee();
-		employee.setMyEvents(new HashSet<VacationEvent>());
+		employee.setMyEvents(new HashSet<Event>());
 
 		Date startDate = createDate(2013, 11, 27);
 		Date endDate = createDate(2013, 11, 27);
-		VacationEvent event = new VacationEvent("Abwesend", startDate, endDate,
-				true);
+		Event event = new Event("Abwesend", startDate, endDate,
+				EventType.vacation);
 		employee.addEvent(event);
 
 		Set<Week> set2 = conflikt.getEmployeesWeek(employee);

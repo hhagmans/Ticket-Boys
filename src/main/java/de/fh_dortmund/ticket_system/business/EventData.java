@@ -8,25 +8,25 @@ import javax.faces.bean.ManagedBean;
 
 import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDao;
-import de.fh_dortmund.ticket_system.persistence.VacationEventDaoSqlite;
+import de.fh_dortmund.ticket_system.entity.Event;
+import de.fh_dortmund.ticket_system.persistence.EventDao;
+import de.fh_dortmund.ticket_system.persistence.EventDaoSqlite;
 
 @ManagedBean
 @ApplicationScoped
-public class VacationData extends BaseData<VacationEvent, VacationEventDao>
+public class EventData extends BaseData<Event, EventDao>
 		implements Serializable {
 	private static final long serialVersionUID = 1386350160944016195L;
 
-	public VacationData() {
-		setDao(new VacationEventDaoSqlite());
+	public EventData() {
+		setDao(new EventDaoSqlite());
 	}
 
-	public List<VacationEvent> findByUser(Employee emp) {
+	public List<Event> findByUser(Employee emp) {
 		return getDao().findByUser(emp);
 	}
 
-	public void update(VacationEvent vacationEvent, int dayDelta) {
+	public void update(Event vacationEvent, int dayDelta) {
 		getDao().update(vacationEvent, dayDelta);
 	}
 }

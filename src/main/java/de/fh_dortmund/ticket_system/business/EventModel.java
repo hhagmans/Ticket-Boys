@@ -9,23 +9,24 @@ import javax.faces.bean.ManagedBean;
 
 import org.primefaces.model.ScheduleEvent;
 
-import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.Event;
+import de.fh_dortmund.ticket_system.entity.EventType;
 
 @ManagedBean
 @ApplicationScoped
-public class VacationEventModel extends PersonalVacationEventModel {
+public class EventModel extends PersonalEventModel {
 
 	private static final long serialVersionUID = 1L;
 
-	public VacationEventModel() {
+	public EventModel() {
 	}
 
 	@Override
 	public List<ScheduleEvent> getEvents() {
-		ArrayList<VacationEvent> events = new ArrayList<VacationEvent>(super
+		ArrayList<Event> events = new ArrayList<Event>(super
 				.getData().findAll());
-		for (VacationEvent vacationEvent : events) {
-			if (vacationEvent.getIsVacation()) {
+		for (Event vacationEvent : events) {
+			if (vacationEvent.getEventType() == EventType.vacation) {
 				vacationEvent.setTitle("Urlaub: "
 						+ vacationEvent.getEmployee().getFullName());
 			} else {
@@ -37,13 +38,13 @@ public class VacationEventModel extends PersonalVacationEventModel {
 	}
 
 	public void addEvent(ScheduleEvent event) {
-		VacationEvent vacEvent = (VacationEvent) event;
+		Event vacEvent = (Event) event;
 		vacEvent.setId(UUID.randomUUID().toString());
 
 		getData().add(vacEvent);
 	}
 
-	public void addEvent(VacationEvent event) {
+	public void addEvent(Event event) {
 		event.setId(UUID.randomUUID().toString());
 
 		getData().add(event);
@@ -51,7 +52,7 @@ public class VacationEventModel extends PersonalVacationEventModel {
 
 	@Override
 	public boolean deleteEvent(ScheduleEvent event) {
-		VacationEvent vacEvent = (VacationEvent) event;
+		Event vacEvent = (Event) event;
 		getData().delete(vacEvent);
 		return true;
 	}
@@ -63,21 +64,21 @@ public class VacationEventModel extends PersonalVacationEventModel {
 
 	@Override
 	public void updateEvent(ScheduleEvent event) {
-		VacationEvent vacEvent = (VacationEvent) event;
+		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent);
 	}
 
 	@Override
 	public int getEventCount() {
-		List<VacationEvent> events = getData().findAll();
+		List<Event> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
 	public void clear() {
-		List<VacationEvent> events = getData().findAll();
-		for (VacationEvent vacationEvent : events) {
+		List<Event> events = getData().findAll();
+		for (Event vacationEvent : events) {
 			getData().delete(vacationEvent);
 		}
 	}

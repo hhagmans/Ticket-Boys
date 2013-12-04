@@ -17,11 +17,11 @@ import javax.persistence.Transient;
 import org.primefaces.model.ScheduleEvent;
 
 @Entity
-@Table(name = "vacationEvent")
+@Table(name = "Event")
 @NamedQueries({
-		@NamedQuery(name = "findAll", query = "SELECT v FROM VacationEvent v"),
-		@NamedQuery(name = "findByUser", query = "SELECT v FROM VacationEvent v WHERE v.employee = :employee") })
-public class VacationEvent implements ScheduleEvent, Serializable {
+		@NamedQuery(name = "findAll", query = "SELECT v FROM Event v"),
+		@NamedQuery(name = "findByUser", query = "SELECT v FROM Event v WHERE v.employee = :employee") })
+public class Event implements ScheduleEvent, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,22 +43,21 @@ public class VacationEvent implements ScheduleEvent, Serializable {
 
 	private Employee employee;
 
-	private boolean isVacation = true;
+	private EventType eventType;
 
-	public VacationEvent(String title, Date startDate, Date endDate,
-			boolean vacation) {
+	public Event(String title, Date startDate, Date endDate, EventType eventType) {
 		this.title = title;
 		this.personalTitle = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.setIsVacation(vacation);
+		this.setEventType(eventType);
 	}
 
 	private String generateID(String title, Date startDate, Date endDate) {
 		return startDate.toString() + "-" + endDate.toString() + "-" + title;
 	}
 
-	public VacationEvent() {
+	public Event() {
 		this.id = null;
 	}
 
@@ -159,7 +158,7 @@ public class VacationEvent implements ScheduleEvent, Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final VacationEvent other = (VacationEvent) obj;
+		final Event other = (Event) obj;
 		if ((this.title == null) ? (other.getTitle() != null) : !this.title
 				.equals(other.getTitle())) {
 			return false;
@@ -194,13 +193,12 @@ public class VacationEvent implements ScheduleEvent, Serializable {
 				+ ",endDate=" + endDate + "}";
 	}
 
-	// needs that retarded name. Otherwise the property wont be found
-	public boolean getIsVacation() {
-		return isVacation;
+	public EventType getEventType() {
+		// TODO Auto-generated method stub
+		return eventType;
 	}
 
-	public void setIsVacation(boolean isVacation) {
-		this.isVacation = isVacation;
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
 	}
-
 }

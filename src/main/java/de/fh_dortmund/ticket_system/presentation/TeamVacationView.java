@@ -14,98 +14,86 @@ import org.primefaces.model.ScheduleEvent;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.base.BaseView;
-import de.fh_dortmund.ticket_system.business.VacationData;
-import de.fh_dortmund.ticket_system.business.VacationEventModel;
-import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.business.EventData;
+import de.fh_dortmund.ticket_system.business.EventModel;
+import de.fh_dortmund.ticket_system.entity.Event;
 
 @ManagedBean
 @ViewScoped
-public class TeamVacationView extends BaseView implements Serializable
-{
+public class TeamVacationView extends BaseView implements Serializable {
 
 	@ManagedProperty("#{auth}")
-	private Authentication		auth;
+	private Authentication auth;
 
-	@ManagedProperty("#{vacationData}")
-	private VacationData		data;
+	@ManagedProperty("#{eventData}")
+	private EventData data;
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
+	private EventModel eventModel;
 
-	private VacationEventModel	eventModel;
+	private ScheduleEvent event = new Event();
 
-	private ScheduleEvent		event				= new VacationEvent();
-
-	public TeamVacationView()
-	{
-		setEventModel(new VacationEventModel());
+	public TeamVacationView() {
+		setEventModel(new EventModel());
 	}
 
 	@PostConstruct
-	public void init()
-	{
+	public void init() {
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
 	}
 
-	public Date getRandomDate(Date base)
-	{
+	public Date getRandomDate(Date base) {
 		Calendar date = Calendar.getInstance();
 		date.setTime(base);
-		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random day of month
+		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random
+																	// day of
+																	// month
 
 		return date.getTime();
 	}
 
-	public Date getInitialDate()
-	{
+	public Date getInitialDate() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
+		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY,
+				calendar.get(Calendar.DATE), 0, 0, 0);
 
 		return calendar.getTime();
 	}
 
-	public VacationEventModel getEventModel()
-	{
-		return eventModel;
-	}
-
-	public Authentication getAuth()
-	{
+	public Authentication getAuth() {
 		return auth;
 	}
 
-	public void setAuth(Authentication auth)
-	{
+	public void setAuth(Authentication auth) {
 		this.auth = auth;
 	}
 
-	public VacationData getData()
-	{
-		return data;
-	}
-
-	public void setData(VacationData data)
-	{
-		this.data = data;
-	}
-
-	public void setEventModel(VacationEventModel eventModel)
-	{
-		this.eventModel = eventModel;
-	}
-
-	public ScheduleEvent getEvent()
-	{
+	public ScheduleEvent getEvent() {
 		return event;
 	}
 
-	public void setEvent(ScheduleEvent event)
-	{
+	public void setData(EventData data) {
+		this.data = data;
+	}
+
+	public void setEventModel(EventModel eventModel) {
+		this.eventModel = eventModel;
+	}
+
+	public void setEvent(ScheduleEvent event) {
 		this.event = event;
 	}
 
-	public void onEventSelect(SelectEvent selectEvent)
-	{
+	public void onEventSelect(SelectEvent selectEvent) {
 		event = (ScheduleEvent) selectEvent.getObject();
+	}
+
+	public EventModel getEventModel() {
+		return eventModel;
+	}
+
+	public EventData getData() {
+		return data;
 	}
 }
