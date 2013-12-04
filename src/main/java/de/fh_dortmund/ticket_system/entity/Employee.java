@@ -35,7 +35,7 @@ public class Employee implements Serializable {
 	private int maxVacationCount = 30;
 	private int freeVacationCount;
 
-	private Set<VacationEvent> myEvents;
+	private Set<Event> myEvents;
 
 	public Employee() {
 		this.freeVacationCount = maxVacationCount - vacationCount;
@@ -152,19 +152,19 @@ public class Employee implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "vacations", joinColumns = { @JoinColumn(name = "employeeID") }, inverseJoinColumns = { @JoinColumn(name = "vacationID") })
-	public Set<VacationEvent> getMyEvents() {
+	public Set<Event> getMyEvents() {
 		return myEvents;
 	}
 
-	public void setMyEvents(Set<VacationEvent> myEvents) {
+	public void setMyEvents(Set<Event> myEvents) {
 		this.myEvents = myEvents;
 	}
 
-	public void addEvent(VacationEvent event) {
+	public void addEvent(Event event) {
 		this.myEvents.add(event);
 	}
 
-	public void deleteEvent(VacationEvent event) {
+	public void deleteEvent(Event event) {
 
 	}
 
@@ -187,4 +187,5 @@ public class Employee implements Serializable {
 	public void refreshFreeVacationDays() {
 		this.freeVacationCount = maxVacationCount - vacationCount;
 	}
+
 }

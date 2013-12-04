@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
@@ -18,14 +17,17 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
-import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
-import de.fh_dortmund.ticket_system.business.VacationData;
+import de.fh_dortmund.ticket_system.base.BaseView;
+import de.fh_dortmund.ticket_system.business.ConflictFinder;
+import de.fh_dortmund.ticket_system.business.EventData;
+import de.fh_dortmund.ticket_system.business.PersonalEventModel;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.Event;
+import de.fh_dortmund.ticket_system.entity.EventType;
 
 @ManagedBean
 @ViewScoped
-public class PersonalVacationView implements Serializable {
+public class PersonalVacationView extends BaseView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,15 +36,18 @@ public class PersonalVacationView implements Serializable {
 
 	private Employee employee;
 
-	@ManagedProperty("#{vacationData}")
-	private VacationData data;
+	@ManagedProperty("#{EventData}")
+	private EventData data;
 
-	private PersonalVacationEventModel eventModel;
+	private PersonalEventModel eventModel;
 
-	private ScheduleEvent event = new VacationEvent();
+	private ScheduleEvent event = new Event();
+
+	@ManagedProperty("#{conflict}")
+	private ConflictFinder conflictFinder;
 
 	public PersonalVacationView() {
-		setEventModel(new PersonalVacationEventModel());
+		setEventModel(new PersonalEventModel());
 	}
 
 	@PostConstruct
@@ -70,16 +75,8 @@ public class PersonalVacationView implements Serializable {
 		return calendar.getTime();
 	}
 
-	public PersonalVacationEventModel getEventModel() {
+	public PersonalEventModel getEventModel() {
 		return eventModel;
-	}
-
-	private Calendar today() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DATE), 0, 0, 0);
-
-		return calendar;
 	}
 
 	public ScheduleEvent getEvent() {
@@ -92,14 +89,18 @@ public class PersonalVacationView implements Serializable {
 
 	public void addEvent(ActionEvent actionEvent) {
 		if (event.getId() == null) {
-			VacationEvent vacEvent = (VacationEvent) event;
+			Event vacEvent = (Event) event;
 			vacEvent.setEmployee(getAuth().getEmployee());
-			getEventModel().addEvent(vacEvent);
+			if (getConflictFinder().checkVacation(vacEvent)) {
+				getEventModel().addEvent(vacEvent);
+			} else {
+				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetretten.");
+			}
 		} else {
 			getEventModel().updateEvent(event);
 		}
 
-		event = new VacationEvent();
+		event = new Event();
 	}
 
 	public void deleteEvent(ActionEvent actionEvent) {
@@ -120,7 +121,7 @@ public class PersonalVacationView implements Serializable {
 
 	public void onDateSelect(SelectEvent selectEvent) {
 		Date selectedDate = (Date) selectEvent.getObject();
-		event = new VacationEvent("", selectedDate, selectedDate, true);
+		event = new Event("", selectedDate, selectedDate, EventType.vacation);
 	}
 
 	public void onEventMove(ScheduleEntryMoveEvent event) {
@@ -140,10 +141,6 @@ public class PersonalVacationView implements Serializable {
 		addMessage(message);
 	}
 
-	private void addMessage(FacesMessage message) {
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
 	public Authentication getAuth() {
 		return auth;
 	}
@@ -152,15 +149,15 @@ public class PersonalVacationView implements Serializable {
 		this.auth = auth;
 	}
 
-	public VacationData getData() {
+	public EventData getData() {
 		return data;
 	}
 
-	public void setData(VacationData data) {
+	public void setData(EventData data) {
 		this.data = data;
 	}
 
-	public void setEventModel(PersonalVacationEventModel eventModel) {
+	public void setEventModel(PersonalEventModel eventModel) {
 		this.eventModel = eventModel;
 	}
 
@@ -170,5 +167,13 @@ public class PersonalVacationView implements Serializable {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public ConflictFinder getConflictFinder() {
+		return conflictFinder;
+	}
+
+	public void setConflictFinder(ConflictFinder conflictFinder) {
+		this.conflictFinder = conflictFinder;
 	}
 }

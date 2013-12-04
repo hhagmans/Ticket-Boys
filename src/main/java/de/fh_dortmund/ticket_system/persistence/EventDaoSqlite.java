@@ -10,21 +10,22 @@ import javax.persistence.Query;
 
 import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.Event;
+import de.fh_dortmund.ticket_system.entity.EventType;
 
-public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
-		implements VacationEventDao, Serializable {
+public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
+		Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void delete(VacationEvent vacationEvent) {
+	public void delete(Event event) {
 
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		getEm().remove(vacationEvent);
-		if (vacationEvent.getIsVacation()) {
-			Employee emp = vacationEvent.getEmployee();
-			long diffDays = calculateDayCount(vacationEvent);
+		getEm().remove(event);
+		if (event.getEventType() == EventType.vacation) {
+			Employee emp = event.getEmployee();
+			long diffDays = calculateDayCount(event);
 			emp.decrementVacationCount((int) diffDays + 1);
 			emp.refreshFreeVacationDays();
 			getEm().merge(emp);
@@ -33,55 +34,55 @@ public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
 	}
 
 	@Override
-	public void add(VacationEvent vacationEvent) {
+	public void add(Event event) {
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		getEm().persist(vacationEvent);
-		if (vacationEvent.getIsVacation()) {
-			long diffDays = calculateDayCount(vacationEvent);
-			Employee employee = vacationEvent.getEmployee();
+		getEm().persist(event);
+		if (event.getEventType() == EventType.vacation) {
+			long diffDays = calculateDayCount(event);
+			Employee employee = event.getEmployee();
 			employee.incrementVacationCount((int) diffDays + 1);
 			employee.refreshFreeVacationDays();
 		}
 		tx.commit();
 	}
 
-	public void update(VacationEvent vacationEvent, int dayDelta) {
+	public void update(Event event, int dayDelta) {
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		Employee emp = vacationEvent.getEmployee();
-		if (vacationEvent.getIsVacation()) {
+		Employee emp = event.getEmployee();
+		if (event.getEventType() == EventType.vacation) {
 			emp.incrementVacationCount(dayDelta);
 		}
 		emp.refreshFreeVacationDays();
-		getEm().merge(vacationEvent);
+		getEm().merge(event);
 		getEm().merge(emp);
 		tx.commit();
 	}
 
 	@Override
-	public VacationEvent findById(String id) {
-		VacationEvent emp = getEm().find(VacationEvent.class, id);
+	public Event findById(String id) {
+		Event emp = getEm().find(Event.class, id);
 		return emp;
 	}
 
 	@Override
-	public List<VacationEvent> findAll() {
-		return getEm().createNamedQuery("findAll", VacationEvent.class)
-				.getResultList();
+	public List<Event> findAll() {
+		return getEm().createNamedQuery("findAll", Event.class).getResultList();
 	}
 
-	public List<VacationEvent> findByUser(Employee emp) {
-		Query setParameter = getEm().createNamedQuery("findByUser",
-				VacationEvent.class).setParameter("employee", emp);
-		return (List<VacationEvent>) setParameter.getResultList();
+	public List<Event> findByUser(Employee emp) {
+		Query setParameter = getEm()
+				.createNamedQuery("findByUser", Event.class).setParameter(
+						"employee", emp);
+		return (List<Event>) setParameter.getResultList();
 	}
 
-	private long calculateDayCount(VacationEvent vacationEvent) {
+	private long calculateDayCount(Event event) {
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();
-		Date startDate = vacationEvent.getStartDate();
-		Date endDate = vacationEvent.getEndDate();
+		Date startDate = event.getStartDate();
+		Date endDate = event.getEndDate();
 		start.setTime(startDate);
 		end.setTime(endDate);
 		long startTime = startDate.getTime();
