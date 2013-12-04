@@ -5,46 +5,44 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
+import de.fh_dortmund.ticket_system.base.BaseView;
 import de.fh_dortmund.ticket_system.business.VacationData;
 import de.fh_dortmund.ticket_system.business.VacationEventModel;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
 @ManagedBean
 @ViewScoped
-public class TeamVacationView implements Serializable
+public class TeamVacationView extends BaseView implements Serializable
 {
-	
+
 	@ManagedProperty("#{auth}")
-	private
-	Authentication auth;
-	
+	private Authentication		auth;
+
 	@ManagedProperty("#{vacationData}")
-	private
-	VacationData data;
+	private VacationData		data;
 
 	private static final long	serialVersionUID	= 1L;
 
-	private VacationEventModel		eventModel;
+	private VacationEventModel	eventModel;
 
 	private ScheduleEvent		event				= new VacationEvent();
-	
+
 	public TeamVacationView()
 	{
 		setEventModel(new VacationEventModel());
 	}
-	
+
 	@PostConstruct
-	public void init(){
+	public void init()
+	{
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
 	}
@@ -71,32 +69,29 @@ public class TeamVacationView implements Serializable
 		return eventModel;
 	}
 
-	public Authentication getAuth() {
+	public Authentication getAuth()
+	{
 		return auth;
 	}
 
-	public void setAuth(Authentication auth) {
+	public void setAuth(Authentication auth)
+	{
 		this.auth = auth;
 	}
 
-	public VacationData getData() {
+	public VacationData getData()
+	{
 		return data;
 	}
 
-	public void setData(VacationData data) {
+	public void setData(VacationData data)
+	{
 		this.data = data;
 	}
 
-	public void setEventModel(VacationEventModel eventModel) {
-		this.eventModel = eventModel;
-	}
-
-	private Calendar today()
+	public void setEventModel(VacationEventModel eventModel)
 	{
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
-
-		return calendar;
+		this.eventModel = eventModel;
 	}
 
 	public ScheduleEvent getEvent()
@@ -112,10 +107,5 @@ public class TeamVacationView implements Serializable
 	public void onEventSelect(SelectEvent selectEvent)
 	{
 		event = (ScheduleEvent) selectEvent.getObject();
-	}
-
-	private void addMessage(FacesMessage message)
-	{
-		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }

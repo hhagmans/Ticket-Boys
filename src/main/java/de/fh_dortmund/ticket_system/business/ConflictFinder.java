@@ -9,10 +9,10 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-import de.fh_dortmund.ticket_system.base.Week;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.Week;
 import de.fh_dortmund.ticket_system.util.DateUtil;
 
 /**
@@ -23,7 +23,7 @@ import de.fh_dortmund.ticket_system.util.DateUtil;
  */
 @ManagedBean
 @ApplicationScoped
-public class Conflict
+public class ConflictFinder
 {
 	@ManagedProperty("#{shiftData}")
 	ShiftData		shiftData;
@@ -34,7 +34,7 @@ public class Conflict
 	@ManagedProperty("#{vacationData}")
 	VacationData	vacationData;
 
-	public Conflict()
+	public ConflictFinder()
 	{
 	}
 

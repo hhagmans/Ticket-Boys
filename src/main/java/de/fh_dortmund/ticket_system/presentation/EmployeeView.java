@@ -3,21 +3,20 @@ package de.fh_dortmund.ticket_system.presentation;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 
+import de.fh_dortmund.ticket_system.base.BaseView;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.EmployeeModel;
 import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
 @ViewScoped
-public class EmployeeView implements Serializable
+public class EmployeeView extends BaseView implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
@@ -36,19 +35,12 @@ public class EmployeeView implements Serializable
 	public void onEdit(RowEditEvent event)
 	{
 		updateEmployee((Employee) event.getObject());
-		showMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
+		addMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
 	}
 
 	public void onCancel(RowEditEvent event)
 	{
-		showMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
-	}
-
-	private void showMessage(String summary, String detail)
-	{
-		FacesMessage msg = new FacesMessage(summary, detail);
-
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		addMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
 	}
 
 	public void updateEmployee(Employee employee)
@@ -64,7 +56,7 @@ public class EmployeeView implements Serializable
 	public void deleteEmployee(Employee employee)
 	{
 		getEmployeeData().delete(employee);
-		showMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
+		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
 	}
 
 	public Employee getSelectedEmployee()

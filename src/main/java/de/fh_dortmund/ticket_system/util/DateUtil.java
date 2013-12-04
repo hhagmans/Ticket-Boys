@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.fh_dortmund.ticket_system.base.Week;
+import de.fh_dortmund.ticket_system.entity.Week;
 
 /**
  * Helperclass for the Date and Week classes.

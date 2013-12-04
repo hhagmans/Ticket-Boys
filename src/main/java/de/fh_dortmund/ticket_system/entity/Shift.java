@@ -8,8 +8,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import de.fh_dortmund.ticket_system.base.Week;
-
 /**
  * Dieses Objekt repräsentiert eine Schicht Eine Schicht ist die Zuordnung einer Kalenderwoche zu
  * einem Dispatcher und seinem Vertreter
@@ -24,7 +22,6 @@ import de.fh_dortmund.ticket_system.base.Week;
 { @NamedQuery(name = "findByDispatcher", query = "SELECT c FROM Shift c WHERE c.dispatcher = :dispatcher") })
 public class Shift implements Serializable
 {
-
 	private static final long	serialVersionUID	= 1L;
 
 	private Week				week;

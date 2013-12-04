@@ -1,4 +1,4 @@
-package de.fh_dortmund.ticket_system.base;
+package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
 
@@ -21,8 +21,6 @@ public class Week implements Serializable {
 	private int year;
 	private int weekNumber;
 	private String uniqueRowKey;
-
-	
 	
 	public Week() {
 		

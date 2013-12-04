@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
@@ -18,6 +17,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.ScheduleEvent;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
+import de.fh_dortmund.ticket_system.base.BaseView;
+import de.fh_dortmund.ticket_system.business.ConflictFinder;
 import de.fh_dortmund.ticket_system.business.PersonalVacationEventModel;
 import de.fh_dortmund.ticket_system.business.VacationData;
 import de.fh_dortmund.ticket_system.entity.Employee;
@@ -25,34 +26,41 @@ import de.fh_dortmund.ticket_system.entity.VacationEvent;
 
 @ManagedBean
 @ViewScoped
-public class PersonalVacationView implements Serializable {
+public class PersonalVacationView extends BaseView implements Serializable
+{
 
-	private static final long serialVersionUID = 1L;
+	private static final long			serialVersionUID	= 1L;
 
 	@ManagedProperty("#{auth}")
-	private Authentication auth;
+	private Authentication				auth;
 
-	private Employee employee;
+	private Employee					employee;
 
 	@ManagedProperty("#{vacationData}")
-	private VacationData data;
+	private VacationData				data;
 
-	private PersonalVacationEventModel eventModel;
+	private PersonalVacationEventModel	eventModel;
 
-	private ScheduleEvent event = new VacationEvent();
+	private ScheduleEvent				event				= new VacationEvent();
 
-	public PersonalVacationView() {
+	@ManagedProperty("#{conflict}")
+	private ConflictFinder				conflictFinder;
+
+	public PersonalVacationView()
+	{
 		setEventModel(new PersonalVacationEventModel());
 	}
 
 	@PostConstruct
-	public void init() {
+	public void init()
+	{
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
 		this.setEmployee(getAuth().getEmployee());
 	}
 
-	public Date getRandomDate(Date base) {
+	public Date getRandomDate(Date base)
+	{
 		Calendar date = Calendar.getInstance();
 		date.setTime(base);
 		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random
@@ -62,113 +70,136 @@ public class PersonalVacationView implements Serializable {
 		return date.getTime();
 	}
 
-	public Date getInitialDate() {
+	public Date getInitialDate()
+	{
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY,
-				calendar.get(Calendar.DATE), 0, 0, 0);
+		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
 
 		return calendar.getTime();
 	}
 
-	public PersonalVacationEventModel getEventModel() {
+	public PersonalVacationEventModel getEventModel()
+	{
 		return eventModel;
 	}
 
-	private Calendar today() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DATE), 0, 0, 0);
-
-		return calendar;
-	}
-
-	public ScheduleEvent getEvent() {
+	public ScheduleEvent getEvent()
+	{
 		return event;
 	}
 
-	public void setEvent(ScheduleEvent event) {
+	public void setEvent(ScheduleEvent event)
+	{
 		this.event = event;
 	}
 
-	public void addEvent(ActionEvent actionEvent) {
-		if (event.getId() == null) {
+	public void addEvent(ActionEvent actionEvent)
+	{
+		if (event.getId() == null)
+		{
 			VacationEvent vacEvent = (VacationEvent) event;
 			vacEvent.setEmployee(getAuth().getEmployee());
-			getEventModel().addEvent(vacEvent);
-		} else {
+			if (getConflictFinder().checkVacation(vacEvent))
+			{
+				getEventModel().addEvent(vacEvent);
+			}
+			else
+			{
+				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetretten.");
+			}
+		}
+		else
+		{
 			getEventModel().updateEvent(event);
 		}
 
 		event = new VacationEvent();
 	}
 
-	public void deleteEvent(ActionEvent actionEvent) {
-		if (getEventModel().getEvent(event.getId()) == null) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Ereignis nicht vorhanden",
+	public void deleteEvent(ActionEvent actionEvent)
+	{
+		if (getEventModel().getEvent(event.getId()) == null)
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis nicht vorhanden",
 					"Ereignis nicht vorhanden und daher nicht löschbar.");
 
 			addMessage(message);
-		} else {
+		}
+		else
+		{
 			getEventModel().deleteEvent(event);
 		}
 	}
 
-	public void onEventSelect(SelectEvent selectEvent) {
+	public void onEventSelect(SelectEvent selectEvent)
+	{
 		event = (ScheduleEvent) selectEvent.getObject();
 	}
 
-	public void onDateSelect(SelectEvent selectEvent) {
+	public void onDateSelect(SelectEvent selectEvent)
+	{
 		Date selectedDate = (Date) selectEvent.getObject();
 		event = new VacationEvent("", selectedDate, selectedDate, true);
 	}
 
-	public void onEventMove(ScheduleEntryMoveEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Ereignis verschoben", "Verschoben um: " + event.getDayDelta()
-						+ " Tage.");
+	public void onEventMove(ScheduleEntryMoveEvent event)
+	{
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
+				+ event.getDayDelta() + " Tage.");
 		getEventModel().updateEvent(event.getScheduleEvent());
 		addMessage(message);
 	}
 
-	public void onEventResize(ScheduleEntryResizeEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Ereignis verändert", "Verändert um: " + event.getDayDelta()
-						+ " Tage.");
-		getEventModel().updateEvent(event.getScheduleEvent(),
-				event.getDayDelta());
+	public void onEventResize(ScheduleEntryResizeEvent event)
+	{
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
+				+ event.getDayDelta() + " Tage.");
+		getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
 		addMessage(message);
 	}
 
-	private void addMessage(FacesMessage message) {
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public Authentication getAuth() {
+	public Authentication getAuth()
+	{
 		return auth;
 	}
 
-	public void setAuth(Authentication auth) {
+	public void setAuth(Authentication auth)
+	{
 		this.auth = auth;
 	}
 
-	public VacationData getData() {
+	public VacationData getData()
+	{
 		return data;
 	}
 
-	public void setData(VacationData data) {
+	public void setData(VacationData data)
+	{
 		this.data = data;
 	}
 
-	public void setEventModel(PersonalVacationEventModel eventModel) {
+	public void setEventModel(PersonalVacationEventModel eventModel)
+	{
 		this.eventModel = eventModel;
 	}
 
-	public Employee getEmployee() {
+	public Employee getEmployee()
+	{
 		return employee;
 	}
 
-	public void setEmployee(Employee employee) {
+	public void setEmployee(Employee employee)
+	{
 		this.employee = employee;
+	}
+
+	public ConflictFinder getConflictFinder()
+	{
+		return conflictFinder;
+	}
+
+	public void setConflictFinder(ConflictFinder conflictFinder)
+	{
+		this.conflictFinder = conflictFinder;
 	}
 }

@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
@@ -21,36 +23,59 @@ import de.jollyday.HolidayManager;
 
 @ManagedBean
 @ApplicationScoped
-public class PersonalVacationEventModel implements ScheduleModel, Serializable {
+public class PersonalVacationEventModel implements ScheduleModel, Serializable
+{
 
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
 	@ManagedProperty("#{auth}")
-	private Authentication auth;
+	private Authentication		auth;
 
 	@ManagedProperty("#{vacationData}")
-	private VacationData data;
+	private VacationData		data;
 
-	public PersonalVacationEventModel() {
+	@ManagedProperty("#{conflict}")
+	private ConflictFinder		conflictFinder;
+
+	public PersonalVacationEventModel()
+	{
 
 	}
 
 	@Override
-	public void addEvent(ScheduleEvent event) {
+	public void addEvent(ScheduleEvent event)
+	{
 		VacationEvent vacEvent = (VacationEvent) event;
 		vacEvent.setId(UUID.randomUUID().toString());
 		vacEvent.setEmployee(auth.getEmployee());
 		getData().add(vacEvent);
 	}
 
+<<<<<<< HEAD
 	public void addEvent(VacationEvent event, boolean isHoliday) {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
+=======
+	public void addEvent(VacationEvent event)
+	{
+		event.setId(UUID.randomUUID().toString());
+		event.setEmployee(auth.getEmployee());
+		if (event.getIsVacation())
+		{
+			event.setPersonalTitle(event.getTitle());
+		}
+		else
+		{
+			event.setPersonalTitle(event.getTitle());
+		}
+
+>>>>>>> ce50ca3b4511391f750fe3800cd6684148539bed
 		getData().add(event);
 	}
 
-	public boolean deleteEvent(ScheduleEvent event) {
+	public boolean deleteEvent(ScheduleEvent event)
+	{
 		VacationEvent vacEvent = (VacationEvent) event;
 		getData().delete(vacEvent);
 		// FIXME Return true...
@@ -58,22 +83,26 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 	}
 
 	@Override
-	public List<ScheduleEvent> getEvents() {
-		System.out.println(getAuth().getEmployee().getMyEvents());
+	public List<ScheduleEvent> getEvents()
+	{
 		ArrayList<VacationEvent> myEvents = new ArrayList<VacationEvent>(
 				getData().findByUser(getAuth().getEmployee()));
 		myEvents = addHolidays(myEvents);
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 		ScheduleEvent event;
-		for (VacationEvent vacationEvent : myEvents) {
+		for (VacationEvent vacationEvent : myEvents)
+		{
 			vacationEvent.setTitle(vacationEvent.getPersonalTitle());
 			event = (ScheduleEvent) vacationEvent;
 			arrayList.add((ScheduleEvent) vacationEvent);
 		}
 
-		if (myEvents != null) {
+		if (myEvents != null)
+		{
 			arrayList = new ArrayList<ScheduleEvent>(myEvents);
-		} else {
+		}
+		else
+		{
 			arrayList = new ArrayList<ScheduleEvent>();
 		}
 		return arrayList;
@@ -93,51 +122,71 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 	}
 
 	@Override
-	public ScheduleEvent getEvent(String id) {
+	public ScheduleEvent getEvent(String id)
+	{
 		return getData().findByID(id);
 	}
 
 	@Override
-	public void updateEvent(ScheduleEvent event) {
+	public void updateEvent(ScheduleEvent event)
+	{
 		VacationEvent vacEvent = (VacationEvent) event;
 
 		getData().update(vacEvent);
 	}
 
-	public void updateEvent(ScheduleEvent event, int dayDelta) {
+	public void updateEvent(ScheduleEvent event, int dayDelta)
+	{
 		VacationEvent vacEvent = (VacationEvent) event;
 
 		getData().update(vacEvent, dayDelta);
 	}
 
 	@Override
-	public int getEventCount() {
+	public int getEventCount()
+	{
 		List<VacationEvent> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
-	public void clear() {
+	public void clear()
+	{
 		List<VacationEvent> events = getData().findAll();
-		for (VacationEvent vacationEvent : events) {
+		for (VacationEvent vacationEvent : events)
+		{
 			getData().delete(vacationEvent);
 		}
 	}
 
-	public VacationData getData() {
+	public VacationData getData()
+	{
 		return data;
 	}
 
-	public void setData(VacationData data) {
+	public void setData(VacationData data)
+	{
 		this.data = data;
 	}
 
-	public Authentication getAuth() {
+	public Authentication getAuth()
+	{
 		return auth;
 	}
 
-	public void setAuth(Authentication auth) {
+	public void setAuth(Authentication auth)
+	{
 		this.auth = auth;
+	}
+
+	public ConflictFinder getConflictFinder()
+	{
+		return conflictFinder;
+	}
+
+	public void setConflictFinder(ConflictFinder conflictFinder)
+	{
+		this.conflictFinder = conflictFinder;
 	}
 
 }

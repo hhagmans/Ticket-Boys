@@ -10,7 +10,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import de.fh_dortmund.ticket_system.business.Conflict;
+import de.fh_dortmund.ticket_system.business.ConflictFinder;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftCalculator;
 import de.fh_dortmund.ticket_system.business.ShiftData;
@@ -99,7 +99,7 @@ public class TestdataProvider
 		{
 			ShiftCalculator sh = new ShiftCalculator();
 
-			Conflict conflict = new Conflict();
+			ConflictFinder conflict = new ConflictFinder();
 			
 			EmployeeData ed = new EmployeeData();
 			ed.setDao(new EmployeeDaoSqlite());
