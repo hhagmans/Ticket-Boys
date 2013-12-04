@@ -12,7 +12,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
-import de.fh_dortmund.ticket_system.persistence.TestdataProvider;
+import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 /**
  * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)

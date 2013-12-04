@@ -1,4 +1,4 @@
-package de.fh_dortmund.ticket_system.persistence;
+package de.fh_dortmund.ticket_system.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +16,8 @@ import de.fh_dortmund.ticket_system.business.ShiftCalculator;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
+import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 
 public class TestdataProvider
 {

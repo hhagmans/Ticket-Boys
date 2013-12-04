@@ -10,7 +10,7 @@ import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
-import de.fh_dortmund.ticket_system.persistence.TestdataProvider;
+import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 /**
  * Diese Klasse speichert und verwaltet alle bekannten Benutzer
