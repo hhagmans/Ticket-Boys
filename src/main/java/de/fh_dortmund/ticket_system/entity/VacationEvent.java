@@ -18,11 +18,10 @@ import org.primefaces.model.ScheduleEvent;
 
 @Entity
 @Table(name = "vacationEvent")
-@NamedQueries(
-{ @NamedQuery(name = "findAll", query = "SELECT v FROM VacationEvent v"),
-	@NamedQuery(name = "findByUser", query = "SELECT v FROM VacationEvent v WHERE v.employee = :employee")})
-public class VacationEvent implements ScheduleEvent, Serializable
-{
+@NamedQueries({
+		@NamedQuery(name = "findAll", query = "SELECT v FROM VacationEvent v"),
+		@NamedQuery(name = "findByUser", query = "SELECT v FROM VacationEvent v WHERE v.employee = :employee") })
+public class VacationEvent implements ScheduleEvent, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,127 +33,107 @@ public class VacationEvent implements ScheduleEvent, Serializable
 
 	private Date endDate;
 
+	private String personalTitle;
+
 	private boolean allDay = true;
 
 	private String styleClass;
 
 	private boolean editable = true;
-	
+
 	private Employee employee;
-	
+
 	private boolean isVacation = true;
 
-	public VacationEvent(String title, Date startDate, Date endDate, boolean vacation)
-	{
+	public VacationEvent(String title, Date startDate, Date endDate,
+			boolean vacation) {
 		this.title = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.setIsVacation(vacation);
 	}
 
-	private String generateID(String title, Date startDate, Date endDate)
-	{
+	private String generateID(String title, Date startDate, Date endDate) {
 		return startDate.toString() + "-" + endDate.toString() + "-" + title;
 	}
 
-	public VacationEvent()
-	{
+	public VacationEvent() {
 		this.id = null;
 	}
 
 	@Id
 	@Override
-	public String getId()
-	{
+	public String getId() {
 		return id;
 	}
 
 	@Override
-	public void setId(String id)
-	{
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@Override
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
 	@Override
-	public Date getStartDate()
-	{
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate)
-	{
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
 	@Override
-	public Date getEndDate()
-	{
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate)
-	{
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
 	@Override
-	public boolean isAllDay()
-	{
+	public boolean isAllDay() {
 		return allDay;
 	}
 
-	public void setAllDay(boolean allDay)
-	{
+	public void setAllDay(boolean allDay) {
 		this.allDay = allDay;
 	}
 
 	@Override
-	public String getStyleClass()
-	{
+	public String getStyleClass() {
 		return styleClass;
 	}
 
-	public void setStyleClass(String styleClass)
-	{
+	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
 	}
 
 	@Transient
 	@Override
-	public Object getData()
-	{
+	public Object getData() {
 		return null;
 	}
 
 	@Override
-	public boolean isEditable()
-	{
+	public boolean isEditable() {
 		return editable;
 	}
 
-	public void setEditable(boolean editable)
-	{
+	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinTable
-	  (
-	     name="vacations",
-	     joinColumns = { @JoinColumn( name="vacationID") },
-	     inverseJoinColumns = { @JoinColumn( name="employeeID") }
-	  )
+	@JoinTable(name = "vacations", joinColumns = { @JoinColumn(name = "vacationID") }, inverseJoinColumns = { @JoinColumn(name = "employeeID") })
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -163,56 +142,62 @@ public class VacationEvent implements ScheduleEvent, Serializable
 		this.employee = employee;
 	}
 
+	public String getPersonalTitle() {
+		return personalTitle;
+	}
+
+	public void setPersonalTitle(String teamTitle) {
+		this.personalTitle = teamTitle;
+	}
+
 	@Override
-	public boolean equals(Object obj)
-	{
-		if (obj == null)
-		{
+	public boolean equals(Object obj) {
+		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass())
-		{
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		final VacationEvent other = (VacationEvent) obj;
-		if ((this.title == null) ? (other.getTitle() != null) : !this.title.equals(other.getTitle()))
-		{
+		if ((this.title == null) ? (other.getTitle() != null) : !this.title
+				.equals(other.getTitle())) {
 			return false;
 		}
 		if ((this.startDate != other.getStartDate())
-			&& ((this.startDate == null) || !this.startDate.equals(other.getStartDate())))
-		{
+				&& ((this.startDate == null) || !this.startDate.equals(other
+						.getStartDate()))) {
 			return false;
 		}
 		if ((this.endDate != other.getEndDate())
-			&& ((this.endDate == null) || !this.endDate.equals(other.getEndDate())))
-		{
+				&& ((this.endDate == null) || !this.endDate.equals(other
+						.getEndDate()))) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		int hash = 5;
 		hash = (61 * hash) + (this.title != null ? this.title.hashCode() : 0);
-		hash = (61 * hash) + (this.startDate != null ? this.startDate.hashCode() : 0);
-		hash = (61 * hash) + (this.endDate != null ? this.endDate.hashCode() : 0);
+		hash = (61 * hash)
+				+ (this.startDate != null ? this.startDate.hashCode() : 0);
+		hash = (61 * hash)
+				+ (this.endDate != null ? this.endDate.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
-	public String toString()
-	{
-		return "VacationEvent{title=" + title + ",startDate=" + startDate + ",endDate=" + endDate + "}";
+	public String toString() {
+		return "VacationEvent{title=" + title + ",startDate=" + startDate
+				+ ",endDate=" + endDate + "}";
 	}
 
-	//needs that retarded name. Otherwise the property wont be found
+	// needs that retarded name. Otherwise the property wont be found
 	public boolean getIsVacation() {
 		return isVacation;
 	}
-	
+
 	public void setIsVacation(boolean isVacation) {
 		this.isVacation = isVacation;
 	}

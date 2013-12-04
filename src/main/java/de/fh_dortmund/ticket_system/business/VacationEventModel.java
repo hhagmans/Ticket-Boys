@@ -22,13 +22,15 @@ public class VacationEventModel extends PersonalVacationEventModel {
 
 	@Override
 	public List<ScheduleEvent> getEvents() {
-		ArrayList<VacationEvent> events = new ArrayList<VacationEvent>(getData().findAll());
-		for (VacationEvent scheduleEvent : events) {
-			if (scheduleEvent.getIsVacation()){
-			scheduleEvent.setTitle("Urlaub: " + scheduleEvent.getEmployee().getFullName());
-			}
-			else {
-				scheduleEvent.setTitle("Sonstiges: " + scheduleEvent.getEmployee().getFullName());
+		ArrayList<VacationEvent> events = new ArrayList<VacationEvent>(super
+				.getData().findAll());
+		for (VacationEvent vacationEvent : events) {
+			if (vacationEvent.getIsVacation()) {
+				vacationEvent.setTitle("Urlaub: "
+						+ vacationEvent.getEmployee().getFullName());
+			} else {
+				vacationEvent.setTitle("Sonstiges: "
+						+ vacationEvent.getEmployee().getFullName());
 			}
 		}
 		return new ArrayList<ScheduleEvent>(events);
@@ -81,6 +83,7 @@ public class VacationEventModel extends PersonalVacationEventModel {
 	}
 
 	public List<ScheduleEvent> getEventsForCurrentUser() {
-		return new ArrayList<ScheduleEvent>(super.getAuth().getEmployee().getMyEvents());
+		return new ArrayList<ScheduleEvent>(super.getAuth().getEmployee()
+				.getMyEvents());
 	}
 }

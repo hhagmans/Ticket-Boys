@@ -31,8 +31,8 @@ public class Employee implements Serializable {
 	private int zipcode;
 	private Role role;
 	private int score;
-	private int vacationCount=0;
-	private int maxVacationCount=30;
+	private int vacationCount = 0;
+	private int maxVacationCount = 30;
 	private int freeVacationCount;
 
 	private Set<VacationEvent> myEvents;
@@ -187,5 +187,4 @@ public class Employee implements Serializable {
 	public void refreshFreeVacationDays() {
 		this.freeVacationCount = maxVacationCount - vacationCount;
 	}
-
 }
