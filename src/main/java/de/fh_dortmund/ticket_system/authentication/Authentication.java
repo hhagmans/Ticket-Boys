@@ -2,7 +2,6 @@ package de.fh_dortmund.ticket_system.authentication;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 

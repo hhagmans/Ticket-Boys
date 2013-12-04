@@ -2,14 +2,10 @@ package de.fh_dortmund.ticket_system.persistence;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,7 +15,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
-public class ShiftDaoTestdataProvider
+public class TestdataProvider
 {
 	/**
 	 * Fetches the list of all employees and filters them by role. Returns all {@link Role#dispatcher}s.
@@ -44,13 +40,12 @@ public class ShiftDaoTestdataProvider
 	 * 
 	 * @return list of employees
 	 */
-	private List<Employee> getEmployeeList()
+	private static List<Employee> getEmployeeList()
 	{
 		List<Employee> empList;
 
 		// Auslesen der json File
-		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
-		@SuppressWarnings("resource")
+		InputStream is = new TestdataProvider().getClass().getResourceAsStream("/test/UserList.json");
 		// XXX
 		java.util.Scanner s = new Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
@@ -73,4 +68,37 @@ public class ShiftDaoTestdataProvider
 		return empList;
 	}
 
+	public static void fillEmployees(EmployeeDao dao)
+	{
+		List<Employee> allEmployees = getEmployeeList();
+
+		for (Employee employee : allEmployees)
+		{
+			if (!employee.equals(dao.findById(employee.getKonzernID())))
+				dao.add(employee);
+		}
+
+		System.out.println("Employees added " + allEmployees.size());
+	}
+
+	public static void fillShift(ShiftDao dao)
+	{
+		TestdataProvider dataProvider = new TestdataProvider();
+		List<Employee> dispatchers = dataProvider.getDispatchingEmployees();
+		List<Shift> allshifts = new ArrayList<Shift>();
+		if (dispatchers != null)
+		{
+			ShiftCalculator sh = new ShiftCalculator();
+			allshifts = sh.generateShiftList(dispatchers);
+		}
+
+		if (dao.findAll().isEmpty())
+		{
+			for (Shift shift : allshifts)
+			{
+				if (!shift.equals(dao.findById(shift.getUniqueRowKey())))
+					dao.add(shift);
+			}
+		}
+	}
 }

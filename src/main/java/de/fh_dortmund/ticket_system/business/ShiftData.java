@@ -1,7 +1,6 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +12,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
-import de.fh_dortmund.ticket_system.persistence.ShiftDaoTestdataProvider;
+import de.fh_dortmund.ticket_system.persistence.TestdataProvider;
 
 /**
  * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
@@ -36,27 +35,7 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 	@PostConstruct
 	public void fill()
 	{
-		ShiftDaoTestdataProvider dataProvider = new ShiftDaoTestdataProvider();
-		List<Employee> dispatchers = dataProvider.getDispatchingEmployees();
-		List<Shift> allshifts = new ArrayList<Shift>();
-		if (dispatchers != null)
-		{
-			ShiftCalculator sh = new ShiftCalculator();
-			Conflict conflict = new Conflict();
-			conflict.setShiftData(this);
-			conflict.setVacationData(new VacationData());
-			sh.setConflict(conflict);
-			allshifts = sh.generateShiftList(dispatchers);
-		}
-
-		if (dao.findAll().isEmpty())
-		{
-			for (Shift shift : allshifts)
-			{
-				if (!shift.equals(dao.findById(shift.getUniqueRowKey())))
-					dao.add(shift);
-			}
-		}
+		TestdataProvider.fillShift(dao);
 	}
 
 	public Shift findShiftByWeekNumber(int weekNumber)

@@ -1,7 +1,6 @@
 package de.fh_dortmund.ticket_system.persistence;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +10,7 @@ import javax.persistence.Query;
 
 import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
-import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.entity.VacationType;
 
 public class VacationEventDaoSqlite extends BaseDaoSqlite<VacationEvent>
 		implements VacationEventDao, Serializable {

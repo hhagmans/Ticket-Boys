@@ -2,7 +2,6 @@ package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;

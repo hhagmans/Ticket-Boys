@@ -1,10 +1,5 @@
 package de.fh_dortmund.ticket_system.business;
 
-import static de.fh_dortmund.ticket_system.util.DateUtil.createDate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -18,7 +13,11 @@ import de.fh_dortmund.ticket_system.base.Week;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
-import de.fh_dortmund.ticket_system.entity.VacationType;
+import static de.fh_dortmund.ticket_system.util.DateUtil.createDate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ConfliktTest {
 	Conflict conflikt;

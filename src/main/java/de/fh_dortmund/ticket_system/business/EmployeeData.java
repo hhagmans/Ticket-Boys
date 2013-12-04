@@ -1,16 +1,16 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
-import de.fh_dortmund.ticket_system.persistence.EmployeeDaoTestImpl;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
+import de.fh_dortmund.ticket_system.persistence.TestdataProvider;
 
 /**
  * Diese Klasse speichert und verwaltet alle bekannten Benutzer
@@ -28,22 +28,11 @@ public class EmployeeData extends BaseData<Employee, EmployeeDao> implements Ser
 	public EmployeeData()
 	{
 		dao = new EmployeeDaoSqlite();
-
-		addStuff();
 	}
 
-	private void addStuff()
+	@PostConstruct
+	private void fill()
 	{
-		EmployeeDao employeeDAOtemp = new EmployeeDaoTestImpl();
-
-		List<Employee> allEmployees = employeeDAOtemp.findAll();
-
-		for (Employee employee : allEmployees)
-		{
-			if (!employee.equals(dao.findById(employee.getKonzernID())))
-				dao.add(employee);
-		}
-
-		System.out.println("Employees added " + allEmployees.size());
+		TestdataProvider.fillEmployees(dao);
 	}
 }

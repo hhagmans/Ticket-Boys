@@ -7,9 +7,6 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-import de.fh_dortmund.ticket_system.business.ShiftCalculator;
-import de.fh_dortmund.ticket_system.entity.Shift;
-
 @ManagedBean
 public class EmailUtil
 {

@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.ScheduleEvent;
 

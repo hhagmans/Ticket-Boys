@@ -1,19 +1,5 @@
 package de.fh_dortmund.ticket_system.business;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.mail.internet.InternetAddress;
-
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import de.fh_dortmund.ticket_system.util.EmailUtil;
 
 
 /**

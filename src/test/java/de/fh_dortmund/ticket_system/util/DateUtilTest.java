@@ -1,7 +1,5 @@
 package de.fh_dortmund.ticket_system.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -10,6 +8,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import de.fh_dortmund.ticket_system.base.Week;
+
+import static org.junit.Assert.assertEquals;
 
 public class DateUtilTest {
 
