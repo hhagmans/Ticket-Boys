@@ -2,9 +2,7 @@ package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.faces.bean.ApplicationScoped;
@@ -16,10 +14,6 @@ import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.Event;
-import de.fh_dortmund.ticket_system.entity.EventType;
-import de.jollyday.Holiday;
-import de.jollyday.HolidayCalendar;
-import de.jollyday.HolidayManager;
 
 @ManagedBean
 @ApplicationScoped
@@ -48,12 +42,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	public void addEvent(Event event) {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
-		if (event.getEventType() == EventType.vacation) {
-			event.setPersonalTitle(event.getTitle());
-		} else {
-			event.setPersonalTitle(event.getTitle());
-		}
-		getData().add(event);
+		event.setPersonalTitle(event.getTitle());
 	}
 
 	public boolean deleteEvent(ScheduleEvent event) {
@@ -68,7 +57,6 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		System.out.println(getAuth().getEmployee().getMyEvents());
 		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
 				getAuth().getEmployee()));
-		myEvents = addHolidays(myEvents);
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 		ScheduleEvent event;
 		for (Event vacationEvent : myEvents) {
@@ -82,38 +70,6 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 			arrayList = new ArrayList<ScheduleEvent>();
 		}
 		return arrayList;
-	}
-
-	public ArrayList<Event> addHolidays(ArrayList<Event> vacList) {
-
-		HolidayManager manager;
-		Set<Holiday> holidays = null;
-		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5) {
-			manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
-			if (getAuth().getEmployee().getCity().trim().toLowerCase()
-					.startsWith("marl")) {
-				holidays = manager.getHolidays(
-						Calendar.getInstance().get(Calendar.YEAR), "nw");
-			} else if (getAuth().getEmployee().getCity().trim().toLowerCase()
-					.startsWith("frankfurt")) {
-				holidays = manager.getHolidays(
-						Calendar.getInstance().get(Calendar.YEAR), "he");
-			} else {
-				holidays = manager.getHolidays(
-						Calendar.getInstance().get(Calendar.YEAR), "de");
-			}
-		} else if (String.valueOf(getAuth().getEmployee().getZipcode())
-				.length() == 4) {
-			manager = HolidayManager.getInstance(HolidayCalendar.BULGARIA);
-			holidays = manager.getHolidays(Calendar.getInstance().get(
-					Calendar.YEAR));
-		}
-		for (Holiday h : holidays) {
-			vacList.add(new Event(h.getDescription(), h.getDate()
-					.toDateTimeAtStartOfDay().toDate(), h.getDate()
-					.toDateTimeAtStartOfDay().toDate(), EventType.vacation));
-		}
-		return vacList;
 	}
 
 	@Override

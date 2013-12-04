@@ -41,6 +41,7 @@ public class PersonalVacationView extends BaseView implements Serializable {
 
 	private PersonalEventModel eventModel;
 	private ScheduleEvent event = new Event();
+	private String EventTypeSelection;
 
 	@ManagedProperty("#{conflictFinder}")
 	private ConflictFinder conflictFinder;
@@ -174,5 +175,13 @@ public class PersonalVacationView extends BaseView implements Serializable {
 
 	public void setConflictFinder(ConflictFinder conflictFinder) {
 		this.conflictFinder = conflictFinder;
+	}
+
+	public String getEventTypeSelection() {
+		return EventTypeSelection;
+	}
+
+	public void setEventTypeSelection(String eventTypeSelection) {
+		EventTypeSelection = eventTypeSelection;
 	}
 }

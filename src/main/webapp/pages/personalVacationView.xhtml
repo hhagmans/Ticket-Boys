@@ -68,7 +68,10 @@
             <p:inputMask id="to" value="#{personalVacationView.event.endDate}" mask="99/99/9999">  
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
             </p:inputMask>
-              
+              <h:selectOneMenu value="{personalVacationView.eventTypeSelection">
+              	<f:selectItem value="Urlaub"/>
+              	<f:selectItem value="Sonstiges"/>
+              </h:selectOneMenu>
             <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" update="vacationDays" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
             <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" update="vacationDays" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
         </h:panelGrid>  

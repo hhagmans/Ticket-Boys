@@ -10,6 +10,21 @@ public enum EventType {
 
 	}
 
+	public EventType getEventTypeForString(String eventType) {
+		if (eventType.equals(EventType.vacation)) {
+			return vacation;
+		}
+		if (eventType.equals(EventType.other)) {
+			return other;
+		}
+
+		if (eventType.equals(EventType.dispatcher)) {
+			return dispatcher;
+		}
+
+		return other;
+	}
+
 	public String getName() {
 		return name;
 	}
