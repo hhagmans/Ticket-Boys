@@ -1,8 +1,10 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -29,13 +31,23 @@ public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 	public ShiftData()
 	{
 		dao = new ShiftDaoSqlite();
-		fill();
 	}
 
+	@PostConstruct
 	public void fill()
 	{
 		ShiftDaoTestdataProvider dataProvider = new ShiftDaoTestdataProvider();
-		List<Shift> allshifts = dataProvider.findAllShifts();
+		List<Employee> dispatchers = dataProvider.getDispatchingEmployees();
+		List<Shift> allshifts = new ArrayList<Shift>();
+		if (dispatchers != null)
+		{
+			ShiftCalculator sh = new ShiftCalculator();
+			Conflict conflict = new Conflict();
+			conflict.setShiftData(this);
+			conflict.setVacationData(new VacationData());
+			sh.setConflict(conflict);
+			allshifts = sh.generateShiftList(dispatchers);
+		}
 
 		if (dao.findAll().isEmpty())
 		{

@@ -23,17 +23,19 @@ import de.fh_dortmund.ticket_system.util.DateUtil;
  */
 @ManagedBean
 @ApplicationScoped
-public class Conflict {
-	@ManagedProperty("#shiftData")
-	ShiftData shiftData;
+public class Conflict
+{
+	@ManagedProperty("#{shiftData}")
+	ShiftData		shiftData;
 
-	@ManagedProperty("#employeeData")
-	EmployeeData employeeData;
+	@ManagedProperty("#{employeeData}")
+	EmployeeData	employeeData;
 
-	@ManagedProperty("#vacationData")
-	VacationData vacationData;
+	@ManagedProperty("#{vacationData}")
+	VacationData	vacationData;
 
-	public Conflict() {
+	public Conflict()
+	{
 	}
 
 	/**
@@ -42,12 +44,13 @@ public class Conflict {
 	 * @param employee
 	 * @return true if the employee has no conflicts, else false
 	 */
-	public boolean checkEmployee(Employee employee) {
+	public boolean checkEmployee(Employee employee)
+	{
 		// Get all Weeks from employee
 		Set<Week> employeesWeeks = getEmployeesWeek(employee);
 
 		// Get all Weeks from employees shifts
-		List<Shift> shifts = shiftData.findShiftByEmployee(employee);
+		List<Shift> shifts = getShiftData().findShiftByEmployee(employee);
 		Set<Week> shiftWeeks = getShiftsWeeks(shifts);
 
 		return checkForNoConflicts(employeesWeeks, shiftWeeks);
@@ -60,11 +63,14 @@ public class Conflict {
 	 * @param set2
 	 * @return true if the sets have at least one week in common, else false
 	 */
-	public boolean checkForNoConflicts(Set<Week> set1, Set<Week> set2) {
+	public boolean checkForNoConflicts(Set<Week> set1, Set<Week> set2)
+	{
 		// Check for conflikts
 		boolean ok = true;
-		for (Week kw : set1) {
-			if (set2.contains(kw)) {
+		for (Week kw : set1)
+		{
+			if (set2.contains(kw))
+			{
 				ok = false;
 				break;
 			}
@@ -78,8 +84,10 @@ public class Conflict {
 	 * 
 	 * @return true if every employee has no conficts, else false
 	 */
-	public boolean checkAllEmployees() {
-		for (Employee employee : employeeData.findAll()) {
+	public boolean checkAllEmployees()
+	{
+		for (Employee employee : getEmployeeData().findAll())
+		{
 			if (!checkEmployee(employee))
 				return false;
 		}
@@ -93,7 +101,8 @@ public class Conflict {
 	 * @param vacationEvent
 	 * @return true if the vacation has no conflict, else false
 	 */
-	public boolean checkVacation(VacationEvent vacationEvent) {
+	public boolean checkVacation(VacationEvent vacationEvent)
+	{
 		// Get all weeks of event
 		Date startDate = vacationEvent.getStartDate();
 		Date endDate = vacationEvent.getEndDate();
@@ -101,7 +110,7 @@ public class Conflict {
 
 		// Get all Weeks from employees shifts
 		Employee employee = vacationEvent.getEmployee();
-		List<Shift> shifts = shiftData.findShiftByEmployee(employee);
+		List<Shift> shifts = getShiftData().findShiftByEmployee(employee);
 		Set<Week> shiftWeeks = getShiftsWeeks(shifts);
 
 		boolean result = checkForNoConflicts(eventWeeks, shiftWeeks);
@@ -114,8 +123,10 @@ public class Conflict {
 	 * 
 	 * @return true if every vacation has no conflicts, else false
 	 */
-	public boolean checkAllVacations() {
-		for (VacationEvent event : vacationData.findAll()) {
+	public boolean checkAllVacations()
+	{
+		for (VacationEvent event : getVacationData().findAll())
+		{
 			if (!checkVacation(event))
 				return false;
 		}
@@ -128,9 +139,10 @@ public class Conflict {
 	 * @param shift
 	 * @return true if the shift has no conflicts, else false
 	 */
-	public boolean checkShift(Shift shift) {
+	public boolean checkShift(Shift shift)
+	{
 		// Get all shiftweeks
-		Week shiftWeek =shift.getWeek();
+		Week shiftWeek = shift.getWeek();
 		Set<Week> shiftWeeks = new HashSet<Week>();
 		shiftWeeks.add(shiftWeek);
 
@@ -147,8 +159,10 @@ public class Conflict {
 	 * 
 	 * @return true if every shift has no conflicts, else false
 	 */
-	public boolean checkAllShifts() {
-		for (Shift shift : shiftData.findAll()) {
+	public boolean checkAllShifts()
+	{
+		for (Shift shift : getShiftData().findAll())
+		{
 			if (!checkShift(shift))
 				return false;
 		}
@@ -162,9 +176,11 @@ public class Conflict {
 	 * @param shifts
 	 * @return a set of weeks
 	 */
-	protected Set<Week> getShiftsWeeks(List<Shift> shifts) {
+	protected Set<Week> getShiftsWeeks(List<Shift> shifts)
+	{
 		Set<Week> kws = new HashSet<Week>();
-		for (Shift shift : shifts) {
+		for (Shift shift : shifts)
+		{
 			kws.add(shift.getWeek());
 		}
 		return kws;
@@ -176,16 +192,50 @@ public class Conflict {
 	 * @param employee
 	 * @return a set of weeks
 	 */
-	protected Set<Week> getEmployeesWeek(Employee employee) {
+	protected Set<Week> getEmployeesWeek(Employee employee)
+	{
 		Set<Week> employeesWeeks = new HashSet<Week>();
 		Set<VacationEvent> vacs = employee.getMyEvents();
-		for (VacationEvent vacationEvent : vacs) {
+		if (vacs == null)
+			return new HashSet<Week>();
+
+		for (VacationEvent vacationEvent : vacs)
+		{
 			Date startDate = vacationEvent.getStartDate();
 			Date endDate = vacationEvent.getEndDate();
-			employeesWeeks.addAll(DateUtil
-					.getWeeksFromDates(startDate, endDate));
+			employeesWeeks.addAll(DateUtil.getWeeksFromDates(startDate, endDate));
 		}
 
 		return employeesWeeks;
+	}
+
+	public ShiftData getShiftData()
+	{
+		return shiftData;
+	}
+
+	public void setShiftData(ShiftData shiftData)
+	{
+		this.shiftData = shiftData;
+	}
+
+	public EmployeeData getEmployeeData()
+	{
+		return employeeData;
+	}
+
+	public void setEmployeeData(EmployeeData employeeData)
+	{
+		this.employeeData = employeeData;
+	}
+
+	public VacationData getVacationData()
+	{
+		return vacationData;
+	}
+
+	public void setVacationData(VacationData vacationData)
+	{
+		this.vacationData = vacationData;
 	}
 }

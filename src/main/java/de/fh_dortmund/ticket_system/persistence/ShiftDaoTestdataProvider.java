@@ -21,29 +21,6 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 
 public class ShiftDaoTestdataProvider
 {
-	
-	/**
-	 * Fetches the list of dispatchers (employees with role =
-	 * {@link Role#dispatcher}). Calculates the shifts for those dispatchers
-	 * using {@link ShiftCalculator}.
-	 * 
-	 * @return a (generated) {@link List} of all {@link Shift}s, or
-	 *         <code>null</code> on error
-	 */
-	public List<Shift> findAllShifts()
-	{
-		List<Employee> dispatchers = getDispatchingEmployees();
-
-		// Verteilen der Employees auf die 52 "Shifts"
-		if (dispatchers != null)
-		{
-			ShiftCalculator sh = new ShiftCalculator();
-			return sh.generateShiftList(dispatchers);
-		}
-
-		return null;
-	}
-
 	/**
 	 * Fetches the list of all employees and filters them by role. Returns all {@link Role#dispatcher}s.
 	 * 
@@ -51,14 +28,14 @@ public class ShiftDaoTestdataProvider
 	 * 
 	 * @see #getEmployeeList()
 	 */
-	private List<Employee> getDispatchingEmployees()
+	public List<Employee> getDispatchingEmployees()
 	{
 		List<Employee> dispatchers = new ArrayList<Employee>();
-		
+
 		for (Employee e : getEmployeeList())
 			if (e.getRole().equals(Role.dispatcher))
 				dispatchers.add(e);
-		
+
 		return dispatchers;
 	}
 
@@ -73,10 +50,11 @@ public class ShiftDaoTestdataProvider
 
 		// Auslesen der json File
 		InputStream is = getClass().getResourceAsStream("/test/UserList.json");
-		@SuppressWarnings("resource") // XXX
+		@SuppressWarnings("resource")
+		// XXX
 		java.util.Scanner s = new Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
-		
+
 		try
 		{
 			is.close();
@@ -87,9 +65,11 @@ public class ShiftDaoTestdataProvider
 		}
 
 		// Serialisieren in eine Liste von Employees
-		Type type = new TypeToken<List<Employee>>(){}.getType();
+		Type type = new TypeToken<List<Employee>>()
+		{
+		}.getType();
 		empList = new Gson().fromJson(json, type);
-		
+
 		return empList;
 	}
 

@@ -29,11 +29,11 @@ public class VacationEvent implements ScheduleEvent, Serializable {
 
 	private String title;
 
-	private String personalTitle;
-
 	private Date startDate;
 
 	private Date endDate;
+
+	private String personalTitle;
 
 	private boolean allDay = true;
 
