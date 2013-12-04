@@ -9,10 +9,10 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.fh_dortmund.ticket_system.base.Week;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.fh_dortmund.ticket_system.entity.Week;
 import static de.fh_dortmund.ticket_system.util.DateUtil.createDate;
 
 import static org.junit.Assert.assertEquals;
@@ -20,11 +20,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ConfliktTest {
-	Conflict conflikt;
+	ConflictFinder conflikt;
 
 	@Before
 	public void setUp() throws Exception {
-		conflikt = new Conflict();
+		conflikt = new ConflictFinder();
 	}
 
 	@Test

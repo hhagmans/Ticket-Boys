@@ -2,6 +2,8 @@ package de.fh_dortmund.ticket_system.base;
 
 import org.junit.Test;
 
+import de.fh_dortmund.ticket_system.entity.Week;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;

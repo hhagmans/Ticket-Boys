@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import de.fh_dortmund.ticket_system.base.Week;
+import de.fh_dortmund.ticket_system.entity.Week;
 
 import static org.junit.Assert.assertEquals;
 

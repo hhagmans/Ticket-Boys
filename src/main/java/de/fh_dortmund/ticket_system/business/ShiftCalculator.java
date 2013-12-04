@@ -21,7 +21,7 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 public class ShiftCalculator
 {
 	@ManagedProperty("#{conflict}")
-	private Conflict			conflict;
+	private ConflictFinder			conflict;
 
 	private static final int	WEEKS_IN_A_YEAR	= 52;
 
@@ -72,12 +72,12 @@ public class ShiftCalculator
 	{
 	}
 
-	public Conflict getConflict()
+	public ConflictFinder getConflict()
 	{
 		return conflict;
 	}
 
-	public void setConflict(Conflict conflict)
+	public void setConflict(ConflictFinder conflict)
 	{
 		this.conflict = conflict;
 	}
