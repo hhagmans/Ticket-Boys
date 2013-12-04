@@ -48,6 +48,7 @@ public class VacationEvent implements ScheduleEvent, Serializable {
 	public VacationEvent(String title, Date startDate, Date endDate,
 			boolean vacation) {
 		this.title = title;
+		this.personalTitle = title;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.setIsVacation(vacation);

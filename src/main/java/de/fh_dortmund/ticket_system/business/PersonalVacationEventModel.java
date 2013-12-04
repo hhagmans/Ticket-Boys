@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.faces.bean.ApplicationScoped;
@@ -14,6 +15,9 @@ import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.VacationEvent;
+import de.jollyday.Holiday;
+import de.jollyday.HolidayCalendar;
+import de.jollyday.HolidayManager;
 
 @ManagedBean
 @ApplicationScoped
@@ -39,14 +43,10 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 		getData().add(vacEvent);
 	}
 
-	public void addEvent(VacationEvent event) {
+	public void addEvent(VacationEvent event, boolean isHoliday) {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
-		if (event.getIsVacation()) {
-			event.setPersonalTitle(event.getTitle());
-		} else {
-			event.setPersonalTitle(event.getTitle());
-		}
+		event.setPersonalTitle(event.getTitle());
 		getData().add(event);
 	}
 
@@ -62,6 +62,7 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 		System.out.println(getAuth().getEmployee().getMyEvents());
 		ArrayList<VacationEvent> myEvents = new ArrayList<VacationEvent>(
 				getData().findByUser(getAuth().getEmployee()));
+		myEvents = addHolidays(myEvents);
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 		ScheduleEvent event;
 		for (VacationEvent vacationEvent : myEvents) {
@@ -69,12 +70,26 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 			event = (ScheduleEvent) vacationEvent;
 			arrayList.add((ScheduleEvent) vacationEvent);
 		}
+
 		if (myEvents != null) {
 			arrayList = new ArrayList<ScheduleEvent>(myEvents);
 		} else {
 			arrayList = new ArrayList<ScheduleEvent>();
 		}
 		return arrayList;
+	}
+
+	public ArrayList<VacationEvent> addHolidays(ArrayList<VacationEvent> vacList) {
+
+		HolidayManager manager = HolidayManager
+				.getInstance(HolidayCalendar.GERMANY);
+		Set<Holiday> holidays = manager.getHolidays(2013, "nw");
+		for (Holiday h : holidays) {
+			vacList.add(new VacationEvent(h.getDescription(), h.getDate()
+					.toDateTimeAtStartOfDay().toDate(), h.getDate()
+					.toDateTimeAtStartOfDay().toDate(), true));
+		}
+		return vacList;
 	}
 
 	@Override
