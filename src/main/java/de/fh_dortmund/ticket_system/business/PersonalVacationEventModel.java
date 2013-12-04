@@ -2,6 +2,7 @@ package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -83,9 +84,28 @@ public class PersonalVacationEventModel implements ScheduleModel, Serializable {
 
 	public ArrayList<VacationEvent> addHolidays(ArrayList<VacationEvent> vacList) {
 
-		HolidayManager manager = HolidayManager
-				.getInstance(HolidayCalendar.GERMANY);
-		Set<Holiday> holidays = manager.getHolidays(2013, "nw");
+		HolidayManager manager;
+		Set<Holiday> holidays = null;
+		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5) {
+			manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
+			if (getAuth().getEmployee().getCity().trim().toLowerCase()
+					.startsWith("marl")) {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "nw");
+			} else if (getAuth().getEmployee().getCity().trim().toLowerCase()
+					.startsWith("frankfurt")) {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "he");
+			} else {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "de");
+			}
+		} else if (String.valueOf(getAuth().getEmployee().getZipcode())
+				.length() == 4) {
+			manager = HolidayManager.getInstance(HolidayCalendar.BULGARIA);
+			holidays = manager.getHolidays(Calendar.getInstance().get(
+					Calendar.YEAR));
+		}
 		for (Holiday h : holidays) {
 			vacList.add(new VacationEvent(h.getDescription(), h.getDate()
 					.toDateTimeAtStartOfDay().toDate(), h.getDate()
