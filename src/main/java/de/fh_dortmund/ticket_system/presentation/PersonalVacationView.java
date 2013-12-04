@@ -38,9 +38,7 @@ public class PersonalVacationView extends BaseView implements Serializable {
 
 	@ManagedProperty("#{EventData}")
 	private EventData data;
-
 	private PersonalEventModel eventModel;
-
 	private ScheduleEvent event = new Event();
 
 	@ManagedProperty("#{conflict}")

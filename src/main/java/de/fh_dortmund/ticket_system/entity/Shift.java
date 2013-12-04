@@ -20,9 +20,7 @@ import javax.persistence.Table;
 @Table(name = "shift")
 @NamedQueries({ @NamedQuery(name = "findByDispatcher", query = "SELECT c FROM Shift c WHERE c.dispatcher = :dispatcher") })
 public class Shift implements Serializable {
-
 	private static final long serialVersionUID = 1L;
-
 	private Week week;
 	private Employee dispatcher;
 	private Employee substitutioner;

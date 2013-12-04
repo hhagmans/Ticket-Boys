@@ -29,7 +29,6 @@ public class TeamVacationView extends BaseView implements Serializable {
 	private EventData data;
 
 	private static final long serialVersionUID = 1L;
-
 	private EventModel eventModel;
 
 	private ScheduleEvent event = new Event();
@@ -74,6 +73,14 @@ public class TeamVacationView extends BaseView implements Serializable {
 		return event;
 	}
 
+	public void setData(EventData data) {
+		this.data = data;
+	}
+
+	public void setEventModel(EventModel eventModel) {
+		this.eventModel = eventModel;
+	}
+
 	public void setEvent(ScheduleEvent event) {
 		this.event = event;
 	}
@@ -86,15 +93,7 @@ public class TeamVacationView extends BaseView implements Serializable {
 		return eventModel;
 	}
 
-	public void setEventModel(EventModel eventModel) {
-		this.eventModel = eventModel;
-	}
-
 	public EventData getData() {
 		return data;
-	}
-
-	public void setData(EventData data) {
-		this.data = data;
 	}
 }

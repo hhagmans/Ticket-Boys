@@ -91,7 +91,6 @@ public class TestdataProvider {
 			ShiftCalculator sh = new ShiftCalculator();
 
 			ConflictFinder conflict = new ConflictFinder();
-
 			EmployeeData ed = new EmployeeData();
 			ed.setDao(new EmployeeDaoSqlite());
 			conflict.setEmployeeData(ed);
