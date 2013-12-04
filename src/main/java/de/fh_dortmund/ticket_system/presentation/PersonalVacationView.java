@@ -36,12 +36,13 @@ public class PersonalVacationView extends BaseView implements Serializable {
 
 	private Employee employee;
 
-	@ManagedProperty("#{EventData}")
+	@ManagedProperty("#{eventData}")
 	private EventData data;
+
 	private PersonalEventModel eventModel;
 	private ScheduleEvent event = new Event();
 
-	@ManagedProperty("#{conflict}")
+	@ManagedProperty("#{conflictFinder}")
 	private ConflictFinder conflictFinder;
 
 	public PersonalVacationView() {
@@ -87,10 +88,10 @@ public class PersonalVacationView extends BaseView implements Serializable {
 
 	public void addEvent(ActionEvent actionEvent) {
 		if (event.getId() == null) {
-			Event vacEvent = (Event) event;
-			vacEvent.setEmployee(getAuth().getEmployee());
-			if (getConflictFinder().checkVacation(vacEvent)) {
-				getEventModel().addEvent(vacEvent);
+			Event tempEvent = (Event) event;
+			tempEvent.setEmployee(getAuth().getEmployee());
+			if (getConflictFinder().checkVacation(tempEvent)) {
+				getEventModel().addEvent(tempEvent);
 			} else {
 				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetretten.");
 			}
