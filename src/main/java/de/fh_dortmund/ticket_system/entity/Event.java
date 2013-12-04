@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import org.primefaces.model.ScheduleEvent;
 
 @Entity
-@Table(name = "vacationEvent")
+@Table(name = "Event")
 @NamedQueries({
 		@NamedQuery(name = "findAll", query = "SELECT v FROM Event v"),
 		@NamedQuery(name = "findByUser", query = "SELECT v FROM Event v WHERE v.employee = :employee") })
