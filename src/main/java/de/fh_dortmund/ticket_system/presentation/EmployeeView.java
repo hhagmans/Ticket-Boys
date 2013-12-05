@@ -13,6 +13,7 @@ import de.fh_dortmund.ticket_system.base.BaseView;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.EmployeeModel;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Role;
 
 @ManagedBean
 @ViewScoped
@@ -83,6 +84,11 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	public void setEmployeeModel(EmployeeModel employeeModel) {
 		this.employeeModel = employeeModel;
+	}
+
+	public Role[] getEmployeeRoles() {
+		Role[] e = { Role.admin, Role.dispatcher, Role.vacationer, Role.guest };
+		return e;
 	}
 
 }

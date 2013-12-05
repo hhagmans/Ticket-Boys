@@ -86,6 +86,19 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
+				
+				<p:column headerText="Role" style="width:14%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{employee.role.roleName}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu id="type" value="#{employee.role}" >
+           		   				<f:selectItems value="#{employeeView.employeeRoles}" var="role"  itemValue="#{role}" itemLabel="#{role.roleName}" />
+              				</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
 				<p:column style="width:6%">
 					<p:rowEditor>
