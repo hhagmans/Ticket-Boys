@@ -13,39 +13,40 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 
 @ManagedBean
 @SessionScoped
-public class RightsManager implements Serializable
-{
-	private static final long	serialVersionUID	= 3813512294586726838L;
+public class RightsManager implements Serializable {
+	private static final long serialVersionUID = 3813512294586726838L;
 
 	@ManagedProperty("#{auth}")
-	private Authentication		auth;
+	private Authentication auth;
 
-	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2)
-	{
+	public boolean userIsAllowedToSwitchShifts(Shift shift1, Shift shift2) {
 		Employee currentUser = getAuth().getEmployee();
 
-		if (currentUser.getRole() != Role.admin)
-		{
-			if (currentUser.equals(shift1.getDispatcher()) || currentUser.equals(shift2.getDispatcher()))
-			{
+		if (currentUser.getRole() != Role.admin) {
+			if (currentUser.equals(shift1.getDispatcher())
+					|| currentUser.equals(shift2.getDispatcher())) {
 				return true;
 			}
-		}
-		else
-		{
+		} else {
 			return true;
 		}
 
 		return false;
 	}
-	
-	public Authentication getAuth()
-	{
+
+	public boolean actUserIsAdmin() {
+		if (getAuth().getEmployee().getRole() == Role.admin) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Authentication getAuth() {
 		return auth;
 	}
 
-	public void setAuth(Authentication auth)
-	{
+	public void setAuth(Authentication auth) {
 		this.auth = auth;
 	}
 }

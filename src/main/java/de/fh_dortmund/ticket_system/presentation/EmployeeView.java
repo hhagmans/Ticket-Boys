@@ -16,73 +16,62 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
 @ViewScoped
-public class EmployeeView extends BaseView implements Serializable
-{
-	private static final long	serialVersionUID	= 1L;
+public class EmployeeView extends BaseView implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private Employee			selectedEmployee;
+	private Employee selectedEmployee;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData				employeeData;
+	EmployeeData employeeData;
 
-	private EmployeeModel		employeeModel;
+	private EmployeeModel employeeModel;
 
-	public EmployeeView()
-	{
+	public EmployeeView() {
 
 	}
 
-	public void onEdit(RowEditEvent event)
-	{
+	public void onEdit(RowEditEvent event) {
 		updateEmployee((Employee) event.getObject());
-		addMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
+		addMessage("Mitarbeiter bearbeitet",
+				((Employee) event.getObject()).getKonzernID());
 	}
 
-	public void onCancel(RowEditEvent event)
-	{
+	public void onCancel(RowEditEvent event) {
 		addMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
 	}
 
-	public void updateEmployee(Employee employee)
-	{
+	public void updateEmployee(Employee employee) {
 		getEmployeeData().update(employee);
 	}
 
-	public void addEmployee(Employee employee)
-	{
+	public void addEmployee(Employee employee) {
 		getEmployeeData().add(employee);
 	}
 
-	public void deleteEmployee(Employee employee)
-	{
+	public void deleteEmployee(Employee employee) {
 		getEmployeeData().delete(employee);
-		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
+		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName()
+				+ " wurde gelöscht");
 	}
 
-	public Employee getSelectedEmployee()
-	{
+	public Employee getSelectedEmployee() {
 		return selectedEmployee;
 	}
 
-	public void setSelectedEmployee(Employee selectedEmployee)
-	{
+	public void setSelectedEmployee(Employee selectedEmployee) {
 		this.selectedEmployee = selectedEmployee;
 	}
 
-	public EmployeeData getEmployeeData()
-	{
+	public EmployeeData getEmployeeData() {
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData)
-	{
+	public void setEmployeeData(EmployeeData employeeData) {
 		this.employeeData = employeeData;
 	}
 
-	public EmployeeModel getEmployeeModel()
-	{
-		if (employeeModel == null)
-		{
+	public EmployeeModel getEmployeeModel() {
+		if (employeeModel == null) {
 			List<Employee> findAllEmployees = getEmployeeData().findAll();
 			System.out.println("all employees: " + findAllEmployees.size());
 			EmployeeModel employeeModel2 = new EmployeeModel(findAllEmployees);
@@ -92,8 +81,7 @@ public class EmployeeView extends BaseView implements Serializable
 		return employeeModel;
 	}
 
-	public void setEmployeeModel(EmployeeModel employeeModel)
-	{
+	public void setEmployeeModel(EmployeeModel employeeModel) {
 		this.employeeModel = employeeModel;
 	}
 

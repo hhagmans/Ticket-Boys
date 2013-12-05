@@ -22,7 +22,8 @@
 					<p:menuitem value="Dispatcher"
 						action="dispatcherList?faces-redirect=true" icon="ui-icon-clock" />
 					<p:menuitem value="Nutzer"
-						action="employeeList?faces-redirect=true" icon="ui-icon-person" />
+						action="employeeList?faces-redirect=true" icon="ui-icon-person"
+						rendered="#{auth.employee.role == 'admin'}" />
 					<p:menuitem value="Team-Abwesenheit"
 						action="teamVacationView?faces-redirect=true" icon="ui-icon-image" />
 					
