@@ -12,7 +12,7 @@
 
 	<ui:define name="content">
 	
-	<h:form id="form">  
+	<h:form id="Kalender">  
   
     <p:growl id="messages" showDetail="true" />  
     <h:outputLabel for="vacationDays" value="Anzahl freier Urlaubstage:"></h:outputLabel>
@@ -63,17 +63,18 @@
             <p:inputMask id="from" value="#{personalVacationView.event.startDate}" mask="99/99/9999">  
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
             </p:inputMask>  
-  
-            <h:outputLabel for="to" value="Bis:" />  
+              <h:outputLabel for="to" value="Bis:" />  
             <p:inputMask id="to" value="#{personalVacationView.event.endDate}" mask="99/99/9999">  
                 <f:convertDateTime pattern="dd/MM/yyyy" />  
             </p:inputMask>
-              <h:selectOneMenu value="{personalVacationView.eventTypeSelection">
-              	<f:selectItem value="Urlaub"/>
-              	<f:selectItem value="Sonstiges"/>
+              
+              <h:outputLabel for="type" value="Abwesenheitsgrund:" />  
+              <h:selectOneMenu id="type" value="#{personalVacationView.event.eventType}" >
+           		   <f:selectItems value="#{personalVacationView.eventTypes}" var="eventType"  itemValue="#{eventType}" itemLabel="#{eventType.label}" />
               </h:selectOneMenu>
-            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" update="vacationDays" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
-            <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" update="vacationDays" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
+              
+            <p:commandButton id="deleteButton" value="Löschen" actionListener="#{personalVacationView.deleteEvent}" update="vacationDays, messages" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
+            <p:commandButton id="addButton" value="Speichern" actionListener="#{personalVacationView.addEvent}" update="vacationDays, messages" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>  
         </h:panelGrid>  
     </p:dialog>  
   

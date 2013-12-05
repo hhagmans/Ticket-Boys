@@ -27,7 +27,8 @@ import de.fh_dortmund.ticket_system.entity.EventType;
 
 @ManagedBean
 @ViewScoped
-public class PersonalVacationView extends BaseView implements Serializable {
+public class PersonalVacationView extends BaseView implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,23 +42,25 @@ public class PersonalVacationView extends BaseView implements Serializable {
 
 	private PersonalEventModel eventModel;
 	private ScheduleEvent event = new Event();
-	private String EventTypeSelection;
 
 	@ManagedProperty("#{conflictFinder}")
 	private ConflictFinder conflictFinder;
 
-	public PersonalVacationView() {
+	public PersonalVacationView()
+	{
 		setEventModel(new PersonalEventModel());
 	}
 
 	@PostConstruct
-	public void init() {
+	public void init()
+	{
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
 		this.setEmployee(getAuth().getEmployee());
 	}
 
-	public Date getRandomDate(Date base) {
+	public Date getRandomDate(Date base)
+	{
 		Calendar date = Calendar.getInstance();
 		date.setTime(base);
 		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random
@@ -67,121 +70,142 @@ public class PersonalVacationView extends BaseView implements Serializable {
 		return date.getTime();
 	}
 
-	public Date getInitialDate() {
+	public Date getInitialDate()
+	{
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY,
-				calendar.get(Calendar.DATE), 0, 0, 0);
+		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
 
 		return calendar.getTime();
 	}
 
-	public PersonalEventModel getEventModel() {
+	public PersonalEventModel getEventModel()
+	{
 		return eventModel;
 	}
 
-	public ScheduleEvent getEvent() {
+	public ScheduleEvent getEvent()
+	{
 		return event;
 	}
 
-	public void setEvent(ScheduleEvent event) {
+	public void setEvent(ScheduleEvent event)
+	{
 		this.event = event;
 	}
 
-	public void addEvent(ActionEvent actionEvent) {
-		if (event.getId() == null) {
+	public void addEvent(ActionEvent actionEvent)
+	{
+		if (event.getId() == null)
+		{
 			Event tempEvent = (Event) event;
 			tempEvent.setEmployee(getAuth().getEmployee());
-			if (getConflictFinder().checkVacation(tempEvent)) {
+			if (getConflictFinder().checkVacation(tempEvent))
+			{
 				getEventModel().addEvent(tempEvent);
-			} else {
-				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetretten.");
 			}
-		} else {
+			else
+			{
+				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetreten.");
+			}
+		}
+		else
+		{
 			getEventModel().updateEvent(event);
 		}
 
 		event = new Event();
 	}
 
-	public void deleteEvent(ActionEvent actionEvent) {
-		if (getEventModel().getEvent(event.getId()) == null) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Ereignis nicht vorhanden",
-					"Ereignis nicht vorhanden und daher nicht löschbar.");
+	public void deleteEvent(ActionEvent actionEvent)
+	{
+		if (getEventModel().getEvent(event.getId()) == null)
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis nicht vorhanden",
+				"Ereignis nicht vorhanden und daher nicht löschbar.");
 
 			addMessage(message);
-		} else {
+		}
+		else
+		{
 			getEventModel().deleteEvent(event);
 		}
 	}
 
-	public void onEventSelect(SelectEvent selectEvent) {
+	public void onEventSelect(SelectEvent selectEvent)
+	{
 		event = (ScheduleEvent) selectEvent.getObject();
 	}
 
-	public void onDateSelect(SelectEvent selectEvent) {
+	public void onDateSelect(SelectEvent selectEvent)
+	{
 		Date selectedDate = (Date) selectEvent.getObject();
 		event = new Event("", selectedDate, selectedDate, EventType.vacation);
 	}
 
-	public void onEventMove(ScheduleEntryMoveEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Ereignis verschoben", "Verschoben um: " + event.getDayDelta()
-						+ " Tage.");
+	public void onEventMove(ScheduleEntryMoveEvent event)
+	{
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
+			+ event.getDayDelta() + " Tage.");
 		getEventModel().updateEvent(event.getScheduleEvent());
 		addMessage(message);
 	}
 
-	public void onEventResize(ScheduleEntryResizeEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Ereignis verändert", "Verändert um: " + event.getDayDelta()
-						+ " Tage.");
-		getEventModel().updateEvent(event.getScheduleEvent(),
-				event.getDayDelta());
+	public void onEventResize(ScheduleEntryResizeEvent event)
+	{
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
+			+ event.getDayDelta() + " Tage.");
+		getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
 		addMessage(message);
 	}
 
-	public Authentication getAuth() {
+	public Authentication getAuth()
+	{
 		return auth;
 	}
 
-	public void setAuth(Authentication auth) {
+	public void setAuth(Authentication auth)
+	{
 		this.auth = auth;
 	}
 
-	public EventData getData() {
+	public EventData getData()
+	{
 		return data;
 	}
 
-	public void setData(EventData data) {
+	public void setData(EventData data)
+	{
 		this.data = data;
 	}
 
-	public void setEventModel(PersonalEventModel eventModel) {
+	public void setEventModel(PersonalEventModel eventModel)
+	{
 		this.eventModel = eventModel;
 	}
 
-	public Employee getEmployee() {
+	public Employee getEmployee()
+	{
 		return employee;
 	}
 
-	public void setEmployee(Employee employee) {
+	public void setEmployee(Employee employee)
+	{
 		this.employee = employee;
 	}
 
-	public ConflictFinder getConflictFinder() {
+	public ConflictFinder getConflictFinder()
+	{
 		return conflictFinder;
 	}
 
-	public void setConflictFinder(ConflictFinder conflictFinder) {
+	public void setConflictFinder(ConflictFinder conflictFinder)
+	{
 		this.conflictFinder = conflictFinder;
 	}
 
-	public String getEventTypeSelection() {
-		return EventTypeSelection;
-	}
-
-	public void setEventTypeSelection(String eventTypeSelection) {
-		EventTypeSelection = eventTypeSelection;
+	public EventType[] getEventTypes()
+	{
+		EventType[] e = { EventType.vacation, EventType.other };
+		return e;
 	}
 }

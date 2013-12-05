@@ -17,7 +17,8 @@ import de.fh_dortmund.ticket_system.entity.Event;
 
 @ManagedBean
 @ApplicationScoped
-public class PersonalEventModel implements ScheduleModel, Serializable {
+public class PersonalEventModel implements ScheduleModel, Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,25 +28,31 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	@ManagedProperty("#{eventData}")
 	private EventData data;
 
-	public PersonalEventModel() {
+	public PersonalEventModel()
+	{
 
 	}
 
 	@Override
-	public void addEvent(ScheduleEvent event) {
-		Event vacEvent = (Event) event;
-		vacEvent.setId(UUID.randomUUID().toString());
-		vacEvent.setEmployee(auth.getEmployee());
-		getData().add(vacEvent);
+	public void addEvent(ScheduleEvent event)
+	{
+		Event newEvent = (Event) event;
+		newEvent.setId(UUID.randomUUID().toString());
+		newEvent.setEmployee(auth.getEmployee());
+		getData().add(newEvent);
 	}
 
-	public void addEvent(Event event) {
+	public void addEvent(Event event)
+	{
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
+		getData().add(event);
 	}
 
-	public boolean deleteEvent(ScheduleEvent event) {
+	@Override
+	public boolean deleteEvent(ScheduleEvent event)
+	{
 		Event vacEvent = (Event) event;
 		getData().delete(vacEvent);
 		// FIXME Return true...
@@ -53,70 +60,84 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	}
 
 	@Override
-	public List<ScheduleEvent> getEvents() {
+	public List<ScheduleEvent> getEvents()
+	{
 		System.out.println(getAuth().getEmployee().getMyEvents());
-		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
-				getAuth().getEmployee()));
+		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(getAuth().getEmployee()));
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 		ScheduleEvent event;
-		for (Event vacationEvent : myEvents) {
+		for (Event vacationEvent : myEvents)
+		{
 			vacationEvent.setTitle(vacationEvent.getPersonalTitle());
-			event = (ScheduleEvent) vacationEvent;
-			arrayList.add((ScheduleEvent) vacationEvent);
+			event = vacationEvent;
+			arrayList.add(vacationEvent);
 		}
-		if (myEvents != null) {
+		if (myEvents != null)
+		{
 			arrayList = new ArrayList<ScheduleEvent>(myEvents);
-		} else {
+		}
+		else
+		{
 			arrayList = new ArrayList<ScheduleEvent>();
 		}
 		return arrayList;
 	}
 
 	@Override
-	public ScheduleEvent getEvent(String id) {
+	public ScheduleEvent getEvent(String id)
+	{
 		return getData().findByID(id);
 	}
 
 	@Override
-	public void updateEvent(ScheduleEvent event) {
+	public void updateEvent(ScheduleEvent event)
+	{
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent);
 	}
 
-	public void updateEvent(ScheduleEvent event, int dayDelta) {
+	public void updateEvent(ScheduleEvent event, int dayDelta)
+	{
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent, dayDelta);
 	}
 
 	@Override
-	public int getEventCount() {
+	public int getEventCount()
+	{
 		List<Event> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
-	public void clear() {
+	public void clear()
+	{
 		List<Event> events = getData().findAll();
-		for (Event vacationEvent : events) {
+		for (Event vacationEvent : events)
+		{
 			getData().delete(vacationEvent);
 		}
 	}
 
-	public EventData getData() {
+	public EventData getData()
+	{
 		return data;
 	}
 
-	public void setData(EventData data) {
+	public void setData(EventData data)
+	{
 		this.data = data;
 	}
 
-	public Authentication getAuth() {
+	public Authentication getAuth()
+	{
 		return auth;
 	}
 
-	public void setAuth(Authentication auth) {
+	public void setAuth(Authentication auth)
+	{
 		this.auth = auth;
 	}
 
