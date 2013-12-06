@@ -21,14 +21,15 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 public class ShiftCalculator
 {
 	@ManagedProperty("#{conflict}")
-	private ConflictFinder			conflict;
+	private ConflictFinder conflict;
 
-	private static final int	WEEKS_IN_A_YEAR	= 52;
+	private static final int CYCLES_TO_BE_GENERATED = 3;
+
+	private static final int WEEKS_IN_A_YEAR = 52;
 
 	/**
-	 * Generates and returns a {@link List} of {@link Shift}s from the given
-	 * list of dispatchers ({@link Employee}s where role =
-	 * {@link Role#dispatcher}).
+	 * Generates and returns a {@link List} of {@link Shift}s from the given list of dispatchers (
+	 * {@link Employee}s where role = {@link Role#dispatcher}).
 	 * 
 	 * @param dispatchers list of employees where role = dispatcher
 	 * @return generated list of shifts
@@ -43,7 +44,7 @@ public class ShiftCalculator
 		 * Compute number of shifts to calculate: for the current week (+1), for
 		 * the upcoming weeks this year and the next year.
 		 */
-		int nshifts = 2 * WEEKS_IN_A_YEAR - week + 1;
+		int nshifts = CYCLES_TO_BE_GENERATED * dispatchers.size();
 
 		List<Shift> shifts = new ArrayList<Shift>(nshifts);
 
@@ -56,7 +57,13 @@ public class ShiftCalculator
 
 			Shift shift = new Shift(year, week, dispatcher, representative);
 			if (conflict.checkShift(shift))
+			{
 				shifts.add(shift);
+
+				//				Date startDate = cal.set
+				//				Date endDate;
+				//				dispatcher.addEvent(new Event("Dispatcher-Schicht", startDate, endDate, EventType.dispatcher));
+			}
 
 			if (++week > WEEKS_IN_A_YEAR)
 			{
