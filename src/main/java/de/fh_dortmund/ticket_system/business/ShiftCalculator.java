@@ -33,6 +33,8 @@ public class ShiftCalculator implements Serializable
 
 	private static final int WEEKS_IN_A_YEAR = 52;
 
+	private Calendar cal;
+
 	/**
 	 * Generates and returns a {@link List} of {@link Shift}s from the given list of dispatchers (
 	 * {@link Employee}s where role = {@link Role#dispatcher}).
@@ -42,7 +44,7 @@ public class ShiftCalculator implements Serializable
 	 */
 	public List<Shift> generateShiftList(List<Employee> dispatchers)
 	{
-		Calendar cal = Calendar.getInstance();
+		cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
 
@@ -66,13 +68,8 @@ public class ShiftCalculator implements Serializable
 			{
 				shifts.add(shift);
 
-				cal.clear();
-				cal.set(Calendar.WEEK_OF_YEAR, week);
-				cal.set(Calendar.YEAR, year);
-				Date startDate = cal.getTime();
-				cal.set(Calendar.WEEK_OF_YEAR, week + 1);
-				cal.add(Calendar.DAY_OF_MONTH, -1);
-				Date endDate = cal.getTime();
+				Date startDate = getStartDateForWeek(year, week);
+				Date endDate = getEndDateForWeek(year, week);
 
 				//dispatcher.addEvent(new Event("Dispatcher-Schicht", startDate, endDate, EventType.dispatcher));
 			}
@@ -85,6 +82,24 @@ public class ShiftCalculator implements Serializable
 		}
 
 		return shifts;
+	}
+
+	private Date getEndDateForWeek(int year, int week)
+	{
+		week++;
+		cal.clear();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.WEEK_OF_YEAR, week);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		return cal.getTime();
+	}
+
+	private Date getStartDateForWeek(int year, int week)
+	{
+		cal.clear();
+		cal.set(Calendar.WEEK_OF_YEAR, week);
+		cal.set(Calendar.YEAR, year);
+		return cal.getTime();
 	}
 
 	public ShiftCalculator()
