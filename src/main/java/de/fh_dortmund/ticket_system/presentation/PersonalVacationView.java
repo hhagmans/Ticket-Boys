@@ -126,16 +126,22 @@ public class PersonalVacationView extends BaseView implements Serializable
 		else
 		{
 			Event e = (Event) event;
-			if (e.getEventType() == EventType.holiday)
+			FacesMessage message = null;
+			switch (e.getEventType())
 			{
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
-					"Sie können keine nationalen Feiertage löschen...");
-
-				addMessage(message);
-			}
-			else
-			{
-				getEventModel().deleteEvent(event);
+				case holiday:
+					message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
+						"Sie können keine nationalen Feiertage löschen...");
+					addMessage(message);
+				break;
+				case dispatcher:
+					message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hier nicht möglich",
+						"Für Änderungen an Ihrer Dispatcher-Schicht wechseln Sie bitte zur Dispatcher-Ansicht!");
+					addMessage(message);
+				break;
+				default:
+					getEventModel().deleteEvent(event);
+				break;
 			}
 		}
 	}
@@ -155,19 +161,25 @@ public class PersonalVacationView extends BaseView implements Serializable
 	{
 
 		Event tempEvent = (Event) event.getScheduleEvent();
-		if (tempEvent.getEventType() == EventType.holiday)
+		FacesMessage message = null;
+		switch (tempEvent.getEventType())
 		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
-				"Sie können keine nationalen Feiertage verschieben...");
-
-			addMessage(message);
-		}
-		else
-		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben",
-				"Verschoben um: " + event.getDayDelta() + " Tage.");
-			getEventModel().updateEvent(tempEvent);
-			addMessage(message);
+			case holiday:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
+					"Sie können keine nationalen Feiertage verschieben...");
+				addMessage(message);
+			break;
+			case dispatcher:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hier nicht möglich",
+					"Für Änderungen an Ihrer Dispatcher-Schicht wechseln Sie bitte zur Dispatcher-Ansicht!");
+				addMessage(message);
+			break;
+			default:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
+					+ event.getDayDelta() + " Tage.");
+				getEventModel().updateEvent(tempEvent);
+				addMessage(message);
+			break;
 		}
 
 	}
@@ -175,21 +187,25 @@ public class PersonalVacationView extends BaseView implements Serializable
 	public void onEventResize(ScheduleEntryResizeEvent event)
 	{
 		Event tempEvent = (Event) event.getScheduleEvent();
-
-		if (tempEvent.getEventType() == EventType.holiday)
+		FacesMessage message = null;
+		switch (tempEvent.getEventType())
 		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Netter Versuch..",
-				".. aber das Leben ist kein Ponyhof. Feiertage kann man nicht einfach verlängern.");
-
-			addMessage(message);
-
-		}
-		else
-		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
-				+ event.getDayDelta() + " Tage.");
-			getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
-			addMessage(message);
+			case holiday:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Netter Versuch..",
+					".. aber das Leben ist kein Ponyhof. Feiertage kann man nicht einfach verlängern.");
+				addMessage(message);
+			break;
+			case dispatcher:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hier nicht möglich",
+					"Für Änderungen an Ihrer Dispatcher-Schicht wechseln Sie bitte zur Dispatcher-Ansicht!");
+				addMessage(message);
+			break;
+			default:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
+					+ event.getDayDelta() + " Tage.");
+				getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
+				addMessage(message);
+			break;
 		}
 	}
 

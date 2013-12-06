@@ -15,6 +15,7 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
+import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
 import de.jollyday.Holiday;
@@ -68,7 +69,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	@Override
 	public List<ScheduleEvent> getEvents()
 	{
-		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(getAuth().getEmployee()));
+		Employee employee = getAuth().getEmployee();
+		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(employee));
 		myEvents = addHolidays(myEvents);
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 		ScheduleEvent event;
