@@ -5,9 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -19,8 +17,7 @@ public class DateUtilTest {
 	public void testCreateDate() {
 		Date startDate = DateUtil.createDate(2013, 11, 25);
 
-		Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("CET"),
-				Locale.GERMANY);
+		Calendar cal = new GregorianCalendar();
 		cal.setTime(startDate);
 
 		assertEquals(2013, cal.get(Calendar.YEAR));
@@ -64,7 +61,11 @@ public class DateUtilTest {
 		// 12 August 2011 -> Week 32
 		// 13 April 2012 -> Week 15
 		// (52 - 32 +1 ) + 15 = 35
-		assertEquals(36, count.size());
+		if (new GregorianCalendar().getFirstDayOfWeek() == 2) {
+			assertEquals(36, count.size());
+		} else {
+			assertEquals(35, count.size());
+		}
 	}
 
 	@Test

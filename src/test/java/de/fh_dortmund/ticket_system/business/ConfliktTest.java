@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +55,11 @@ public class ConfliktTest {
 		// (52-35+1) + 15 = 35
 		// Einschließlich Week 35 -> +1
 		// +1Week vom zweiten Event
-		assertEquals(37, count.size());
+		if (new GregorianCalendar().getFirstDayOfWeek() == 2) {
+			assertEquals(37, count.size());
+		} else {
+			assertEquals(36, count.size());
+		}
 	}
 
 	@Test

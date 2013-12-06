@@ -5,9 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 import de.fh_dortmund.ticket_system.entity.Week;
 
@@ -18,8 +16,7 @@ import de.fh_dortmund.ticket_system.entity.Week;
  * 
  */
 public class DateUtil {
-	private static Calendar cal = new GregorianCalendar(
-			TimeZone.getTimeZone("CET"), Locale.GERMANY);
+	private static Calendar cal = new GregorianCalendar();
 
 	/**
 	 * Checks if two dates have the same weeknumber.
