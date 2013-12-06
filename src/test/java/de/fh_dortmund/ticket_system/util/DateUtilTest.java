@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -18,7 +19,8 @@ public class DateUtilTest {
 	public void testCreateDate() {
 		Date startDate = DateUtil.createDate(2013, 11, 25);
 
-		Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("CET"));
+		Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("CET"),
+				Locale.GERMANY);
 		cal.setTime(startDate);
 
 		assertEquals(2013, cal.get(Calendar.YEAR));
