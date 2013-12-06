@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class DateUtilTest {
 	public void testCreateDate() {
 		Date startDate = DateUtil.createDate(2013, 11, 25);
 
-		Calendar cal = new GregorianCalendar();
+		Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("CET"));
 		cal.setTime(startDate);
 
 		assertEquals(2013, cal.get(Calendar.YEAR));

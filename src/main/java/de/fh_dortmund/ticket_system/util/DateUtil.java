@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
 
 import de.fh_dortmund.ticket_system.entity.Week;
 
@@ -13,15 +14,16 @@ import de.fh_dortmund.ticket_system.entity.Week;
  * Helperclass for the Date and Week classes.
  * 
  * @author Alex Hofmann
- *
+ * 
  */
 public class DateUtil {
-	private static Calendar cal = new GregorianCalendar();
-	
+	private static Calendar cal = new GregorianCalendar(
+			TimeZone.getTimeZone("CET"));
+
 	/**
 	 * Checks if two dates have the same weeknumber.
 	 * 
-	 * @param firstDate 
+	 * @param firstDate
 	 * @param secondDate
 	 * @return true if same year and week, else false
 	 */
@@ -40,7 +42,8 @@ public class DateUtil {
 	 * @return weeknumber
 	 */
 	public static int getWeekNumber(Date date) {
-		int weeknumber = Integer.valueOf(new SimpleDateFormat("w").format(date));
+		int weeknumber = Integer
+				.valueOf(new SimpleDateFormat("w").format(date));
 
 		return weeknumber;
 	}
@@ -56,10 +59,10 @@ public class DateUtil {
 
 		return year;
 	}
-	
+
 	/**
-	 * Creates a date object with the given parameters.
-	 * Uses a GregorianCalendar.
+	 * Creates a date object with the given parameters. Uses a
+	 * GregorianCalendar.
 	 * 
 	 * @param year
 	 * @param month
@@ -72,7 +75,7 @@ public class DateUtil {
 
 		return new Date(cal.getTime().getTime());
 	}
-	
+
 	/**
 	 * Counts the weeks between two dates and return a Set of week object.
 	 * 
