@@ -23,8 +23,7 @@ import de.jollyday.HolidayManager;
 
 @ManagedBean
 @ApplicationScoped
-public class PersonalEventModel implements ScheduleModel, Serializable
-{
+public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,22 +33,19 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	@ManagedProperty("#{eventData}")
 	private EventData data;
 
-	public PersonalEventModel()
-	{
+	public PersonalEventModel() {
 
 	}
 
 	@Override
-	public void addEvent(ScheduleEvent event)
-	{
+	public void addEvent(ScheduleEvent event) {
 		Event newEvent = (Event) event;
 		newEvent.setId(UUID.randomUUID().toString());
 		newEvent.setEmployee(auth.getEmployee());
 		getData().add(newEvent);
 	}
 
-	public void addEvent(Event event)
-	{
+	public void addEvent(Event event) {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
@@ -57,8 +53,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	}
 
 	@Override
-	public boolean deleteEvent(ScheduleEvent event)
-	{
+	public boolean deleteEvent(ScheduleEvent event) {
 		Event vacEvent = (Event) event;
 		getData().delete(vacEvent);
 		// FIXME Return true...
@@ -66,118 +61,105 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	}
 
 	@Override
-	public List<ScheduleEvent> getEvents()
-	{
-		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(getAuth().getEmployee()));
+	public List<ScheduleEvent> getEvents() {
+		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
+				getAuth().getEmployee()));
 		myEvents = addHolidays(myEvents);
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 		ScheduleEvent event;
-		for (Event vacationEvent : myEvents)
-		{
+		for (Event vacationEvent : myEvents) {
 			vacationEvent.setTitle(vacationEvent.getPersonalTitle());
 			event = vacationEvent;
 			arrayList.add(vacationEvent);
 		}
-		if (myEvents != null)
-		{
+		if (myEvents != null) {
 			arrayList = new ArrayList<ScheduleEvent>(myEvents);
-		}
-		else
-		{
+		} else {
 			arrayList = new ArrayList<ScheduleEvent>();
 		}
 		return arrayList;
 	}
 
-	public ArrayList<Event> addHolidays(ArrayList<Event> vacList)
-	{
+	public ArrayList<Event> addHolidays(ArrayList<Event> vacList) {
 
 		HolidayManager manager;
 		Set<Holiday> holidays = null;
-		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5)
-		{
+		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5) {
 			manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
-			if (getAuth().getEmployee().getCity().trim().toLowerCase().startsWith("marl"))
-			{
-				holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR), "nw");
+			if (getAuth().getEmployee().getCity().trim().toLowerCase()
+					.startsWith("marl")) {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "nw");
+			} else if (getAuth().getEmployee().getCity().trim().toLowerCase()
+					.startsWith("frankfurt")) {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "he");
+			} else {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "de");
 			}
-			else if (getAuth().getEmployee().getCity().trim().toLowerCase().startsWith("frankfurt"))
-			{
-				holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR), "he");
-			}
-			else
-			{
-				holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR), "de");
-			}
-		}
-		else if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 4)
-		{
+		} else if (String.valueOf(getAuth().getEmployee().getZipcode())
+				.length() == 4) {
 			manager = HolidayManager.getInstance(HolidayCalendar.BULGARIA);
-			holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR));
+			holidays = manager.getHolidays(Calendar.getInstance().get(
+					Calendar.YEAR));
 		}
-		for (Holiday h : holidays)
-		{
-			vacList.add(new Event(h.getDescription(), h.getDate().toDateTimeAtStartOfDay().toDate(), h.getDate()
-				.toDateTimeAtStartOfDay().toDate(), EventType.vacation));
+		Event event;
+		for (Holiday h : holidays) {
+			event = new Event(h.getDescription(), h.getDate()
+					.toDateTimeAtStartOfDay().toDate(), h.getDate()
+					.toDateTimeAtStartOfDay().toDate(), EventType.vacation);
+			event.setEditable(false);
+			vacList.add(event);
 		}
 		return vacList;
 	}
 
 	@Override
-	public ScheduleEvent getEvent(String id)
-	{
+	public ScheduleEvent getEvent(String id) {
 		return getData().findByID(id);
 	}
 
 	@Override
-	public void updateEvent(ScheduleEvent event)
-	{
+	public void updateEvent(ScheduleEvent event) {
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent);
 	}
 
-	public void updateEvent(ScheduleEvent event, int dayDelta)
-	{
+	public void updateEvent(ScheduleEvent event, int dayDelta) {
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent, dayDelta);
 	}
 
 	@Override
-	public int getEventCount()
-	{
+	public int getEventCount() {
 		List<Event> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
-	public void clear()
-	{
+	public void clear() {
 		List<Event> events = getData().findAll();
-		for (Event vacationEvent : events)
-		{
+		for (Event vacationEvent : events) {
 			getData().delete(vacationEvent);
 		}
 	}
 
-	public EventData getData()
-	{
+	public EventData getData() {
 		return data;
 	}
 
-	public void setData(EventData data)
-	{
+	public void setData(EventData data) {
 		this.data = data;
 	}
 
-	public Authentication getAuth()
-	{
+	public Authentication getAuth() {
 		return auth;
 	}
 
-	public void setAuth(Authentication auth)
-	{
+	public void setAuth(Authentication auth) {
 		this.auth = auth;
 	}
 

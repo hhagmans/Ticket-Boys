@@ -146,7 +146,17 @@ public class PersonalVacationView extends BaseView implements Serializable
 	{
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
 			+ event.getDayDelta() + " Tage.");
-		getEventModel().updateEvent(event.getScheduleEvent());
+
+		Event tempEvent = (Event) event.getScheduleEvent();
+		if (tempEvent.getEventType() == EventType.holiday)
+		{
+
+		}
+		else
+		{
+			getEventModel().updateEvent(tempEvent);
+		}
+
 		addMessage(message);
 	}
 

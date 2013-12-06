@@ -13,76 +13,71 @@ import de.fh_dortmund.ticket_system.base.BaseView;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.EmployeeModel;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Role;
 
 @ManagedBean
 @ViewScoped
-public class EmployeeView extends BaseView implements Serializable
-{
-	private static final long	serialVersionUID	= 1L;
+public class EmployeeView extends BaseView implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private Employee			selectedEmployee;
+	private Employee selectedEmployee;
+
+	private Employee newRec = new Employee("new", "first name", "last name",
+			"city", 12345, Role.admin, 0, 0);
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData				employeeData;
+	EmployeeData employeeData;
 
-	private EmployeeModel		employeeModel;
+	private EmployeeModel employeeModel;
 
-	public EmployeeView()
-	{
+	public EmployeeView() {
 
 	}
 
-	public void onEdit(RowEditEvent event)
-	{
+	public void onEdit(RowEditEvent event) {
 		updateEmployee((Employee) event.getObject());
-		addMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
+		addMessage("Mitarbeiter bearbeitet",
+				((Employee) event.getObject()).getKonzernID());
 	}
 
-	public void onCancel(RowEditEvent event)
-	{
+	public void onCancel(RowEditEvent event) {
 		addMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
 	}
 
-	public void updateEmployee(Employee employee)
-	{
+	public void updateEmployee(Employee employee) {
 		getEmployeeData().update(employee);
 	}
 
-	public void addEmployee(Employee employee)
-	{
-		getEmployeeData().add(employee);
+	public void addEmployee() {
+		getEmployeeData().add(getNewRec());
+		addMessage("Mitarbeiter hinzugefügt", "Der Mitarbeiter "
+				+ getNewRec().getFullName() + " wurde erfolgreich hinzugefügt");
 	}
 
-	public void deleteEmployee(Employee employee)
-	{
+	public void deleteEmployee(Employee employee) {
 		getEmployeeData().delete(employee);
-		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
+		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName()
+				+ " wurde gelöscht");
 	}
 
-	public Employee getSelectedEmployee()
-	{
+	public Employee getSelectedEmployee() {
 		return selectedEmployee;
 	}
 
-	public void setSelectedEmployee(Employee selectedEmployee)
-	{
+	public void setSelectedEmployee(Employee selectedEmployee) {
 		this.selectedEmployee = selectedEmployee;
 	}
 
-	public EmployeeData getEmployeeData()
-	{
+	public EmployeeData getEmployeeData() {
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData)
-	{
+	public void setEmployeeData(EmployeeData employeeData) {
 		this.employeeData = employeeData;
 	}
 
-	public EmployeeModel getEmployeeModel()
-	{
-		if (employeeModel == null)
-		{
+	public EmployeeModel getEmployeeModel() {
+		if (employeeModel == null) {
 			List<Employee> findAllEmployees = getEmployeeData().findAll();
 			System.out.println("all employees: " + findAllEmployees.size());
 			EmployeeModel employeeModel2 = new EmployeeModel(findAllEmployees);
@@ -92,9 +87,21 @@ public class EmployeeView extends BaseView implements Serializable
 		return employeeModel;
 	}
 
-	public void setEmployeeModel(EmployeeModel employeeModel)
-	{
+	public void setEmployeeModel(EmployeeModel employeeModel) {
 		this.employeeModel = employeeModel;
+	}
+
+	public Employee getNewRec() {
+		return newRec;
+	}
+
+	public void setNewRec(Employee newRec) {
+		this.newRec = newRec;
+	}
+
+	public Role[] getEmployeeRoles() {
+		Role[] e = { Role.admin, Role.dispatcher, Role.vacationer, Role.guest };
+		return e;
 	}
 
 }

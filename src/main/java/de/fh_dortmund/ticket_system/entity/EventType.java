@@ -1,7 +1,7 @@
 package de.fh_dortmund.ticket_system.entity;
 
 public enum EventType {
-	vacation("Urlaub"), other("Sonstiges"), dispatcher("Dispatcher-Dienst");
+	vacation("Urlaub"), other("Sonstiges"), dispatcher("Dispatcher-Dienst"), holiday("Feiertag");
 
 	private String label;
 

@@ -81,3 +81,8 @@ body {
 .table-no-select-all .ui-chkbox-all {
      display: none !important;
 }
+
+.newEmpPanel tr, .newEmpPanel td {
+	background: none !important;
+border: none !important;
+}
