@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "employee")
-public class Employee implements Serializable {
+public class Employee implements Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,106 +37,117 @@ public class Employee implements Serializable {
 	private int maxVacationCount = 30;
 	private int freeVacationCount;
 
-	private Set<Event> myEvents;
+	private Set<Event> myEvents = new HashSet<Event>();
 
-	public Employee() {
+	public Employee()
+	{
 		this.freeVacationCount = maxVacationCount - vacationCount;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Employee) {
-			Employee emp = (Employee) obj;
-
-			return emp.getKonzernID().equals(this.getKonzernID());
-
-		}
-		return false;
-	}
-
 	@Id
-	public String getKonzernID() {
+	public String getKonzernID()
+	{
 		return konzernID;
 	}
 
-	public void setKonzernID(String konzernID) {
+	public void setKonzernID(String konzernID)
+	{
 		this.konzernID = konzernID;
 	}
 
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName)
+	{
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public String getLastName()
+	{
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(String lastName)
+	{
 		this.lastName = lastName;
 	}
 
-	public String getCity() {
+	public String getCity()
+	{
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(String city)
+	{
 		this.city = city;
 	}
 
-	public int getZipcode() {
+	public int getZipcode()
+	{
 		return zipcode;
 	}
 
-	public void setZipcode(int zipcode) {
+	public void setZipcode(int zipcode)
+	{
 		this.zipcode = zipcode;
 	}
 
-	public Role getRole() {
+	public Role getRole()
+	{
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(Role role)
+	{
 		this.role = role;
 	}
 
-	public int getScore() {
+	public int getScore()
+	{
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(int score)
+	{
 		this.score = score;
 	}
 
-	public void incrementScore() {
+	public void incrementScore()
+	{
 		this.score++;
 	}
 
-	public void decrementScore() {
+	public void decrementScore()
+	{
 		this.score--;
 	}
 
-	public int getVacationCount() {
+	public int getVacationCount()
+	{
 		return vacationCount;
 	}
 
-	public void setVacationCount(int vacationCount) {
+	public void setVacationCount(int vacationCount)
+	{
 		this.vacationCount = vacationCount;
 	}
 
-	public void incrementVacationCount(int value) {
+	public void incrementVacationCount(int value)
+	{
 		this.vacationCount += value;
 	}
 
-	public void decrementVacationCount(int value) {
+	public void decrementVacationCount(int value)
+	{
 		this.vacationCount -= value;
 	}
 
-	public Employee(String konzernID, String firstName, String lastName,
-			String city, int zipcode, Role role, int score, int vacationCount) {
+	public Employee(String konzernID, String firstName, String lastName, String city, int zipcode, Role role,
+		int score, int vacationCount)
+	{
 		this.konzernID = konzernID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -147,46 +160,118 @@ public class Employee implements Serializable {
 	}
 
 	@javax.persistence.Transient
-	public String getFullName() {
+	public String getFullName()
+	{
 		return firstName + " " + lastName;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "vacations", joinColumns = { @JoinColumn(name = "employeeID") }, inverseJoinColumns = { @JoinColumn(name = "vacationID") })
-	public Set<Event> getMyEvents() {
+	public Set<Event> getMyEvents()
+	{
 		return myEvents;
 	}
 
-	public void setMyEvents(Set<Event> myEvents) {
+	public void setMyEvents(Set<Event> myEvents)
+	{
 		this.myEvents = myEvents;
 	}
 
-	public void addEvent(Event event) {
+	public void addEvent(Event event)
+	{
 		this.myEvents.add(event);
 	}
 
-	public void deleteEvent(Event event) {
-
+	public void deleteEvent(Event event)
+	{
+		this.myEvents.remove(event);
 	}
 
-	public int getMaxVacationCount() {
+	public int getMaxVacationCount()
+	{
 		return maxVacationCount;
 	}
 
-	public void setFreeVacationCount(int freeVacationDays) {
+	public void setFreeVacationCount(int freeVacationDays)
+	{
 		this.freeVacationCount = freeVacationDays;
 	}
 
-	public int getFreeVacationCount() {
+	public int getFreeVacationCount()
+	{
 		return freeVacationCount;
 	}
 
-	public void setMaxVacationCount(int maxVacationCount) {
+	public void setMaxVacationCount(int maxVacationCount)
+	{
 		this.maxVacationCount = maxVacationCount;
 	}
 
-	public void refreshFreeVacationDays() {
+	public void refreshFreeVacationDays()
+	{
 		this.freeVacationCount = maxVacationCount - vacationCount;
 	}
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((firstName == null) ? 0 : firstName.hashCode());
+		result = (prime * result) + ((konzernID == null) ? 0 : konzernID.hashCode());
+		result = (prime * result) + ((lastName == null) ? 0 : lastName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (getClass() != obj.getClass())
+		{
+			return false;
+		}
+		Employee other = (Employee) obj;
+		if (firstName == null)
+		{
+			if (other.firstName != null)
+			{
+				return false;
+			}
+		}
+		else if (!firstName.equals(other.firstName))
+		{
+			return false;
+		}
+		if (konzernID == null)
+		{
+			if (other.konzernID != null)
+			{
+				return false;
+			}
+		}
+		else if (!konzernID.equals(other.konzernID))
+		{
+			return false;
+		}
+		if (lastName == null)
+		{
+			if (other.lastName != null)
+			{
+				return false;
+			}
+		}
+		else if (!lastName.equals(other.lastName))
+		{
+			return false;
+		}
+		return true;
+	}
 }

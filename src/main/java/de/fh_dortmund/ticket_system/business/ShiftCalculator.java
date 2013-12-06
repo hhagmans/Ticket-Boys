@@ -1,9 +1,12 @@
 package de.fh_dortmund.ticket_system.business;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
@@ -18,8 +21,11 @@ import de.fh_dortmund.ticket_system.entity.Shift;
  * 
  */
 @ManagedBean
-public class ShiftCalculator
+@ApplicationScoped
+public class ShiftCalculator implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	@ManagedProperty("#{conflict}")
 	private ConflictFinder conflict;
 
@@ -60,9 +66,15 @@ public class ShiftCalculator
 			{
 				shifts.add(shift);
 
-				//				Date startDate = cal.set
-				//				Date endDate;
-				//				dispatcher.addEvent(new Event("Dispatcher-Schicht", startDate, endDate, EventType.dispatcher));
+				cal.clear();
+				cal.set(Calendar.WEEK_OF_YEAR, week);
+				cal.set(Calendar.YEAR, year);
+				Date startDate = cal.getTime();
+				cal.set(Calendar.WEEK_OF_YEAR, week + 1);
+				cal.add(Calendar.DAY_OF_MONTH, -1);
+				Date endDate = cal.getTime();
+
+				//dispatcher.addEvent(new Event("Dispatcher-Schicht", startDate, endDate, EventType.dispatcher));
 			}
 
 			if (++week > WEEKS_IN_A_YEAR)
