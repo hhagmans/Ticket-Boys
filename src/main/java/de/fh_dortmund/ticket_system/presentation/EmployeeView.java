@@ -22,6 +22,9 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	private Employee selectedEmployee;
 
+	private Employee newRec = new Employee("new", "first name", "last name",
+			"city", 12345, Role.admin, 0, 0);
+
 	@ManagedProperty("#{employeeData}")
 	EmployeeData employeeData;
 
@@ -45,8 +48,10 @@ public class EmployeeView extends BaseView implements Serializable {
 		getEmployeeData().update(employee);
 	}
 
-	public void addEmployee(Employee employee) {
-		getEmployeeData().add(employee);
+	public void addEmployee() {
+		getEmployeeData().add(getNewRec());
+		addMessage("Mitarbeiter hinzugefügt", "Der Mitarbeiter "
+				+ getNewRec().getFullName() + " wurde erfolgreich hinzugefügt");
 	}
 
 	public void deleteEmployee(Employee employee) {
@@ -84,6 +89,14 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	public void setEmployeeModel(EmployeeModel employeeModel) {
 		this.employeeModel = employeeModel;
+	}
+
+	public Employee getNewRec() {
+		return newRec;
+	}
+
+	public void setNewRec(Employee newRec) {
+		this.newRec = newRec;
 	}
 
 	public Role[] getEmployeeRoles() {

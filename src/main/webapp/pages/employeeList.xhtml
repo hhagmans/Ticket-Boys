@@ -20,7 +20,7 @@
 			</p:confirmDialog>
 
 
-			<p:dataTable var="employee" value="#{employeeView.employeeModel}"
+			<p:dataTable var="employee" widgetVar="employeeList" value="#{employeeView.employeeModel}"
 				id="employeeList" editable="true">
 
 				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
@@ -104,14 +104,41 @@
 					<p:rowEditor>
 					</p:rowEditor>
 					<p:commandButton id="deleteEmployeeButton"
-						actionListener="#{employeeView.deleteEmployee(employee)}"
-						update=":employeeListMainform:employeeList, :employeeListMainform:messages"
-						icon="ui-icon-circle-close" title="Löschen">
+						action="#{employeeView.deleteEmployee(employee)}"
+						update=":employeeListMainform:messages, :employeeListMainform:employeeList"
+						icon="ui-icon-circle-close" title="Löschen" oncomplete="PF('employeeList').update">
 						<p:confirm header="Bestätigung"
 							message="Möchten Sie diesen Mitarbeiter wirklich löschen?"
 							icon="ui-icon-alert" />
 					</p:commandButton>
 				</p:column>
+				
+				<f:facet title="Neuer User" name="footer">
+				<h:outputLabel style="align:center" value="Neuer User"/>
+         			<h:panelGrid title="Neuer User" styleClass="newEmpPanel" id="newEmpPanel" columns="6" border="0"  >
+					    <h:outputLabel value="Konzern ID"/>
+					    <h:outputLabel value="Vorname"/>
+					    <h:outputLabel value="Nachname"/>
+					    <h:outputLabel value="Arbeitsort"/>
+					    <h:outputLabel value="PLZ"/>
+					    <h:outputLabel value="Role"/>
+					    <p:inputText value="#{employeeView.newRec.konzernID}" />
+					    
+					    <p:inputText value="#{employeeView.newRec.firstName}" />
+					    
+					    <p:inputText value="#{employeeView.newRec.lastName}" />
+					    
+					    <p:inputText value="#{employeeView.newRec.city}" />
+					    
+					    <p:inputText value="#{employeeView.newRec.zipcode}" />
+					    
+					    <h:selectOneMenu id="newEmpType" value="#{employeeView.newRec.role}" >
+		           		   	<f:selectItems value="#{employeeView.employeeRoles}" var="role"  itemValue="#{role}" itemLabel="#{role.roleName}" />
+		              	</h:selectOneMenu>
+					</h:panelGrid>
+					<p:commandButton style="align:center" id="addEmployeeButton" icon="ui-icon-circle-plus" actionListener="#{employeeView.addEmployee}"
+					value="Submit" update=":employeeListMainform:employeeList, :employeeListMainform:messages" oncomplete="PF('employeeList').update" />
+     			</f:facet>
 			</p:dataTable>
 
 		</h:form>

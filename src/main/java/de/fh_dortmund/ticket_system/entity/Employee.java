@@ -143,6 +143,7 @@ public class Employee implements Serializable {
 		this.role = role;
 		this.score = score;
 		this.vacationCount = vacationCount;
+		this.freeVacationCount = maxVacationCount - vacationCount;
 	}
 
 	@javax.persistence.Transient
