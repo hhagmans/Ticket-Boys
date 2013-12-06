@@ -12,6 +12,7 @@ import org.primefaces.event.RowEditEvent;
 import de.fh_dortmund.ticket_system.base.BaseView;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.EmployeeModel;
+import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 
@@ -27,6 +28,9 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	@ManagedProperty("#{employeeData}")
 	EmployeeData employeeData;
+
+	@ManagedProperty("#{shiftData}")
+	ShiftData shiftData;
 
 	private EmployeeModel employeeModel;
 
@@ -56,6 +60,7 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	public void deleteEmployee(Employee employee) {
 		getEmployeeData().delete(employee);
+		getShiftData().deleteEmployeeFromShifts(employee);
 		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName()
 				+ " wurde gelöscht");
 	}
@@ -97,6 +102,14 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	public void setNewRec(Employee newRec) {
 		this.newRec = newRec;
+	}
+
+	public ShiftData getShiftData() {
+		return shiftData;
+	}
+
+	public void setShiftData(ShiftData shiftData) {
+		this.shiftData = shiftData;
 	}
 
 	public Role[] getEmployeeRoles() {
