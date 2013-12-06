@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -47,6 +46,27 @@ public class Event implements ScheduleEvent, Serializable
 
 	public Event(String title, Date startDate, Date endDate, EventType eventType)
 	{
+		this.title = title;
+		this.personalTitle = title;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.setEventType(eventType);
+	}
+
+	public Event(String id, String title, Date startDate, Date endDate, EventType eventType)
+	{
+		this.id = id;
+		this.title = title;
+		this.personalTitle = title;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.setEventType(eventType);
+	}
+
+	public Event(String id, String title, Date startDate, Date endDate, EventType eventType, Employee emp)
+	{
+		this.employee = emp;
+		this.id = id;
 		this.title = title;
 		this.personalTitle = title;
 		this.startDate = startDate;
@@ -146,7 +166,8 @@ public class Event implements ScheduleEvent, Serializable
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinTable(name = "vacations", joinColumns = { @JoinColumn(name = "vacationID") }, inverseJoinColumns = { @JoinColumn(name = "employeeID") })
+	@JoinTable(name = "employeeID")
+	//	@JoinTable(name = "vacations", joinColumns = { @JoinColumn(name = "vacationID") }, inverseJoinColumns = { @JoinColumn(name = "employeeID") })
 	public Employee getEmployee()
 	{
 		return employee;

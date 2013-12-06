@@ -99,14 +99,12 @@ public class PersonalVacationView extends BaseView implements Serializable
 		{
 			Event tempEvent = (Event) event;
 			tempEvent.setEmployee(getAuth().getEmployee());
-			if (getConflictFinder().checkVacation(tempEvent))
+			if (!getConflictFinder().checkVacation(tempEvent))
 			{
-				getEventModel().addEvent(tempEvent);
+				addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
+					"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
 			}
-			else
-			{
-				addMessage("Es ist ein Konflikt mit dem Dispatcher-Plan aufgetreten.");
-			}
+			getEventModel().addEvent(tempEvent);
 		}
 		else
 		{
@@ -127,7 +125,18 @@ public class PersonalVacationView extends BaseView implements Serializable
 		}
 		else
 		{
-			getEventModel().deleteEvent(event);
+			Event e = (Event) event;
+			if (e.getEventType() == EventType.holiday)
+			{
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
+					"Sie können keine nationalen Feiertage löschen...");
+
+				addMessage(message);
+			}
+			else
+			{
+				getEventModel().deleteEvent(event);
+			}
 		}
 	}
 
@@ -144,28 +153,44 @@ public class PersonalVacationView extends BaseView implements Serializable
 
 	public void onEventMove(ScheduleEntryMoveEvent event)
 	{
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
-			+ event.getDayDelta() + " Tage.");
 
 		Event tempEvent = (Event) event.getScheduleEvent();
 		if (tempEvent.getEventType() == EventType.holiday)
 		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
+				"Sie können keine nationalen Feiertage verschieben...");
 
+			addMessage(message);
 		}
 		else
 		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben",
+				"Verschoben um: " + event.getDayDelta() + " Tage.");
 			getEventModel().updateEvent(tempEvent);
+			addMessage(message);
 		}
 
-		addMessage(message);
 	}
 
 	public void onEventResize(ScheduleEntryResizeEvent event)
 	{
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
-			+ event.getDayDelta() + " Tage.");
-		getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
-		addMessage(message);
+		Event tempEvent = (Event) event.getScheduleEvent();
+
+		if (tempEvent.getEventType() == EventType.holiday)
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Netter Versuch..",
+				".. aber das Leben ist kein Ponyhof. Feiertage kann man nicht einfach verlängern.");
+
+			addMessage(message);
+
+		}
+		else
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
+				+ event.getDayDelta() + " Tage.");
+			getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
+			addMessage(message);
+		}
 	}
 
 	public Authentication getAuth()

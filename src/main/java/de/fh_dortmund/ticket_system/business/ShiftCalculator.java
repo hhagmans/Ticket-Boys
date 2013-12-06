@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Event;
+import de.fh_dortmund.ticket_system.entity.EventType;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
@@ -71,7 +74,8 @@ public class ShiftCalculator implements Serializable
 				Date startDate = getStartDateForWeek(year, week);
 				Date endDate = getEndDateForWeek(year, week);
 
-				//dispatcher.addEvent(new Event("Dispatcher-Schicht", startDate, endDate, EventType.dispatcher));
+				dispatcher.addEvent(new Event(UUID.randomUUID().toString(), "Dispatcher-Schicht", startDate, endDate,
+					EventType.dispatcher, dispatcher));
 			}
 
 			if (++week > WEEKS_IN_A_YEAR)

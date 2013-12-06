@@ -118,8 +118,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 		Event event;
 		for (Holiday h : holidays)
 		{
-			event = new Event(h.getDescription(), h.getDate().toDateTimeAtStartOfDay().toDate(), h.getDate()
-				.toDateTimeAtStartOfDay().toDate(), EventType.holiday);
+			event = new Event(UUID.randomUUID().toString(), h.getDescription(), h.getDate().toDateTimeAtStartOfDay()
+				.toDate(), h.getDate().toDateTimeAtStartOfDay().toDate(), EventType.holiday);
 			event.setEditable(false);
 			vacList.add(event);
 		}
