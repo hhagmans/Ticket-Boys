@@ -15,8 +15,7 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 /**
- * Dieses Objekt berechnet und verwaltet den Dispatcher-Schichtplan (Liste von
- * Shift-Objekten)
+ * Dieses Objekt verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
  * 
  * @author Ticket-Boys
  * 

@@ -3,6 +3,7 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -18,14 +19,15 @@ import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
+import de.fh_dortmund.ticket_system.entity.Shift;
+import de.fh_dortmund.ticket_system.entity.Week;
 import de.jollyday.Holiday;
 import de.jollyday.HolidayCalendar;
 import de.jollyday.HolidayManager;
 
 @ManagedBean
 @ApplicationScoped
-public class PersonalEventModel implements ScheduleModel, Serializable
-{
+public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,22 +37,21 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	@ManagedProperty("#{eventData}")
 	private EventData data;
 
-	public PersonalEventModel()
-	{
+	@ManagedProperty("#{shiftData}")
+	private ShiftData shiftData;
 
+	public PersonalEventModel() {
 	}
 
 	@Override
-	public void addEvent(ScheduleEvent event)
-	{
+	public void addEvent(ScheduleEvent event) {
 		Event newEvent = (Event) event;
 		newEvent.setId(UUID.randomUUID().toString());
 		newEvent.setEmployee(auth.getEmployee());
 		getData().add(newEvent);
 	}
 
-	public void addEvent(Event event)
-	{
+	public void addEvent(Event event) {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
@@ -58,8 +59,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	}
 
 	@Override
-	public boolean deleteEvent(ScheduleEvent event)
-	{
+	public boolean deleteEvent(ScheduleEvent event) {
 		Event vacEvent = (Event) event;
 		getData().delete(vacEvent);
 		// FIXME Return true...
@@ -67,61 +67,96 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	}
 
 	@Override
-	public List<ScheduleEvent> getEvents()
-	{
+	public List<ScheduleEvent> getEvents() {
 		Employee employee = getAuth().getEmployee();
-		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(employee));
-		myEvents = addHolidays(myEvents);
+		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
+				employee));
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
-		ScheduleEvent event;
-		for (Event vacationEvent : myEvents)
-		{
+
+		myEvents = addDispatcherEvents(myEvents);
+		myEvents = addHolidays(myEvents);
+
+		for (Event vacationEvent : myEvents) {
 			vacationEvent.setTitle(vacationEvent.getPersonalTitle());
-			event = vacationEvent;
 			arrayList.add(vacationEvent);
-		}
-		if (myEvents != null)
-		{
-			arrayList = new ArrayList<ScheduleEvent>(myEvents);
-		}
-		else
-		{
-			arrayList = new ArrayList<ScheduleEvent>();
 		}
 		return arrayList;
 	}
 
-	public ArrayList<Event> addHolidays(ArrayList<Event> vacList)
-	{
+	private ArrayList<Event> addDispatcherEvents(ArrayList<Event> myEvents) {
+
+		try {
+
+			Employee employee = getAuth().getEmployee();
+
+			List<Shift> findShiftByEmployee = getShiftData()
+					.findShiftByEmployee(employee);
+			if (findShiftByEmployee == null)
+				return myEvents;
+
+			for (Shift shift : findShiftByEmployee) {
+
+				Week week = shift.getWeek();
+				Date startDate = getStartDateForWeek(week);
+				Date endDate = getEndDateForWeek(week);
+
+				Event event = new Event(UUID.randomUUID().toString(),
+						"Dispatcher-Schicht", startDate, endDate,
+						EventType.dispatcher);
+				myEvents.add(event);
+			}
+		} catch (NullPointerException n) {
+			n.printStackTrace();
+		}
+
+		return myEvents;
+	}
+
+	private Date getEndDateForWeek(Week week) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, week.getYear());
+		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber() + 1);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		return cal.getTime();
+	}
+
+	private Date getStartDateForWeek(Week week) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
+		cal.set(Calendar.YEAR, week.getYear());
+		return cal.getTime();
+	}
+
+	public ArrayList<Event> addHolidays(ArrayList<Event> vacList) {
 
 		HolidayManager manager;
 		Set<Holiday> holidays = null;
-		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5)
-		{
+		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5) {
 			manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
-			if (getAuth().getEmployee().getCity().trim().toLowerCase().startsWith("marl"))
-			{
-				holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR), "nw");
+			if (getAuth().getEmployee().getCity().trim().toLowerCase()
+					.startsWith("marl")) {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "nw");
+			} else if (getAuth().getEmployee().getCity().trim().toLowerCase()
+					.startsWith("frankfurt")) {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "he");
+			} else {
+				holidays = manager.getHolidays(
+						Calendar.getInstance().get(Calendar.YEAR), "de");
 			}
-			else if (getAuth().getEmployee().getCity().trim().toLowerCase().startsWith("frankfurt"))
-			{
-				holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR), "he");
-			}
-			else
-			{
-				holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR), "de");
-			}
-		}
-		else if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 4)
-		{
+		} else if (String.valueOf(getAuth().getEmployee().getZipcode())
+				.length() == 4) {
 			manager = HolidayManager.getInstance(HolidayCalendar.BULGARIA);
-			holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR));
+			holidays = manager.getHolidays(Calendar.getInstance().get(
+					Calendar.YEAR));
 		}
 		Event event;
-		for (Holiday h : holidays)
-		{
-			event = new Event(UUID.randomUUID().toString(), h.getDescription(), h.getDate().toDateTimeAtStartOfDay()
-				.toDate(), h.getDate().toDateTimeAtStartOfDay().toDate(), EventType.holiday);
+		for (Holiday h : holidays) {
+			event = new Event(UUID.randomUUID().toString(), h.getDescription(),
+					h.getDate().toDateTimeAtStartOfDay().toDate(), h.getDate()
+							.toDateTimeAtStartOfDay().toDate(),
+					EventType.holiday);
 			event.setEditable(false);
 			vacList.add(event);
 		}
@@ -129,61 +164,59 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 	}
 
 	@Override
-	public ScheduleEvent getEvent(String id)
-	{
+	public ScheduleEvent getEvent(String id) {
 		return getData().findByID(id);
 	}
 
 	@Override
-	public void updateEvent(ScheduleEvent event)
-	{
+	public void updateEvent(ScheduleEvent event) {
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent);
 	}
 
-	public void updateEvent(ScheduleEvent event, int dayDelta)
-	{
+	public void updateEvent(ScheduleEvent event, int dayDelta) {
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent, dayDelta);
 	}
 
 	@Override
-	public int getEventCount()
-	{
+	public int getEventCount() {
 		List<Event> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
-	public void clear()
-	{
+	public void clear() {
 		List<Event> events = getData().findAll();
-		for (Event vacationEvent : events)
-		{
+		for (Event vacationEvent : events) {
 			getData().delete(vacationEvent);
 		}
 	}
 
-	public EventData getData()
-	{
+	public EventData getData() {
 		return data;
 	}
 
-	public void setData(EventData data)
-	{
+	public void setData(EventData data) {
 		this.data = data;
 	}
 
-	public Authentication getAuth()
-	{
+	public Authentication getAuth() {
 		return auth;
 	}
 
-	public void setAuth(Authentication auth)
-	{
+	public void setAuth(Authentication auth) {
 		this.auth = auth;
+	}
+
+	public ShiftData getShiftData() {
+		return shiftData;
+	}
+
+	public void setShiftData(ShiftData shiftData) {
+		this.shiftData = shiftData;
 	}
 
 }

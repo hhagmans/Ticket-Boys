@@ -21,14 +21,14 @@ import de.fh_dortmund.ticket_system.base.BaseView;
 import de.fh_dortmund.ticket_system.business.ConflictFinder;
 import de.fh_dortmund.ticket_system.business.EventData;
 import de.fh_dortmund.ticket_system.business.PersonalEventModel;
+import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
 
 @ManagedBean
 @ViewScoped
-public class PersonalVacationView extends BaseView implements Serializable
-{
+public class PersonalVacationView extends BaseView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,27 +40,27 @@ public class PersonalVacationView extends BaseView implements Serializable
 	@ManagedProperty("#{eventData}")
 	private EventData data;
 
+	@ManagedProperty("#{shiftData}")
+	private ShiftData shiftData;
+
 	private PersonalEventModel eventModel;
 	private ScheduleEvent event = new Event();
 
 	@ManagedProperty("#{conflictFinder}")
 	private ConflictFinder conflictFinder;
 
-	public PersonalVacationView()
-	{
+	public PersonalVacationView() {
 		setEventModel(new PersonalEventModel());
 	}
 
 	@PostConstruct
-	public void init()
-	{
+	public void init() {
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
 		this.setEmployee(getAuth().getEmployee());
 	}
 
-	public Date getRandomDate(Date base)
-	{
+	public Date getRandomDate(Date base) {
 		Calendar date = Calendar.getInstance();
 		date.setTime(base);
 		date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1); // set random
@@ -70,193 +70,189 @@ public class PersonalVacationView extends BaseView implements Serializable
 		return date.getTime();
 	}
 
-	public Date getInitialDate()
-	{
+	public Date getInitialDate() {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
+		calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY,
+				calendar.get(Calendar.DATE), 0, 0, 0);
 
 		return calendar.getTime();
 	}
 
-	public PersonalEventModel getEventModel()
-	{
+	public PersonalEventModel getEventModel() {
+		if (eventModel == null)
+			eventModel = new PersonalEventModel();
 		return eventModel;
 	}
 
-	public ScheduleEvent getEvent()
-	{
+	public ScheduleEvent getEvent() {
 		return event;
 	}
 
-	public void setEvent(ScheduleEvent event)
-	{
+	public void setEvent(ScheduleEvent event) {
 		this.event = event;
 	}
 
-	public void addEvent(ActionEvent actionEvent)
-	{
-		if (event.getId() == null)
-		{
+	public void addEvent(ActionEvent actionEvent) {
+		if (event.getId() == null) {
 			Event tempEvent = (Event) event;
 			tempEvent.setEmployee(getAuth().getEmployee());
-			if (!getConflictFinder().checkVacation(tempEvent))
-			{
-				addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
-					"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
+			if (!getConflictFinder().checkVacation(tempEvent)) {
+				addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Neuer Konflikt!",
+						"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
 			}
 			getEventModel().addEvent(tempEvent);
-		}
-		else
-		{
+		} else {
 			getEventModel().updateEvent(event);
 		}
 
 		event = new Event();
 	}
 
-	public void deleteEvent(ActionEvent actionEvent)
-	{
-		if (getEventModel().getEvent(event.getId()) == null)
-		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis nicht vorhanden",
-				"Ereignis nicht vorhanden und daher nicht löschbar.");
+	public void deleteEvent(ActionEvent actionEvent) {
+		if (getEventModel().getEvent(event.getId()) == null) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Ereignis nicht vorhanden",
+					"Ereignis nicht vorhanden und daher nicht löschbar.");
 
 			addMessage(message);
-		}
-		else
-		{
+		} else {
 			Event e = (Event) event;
 			FacesMessage message = null;
-			switch (e.getEventType())
-			{
-				case holiday:
-					message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
+			switch (e.getEventType()) {
+			case holiday:
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Fehlende Berechtigung",
 						"Sie können keine nationalen Feiertage löschen...");
-					addMessage(message);
+				addMessage(message);
 				break;
-				case dispatcher:
-					message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hier nicht möglich",
+			case dispatcher:
+				message = new FacesMessage(
+						FacesMessage.SEVERITY_INFO,
+						"Hier nicht möglich",
 						"Für Änderungen an Ihrer Dispatcher-Schicht wechseln Sie bitte zur Dispatcher-Ansicht!");
-					addMessage(message);
+				addMessage(message);
 				break;
-				default:
-					getEventModel().deleteEvent(event);
+			default:
+				getEventModel().deleteEvent(event);
 				break;
 			}
 		}
 	}
 
-	public void onEventSelect(SelectEvent selectEvent)
-	{
+	public void onEventSelect(SelectEvent selectEvent) {
 		event = (ScheduleEvent) selectEvent.getObject();
 	}
 
-	public void onDateSelect(SelectEvent selectEvent)
-	{
+	public void onDateSelect(SelectEvent selectEvent) {
 		Date selectedDate = (Date) selectEvent.getObject();
 		event = new Event("", selectedDate, selectedDate, EventType.vacation);
 	}
 
-	public void onEventMove(ScheduleEntryMoveEvent event)
-	{
+	public void onEventMove(ScheduleEntryMoveEvent event) {
 
 		Event tempEvent = (Event) event.getScheduleEvent();
 		FacesMessage message = null;
-		switch (tempEvent.getEventType())
-		{
-			case holiday:
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehlende Berechtigung",
+		switch (tempEvent.getEventType()) {
+		case holiday:
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Fehlende Berechtigung",
 					"Sie können keine nationalen Feiertage verschieben...");
-				addMessage(message);
+			addMessage(message);
 			break;
-			case dispatcher:
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hier nicht möglich",
+		case dispatcher:
+			message = new FacesMessage(
+					FacesMessage.SEVERITY_INFO,
+					"Hier nicht möglich",
 					"Für Änderungen an Ihrer Dispatcher-Schicht wechseln Sie bitte zur Dispatcher-Ansicht!");
-				addMessage(message);
+			addMessage(message);
 			break;
-			default:
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verschoben", "Verschoben um: "
-					+ event.getDayDelta() + " Tage.");
-				getEventModel().updateEvent(tempEvent);
-				addMessage(message);
+		default:
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Ereignis verschoben", "Verschoben um: "
+							+ event.getDayDelta() + " Tage.");
+			getEventModel().updateEvent(tempEvent);
+			addMessage(message);
 			break;
 		}
 
 	}
 
-	public void onEventResize(ScheduleEntryResizeEvent event)
-	{
+	public void onEventResize(ScheduleEntryResizeEvent event) {
 		Event tempEvent = (Event) event.getScheduleEvent();
 		FacesMessage message = null;
-		switch (tempEvent.getEventType())
-		{
-			case holiday:
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Netter Versuch..",
+		switch (tempEvent.getEventType()) {
+		case holiday:
+			message = new FacesMessage(
+					FacesMessage.SEVERITY_INFO,
+					"Netter Versuch..",
 					".. aber das Leben ist kein Ponyhof. Feiertage kann man nicht einfach verlängern.");
-				addMessage(message);
+			addMessage(message);
 			break;
-			case dispatcher:
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Hier nicht möglich",
+		case dispatcher:
+			message = new FacesMessage(
+					FacesMessage.SEVERITY_INFO,
+					"Hier nicht möglich",
 					"Für Änderungen an Ihrer Dispatcher-Schicht wechseln Sie bitte zur Dispatcher-Ansicht!");
-				addMessage(message);
+			addMessage(message);
 			break;
-			default:
-				message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Ereignis verändert", "Verändert um: "
-					+ event.getDayDelta() + " Tage.");
-				getEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
-				addMessage(message);
+		default:
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Ereignis verändert", "Verändert um: "
+							+ event.getDayDelta() + " Tage.");
+			getEventModel().updateEvent(event.getScheduleEvent(),
+					event.getDayDelta());
+			addMessage(message);
 			break;
 		}
 	}
 
-	public Authentication getAuth()
-	{
+	public Authentication getAuth() {
 		return auth;
 	}
 
-	public void setAuth(Authentication auth)
-	{
+	public void setAuth(Authentication auth) {
 		this.auth = auth;
 	}
 
-	public EventData getData()
-	{
+	public EventData getData() {
 		return data;
 	}
 
-	public void setData(EventData data)
-	{
+	public void setData(EventData data) {
 		this.data = data;
 	}
 
-	public void setEventModel(PersonalEventModel eventModel)
-	{
+	public void setEventModel(PersonalEventModel eventModel) {
 		this.eventModel = eventModel;
 	}
 
-	public Employee getEmployee()
-	{
+	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Employee employee)
-	{
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
-	public ConflictFinder getConflictFinder()
-	{
+	public ConflictFinder getConflictFinder() {
 		return conflictFinder;
 	}
 
-	public void setConflictFinder(ConflictFinder conflictFinder)
-	{
+	public void setConflictFinder(ConflictFinder conflictFinder) {
 		this.conflictFinder = conflictFinder;
 	}
 
-	public EventType[] getEventTypes()
-	{
+	public EventType[] getEventTypes() {
 		EventType[] e = { EventType.vacation, EventType.other };
 		return e;
+	}
+
+	public ShiftData getShiftData() {
+		return shiftData;
+	}
+
+	public void setShiftData(ShiftData shiftData) {
+		this.shiftData = shiftData;
 	}
 }
