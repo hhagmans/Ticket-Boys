@@ -22,7 +22,6 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
-		getEm().remove(event);
 		if (event.getEventType() == EventType.vacation) {
 			Employee emp = event.getEmployee();
 			long diffDays = calculateDayCount(event);
@@ -30,6 +29,7 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 			emp.refreshFreeVacationDays();
 			getEm().merge(emp);
 		}
+		getEm().remove(event);
 		tx.commit();
 	}
 
