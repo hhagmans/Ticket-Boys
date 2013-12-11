@@ -18,7 +18,7 @@
     <h:outputLabel for="vacationDays" value="Anzahl freier Urlaubstage:"></h:outputLabel>
   	<h:outputText  id="vacationDays" value="#{personalVacationView.employee.freeVacationCount}"/>
      <p:panel id="panel" header="Eigene Abwesenheiten" >  
-    <p:schedule id="schedule" value="#{personalVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
+    <p:schedule id="schedule" value="#{personalVacationView.personalEventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
   
         <p:ajax event="dateSelect" listener="#{personalVacationView.onDateSelect}" update="eventDetails,vacationDays" oncomplete="PF('eventDialog').show()" />  
         <p:ajax event="eventSelect" listener="#{personalVacationView.onEventSelect}" update="eventDetails, vacationDays" oncomplete="PF('eventDialog').show()" />  

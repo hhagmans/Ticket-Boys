@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
@@ -26,7 +26,7 @@ import de.fh_dortmund.ticket_system.util.HolidayUtil;
 import de.jollyday.Holiday;
 
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -55,6 +55,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
+		event.setStyleClass(event.getEventType().getStyleClass());
 		getData().add(event);
 	}
 
@@ -104,6 +105,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 					"Dispatcher-Schicht", startDate, endDate,
 					EventType.dispatcher);
 			event.setEditable(false);
+			event.setStyleClass(event.getEventType().getStyleClass());
 			myEvents.add(event);
 		}
 
@@ -114,8 +116,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(Calendar.YEAR, week.getYear());
-		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber() + 1);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
+		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
+		cal.set(Calendar.DAY_OF_WEEK, 1);
 		return cal.getTime();
 	}
 
@@ -124,6 +126,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		cal.clear();
 		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
 		cal.set(Calendar.YEAR, week.getYear());
+		cal.set(Calendar.DAY_OF_WEEK, 2);
 		return cal.getTime();
 	}
 
@@ -142,6 +145,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 					h.getDate().toDateTimeAtStartOfDay().toDate(), h.getDate()
 							.toDateTimeAtStartOfDay().toDate(),
 					EventType.holiday);
+			event.setStyleClass(event.getEventType().getStyleClass());
 			event.setEditable(false);
 			vacList.add(event);
 		}
