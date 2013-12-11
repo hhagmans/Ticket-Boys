@@ -45,6 +45,12 @@ public class LoginFilter implements Filter {
 					res.sendRedirect(req.getContextPath()
 							+ "/pages/index.xhtml");
 				}
+			} else if (req.getRequestURL().toString()
+					.contains("personalVacationView.xhtml")) {
+				if (login.getEmployee().getRole() == Role.guest) {
+					res.sendRedirect(req.getContextPath()
+							+ "/pages/index.xhtml");
+				}
 			}
 			chain.doFilter(request, response);
 		}
