@@ -42,6 +42,18 @@ public abstract class BaseDaoSqlite<T> implements BaseDao<T>
 	}
 
 	@Override
+	public void add(List<T> l)
+	{
+		EntityTransaction tx = getEm().getTransaction();
+		tx.begin();
+		for (T t : l)
+		{
+			getEm().persist(t);
+		}
+		tx.commit();
+	}
+
+	@Override
 	public T findById(String id)
 	{
 		T emp = getEm().find(getEntityBeanTyp(), id);
@@ -54,6 +66,19 @@ public abstract class BaseDaoSqlite<T> implements BaseDao<T>
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		getEm().merge(t);
+		tx.commit();
+	}
+
+	@Override
+	public void update(List<T> l)
+	{
+		EntityTransaction tx = getEm().getTransaction();
+		tx.begin();
+		for (T t : l)
+		{
+			getEm().merge(t);
+		}
+
 		tx.commit();
 	}
 

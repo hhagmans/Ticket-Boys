@@ -11,11 +11,15 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import org.primefaces.model.ScheduleEvent;
+
+import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
+import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.util.DateUtil;
 
 /**
@@ -36,8 +40,11 @@ public class ConflictFinder implements Serializable
 	@ManagedProperty("#{employeeData}")
 	EmployeeData				employeeData;
 
-	@ManagedProperty("#{EventData}")
+	@ManagedProperty("#{eventData}")
 	EventData					eventData;
+
+	@ManagedProperty("#{conflictData}")
+	private ConflictData	conflictData;
 
 	public ConflictFinder()
 	{
@@ -102,7 +109,7 @@ public class ConflictFinder implements Serializable
 				Conflict conflict = new Conflict();
 				conflict.setWeek(kw);
 				conflict.setSolved(false);
-				
+
 				conflicts.add(conflict);
 			}
 		}
@@ -275,5 +282,23 @@ public class ConflictFinder implements Serializable
 	public void setEventData(EventData eventData)
 	{
 		this.eventData = eventData;
+	}
+
+	// Conflic beim Tauschen und neuen Urlaub
+	public void generateConflictFor(Employee employee, ScheduleEvent event)
+	{
+		Set<Week> weeksFromDates = DateUtil.getWeeksFromDates(event.getStartDate(), event.getEndDate());
+		List<Conflict> conflicts = new ArrayList<Conflict>();
+		for (Week week : weeksFromDates)
+		{
+			Conflict conflict = new Conflict();
+			conflict.setEmployee(employee);
+			conflict.setSolved(false);
+			conflict.setWeek(week);
+			
+			conflicts.add(conflict);
+		}
+
+		conflictData.add(conflicts);
 	}
 }
