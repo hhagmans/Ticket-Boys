@@ -16,6 +16,21 @@ body {
 	margin: 0 auto;
 }
 
+.holiday-event{
+	background-color: grey;
+}
+.dispatcher-event{
+	background-color: red;
+}
+
+.vacation-event{
+	background-color: green;
+}
+
+.other-event{
+	background-color: orange;
+}
+
 #evonik_logo {
 	position: absolute;
 	right: 11%;
@@ -62,11 +77,6 @@ body {
 	background-image: none;
 }
 
-.vacation, .urlaub .fc-event-skin, .urlaub a{
-    background-color: green;
-    color: black;
-    border-color: greenyellow;
-}
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
     background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)) repeat scroll 0 0 #85B2CB;
