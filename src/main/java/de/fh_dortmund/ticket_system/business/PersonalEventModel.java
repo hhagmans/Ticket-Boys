@@ -19,6 +19,7 @@ import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
+import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
 import de.jollyday.Holiday;
@@ -73,7 +74,9 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 				employee));
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 
-		myEvents = addDispatcherEvents(myEvents);
+		if (employee.getRole() == Role.dispatcher)
+			myEvents = addDispatcherEvents(myEvents);
+
 		myEvents = addHolidays(myEvents);
 
 		for (Event vacationEvent : myEvents) {
@@ -110,6 +113,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	private Date getEndDateForWeek(Week week) {
 		Calendar cal = Calendar.getInstance();
+		cal.clear();
 		cal.set(Calendar.YEAR, week.getYear());
 		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber() + 1);
 		cal.add(Calendar.DAY_OF_MONTH, -1);
@@ -119,6 +123,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	private Date getStartDateForWeek(Week week) {
 		Calendar cal = Calendar.getInstance();
+		cal.clear();
 		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
 		cal.set(Calendar.YEAR, week.getYear());
 		cal.set(Calendar.DAY_OF_WEEK, 2);
