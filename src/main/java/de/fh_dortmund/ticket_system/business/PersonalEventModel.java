@@ -22,9 +22,8 @@ import de.fh_dortmund.ticket_system.entity.EventType;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
+import de.fh_dortmund.ticket_system.util.HolidayUtil;
 import de.jollyday.Holiday;
-import de.jollyday.HolidayCalendar;
-import de.jollyday.HolidayManager;
 
 @ManagedBean
 @ApplicationScoped
@@ -130,28 +129,13 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	public ArrayList<Event> addHolidays(ArrayList<Event> vacList) {
 
-		HolidayManager manager;
-		Set<Holiday> holidays = null;
-		if (String.valueOf(getAuth().getEmployee().getZipcode()).length() == 5) {
-			manager = HolidayManager.getInstance(HolidayCalendar.GERMANY);
-			if (getAuth().getEmployee().getCity().trim().toLowerCase()
-					.startsWith("marl")) {
-				holidays = manager.getHolidays(
-						Calendar.getInstance().get(Calendar.YEAR), "nw");
-			} else if (getAuth().getEmployee().getCity().trim().toLowerCase()
-					.startsWith("frankfurt")) {
-				holidays = manager.getHolidays(
-						Calendar.getInstance().get(Calendar.YEAR), "he");
-			} else {
-				holidays = manager.getHolidays(
-						Calendar.getInstance().get(Calendar.YEAR), "de");
-			}
-		} else if (String.valueOf(getAuth().getEmployee().getZipcode())
-				.length() == 4) {
-			manager = HolidayManager.getInstance(HolidayCalendar.BULGARIA);
-			holidays = manager.getHolidays(Calendar.getInstance().get(
-					Calendar.YEAR));
+		Set<Holiday> holidays = HolidayUtil.getHolidaysforUser(getAuth()
+				.getEmployee());
+
+		if (holidays == null) {
+			return vacList;
 		}
+
 		Event event;
 		for (Holiday h : holidays) {
 			event = new Event(UUID.randomUUID().toString(), h.getDescription(),

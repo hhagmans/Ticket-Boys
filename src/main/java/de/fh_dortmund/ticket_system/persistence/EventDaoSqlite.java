@@ -12,6 +12,7 @@ import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
+import de.fh_dortmund.ticket_system.util.HolidayUtil;
 
 public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		Serializable {
@@ -98,7 +99,9 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 			start.add(Calendar.DAY_OF_MONTH, -1);
 			diffDays--;
 		}
+		diffDays = diffDays
+				- HolidayUtil.getNumberofHolidaysBetweenTwoDates(
+						event.getEmployee(), startDate, endDate);
 		return diffDays;
 	}
-
 }
