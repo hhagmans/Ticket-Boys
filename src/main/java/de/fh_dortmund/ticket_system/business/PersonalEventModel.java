@@ -115,8 +115,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(Calendar.YEAR, week.getYear());
-		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber() + 1);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
+		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
 		cal.set(Calendar.DAY_OF_WEEK, 1);
 		return cal.getTime();
 	}
