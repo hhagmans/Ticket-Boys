@@ -89,6 +89,8 @@ public class PersonalVacationView extends BaseView implements Serializable
 			{
 				addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
 						"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
+				
+				getConflictFinder().generateConflictFor(getAuth().getEmployee(), event);
 			}
 			getPersonalEventModel().addEvent(tempEvent);
 		}

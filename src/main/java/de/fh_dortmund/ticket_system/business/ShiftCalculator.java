@@ -59,14 +59,24 @@ public class ShiftCalculator implements Serializable {
 		for (int i = 0; i < nshifts; i++) {
 			Employee dispatcher = dispatchers.get(i % size);
 
-			Employee representative = i == 0 ? dispatchers.get(size - 1)
-					: dispatchers.get((i - 1) % size);
+			Employee representative = dispatchers.get((i + (size / 2)) % size);
 
 			Shift shift = new Shift(year, week, dispatcher, representative);
-			if (conflict.checkShift(shift)) {
-				shifts.add(shift);
 
+			int o = i;
+			while (!conflict.checkShift(shift)) {
+
+				o++;
+				if (o == i) {
+					shift.setDispatcher(dispatchers.get(i));
+					break;
+				}
+				if (o == dispatchers.size()) {
+					o = 0;
+				}
+				shift.setDispatcher(dispatchers.get(o));
 			}
+			shifts.add(shift);
 
 			if (++week > WEEKS_IN_A_YEAR) {
 				year++;

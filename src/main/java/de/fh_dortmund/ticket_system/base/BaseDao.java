@@ -6,11 +6,15 @@ public interface BaseDao<T>
 {
 	public void add(T t);
 
+	public void add(List<T> l);
+
 	public T findById(String id);
 
 	public List<T> findAll();
 
 	public void update(T t);
+
+	public void update(List<T> l);
 
 	public void delete(T t);
 }
