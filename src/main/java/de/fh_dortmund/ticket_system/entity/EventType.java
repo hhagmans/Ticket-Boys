@@ -1,29 +1,37 @@
 package de.fh_dortmund.ticket_system.entity;
 
 public enum EventType {
-	vacation("Urlaub"), other("Sonstiges"), dispatcher("Dispatcher-Dienst"), holiday("Feiertag");
+	vacation("Urlaub", "vacation-event"), other("Sonstiges", "other-event"), dispatcher(
+			"Dispatcher-Dienst", "dispatcher-event"), holiday("Feiertag",
+			"holiday-event");
 
 	private String label;
+	private String styleClass;
 
-	private EventType(String label)
-	{
+	private EventType(String label, String styleClass) {
 		this.setLabel(label);
+		this.setStyleClass(styleClass);
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.getLabel();
 	}
 
-	public String getLabel()
-	{
+	public String getLabel() {
 		return label;
 	}
 
-	public void setLabel(String label)
-	{
+	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getStyleClass() {
+		return styleClass;
+	}
+
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
 	}
 
 }
