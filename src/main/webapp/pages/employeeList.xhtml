@@ -136,7 +136,7 @@
 		           		   	<f:selectItems value="#{employeeView.employeeRoles}" var="role"  itemValue="#{role}" itemLabel="#{role.roleName}" />
 		              	</h:selectOneMenu>
 					</h:panelGrid>
-					<p:commandButton style="align:center" id="addEmployeeButton" icon="ui-icon-circle-plus" actionListener="#{employeeView.addEmployee}"
+					<p:commandButton style="align:center" id="addEmployeeButton" icon="ui-icon-circle-plus" action="#{employeeView.addEmployee()}"
 					value="Submit" update=":employeeListMainform:employeeList, :employeeListMainform:messages" oncomplete="PF('employeeList').update" />
      			</f:facet>
 			</p:dataTable>

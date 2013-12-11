@@ -58,6 +58,7 @@ public class PersonalVacationView extends BaseView implements Serializable {
 		getEventModel().setAuth(getAuth());
 		getEventModel().setData(getData());
 		this.setEmployee(getAuth().getEmployee());
+		getEventModel().setShiftData(getShiftData());
 	}
 
 	public Date getRandomDate(Date base) {
