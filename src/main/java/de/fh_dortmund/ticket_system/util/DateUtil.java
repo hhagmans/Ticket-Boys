@@ -15,8 +15,9 @@ import de.fh_dortmund.ticket_system.entity.Week;
  * @author Alex Hofmann
  * 
  */
-public class DateUtil {
-	private static Calendar cal = new GregorianCalendar();
+public class DateUtil
+{
+	private static Calendar	cal	= new GregorianCalendar();
 
 	/**
 	 * Checks if two dates have the same weeknumber.
@@ -25,7 +26,8 @@ public class DateUtil {
 	 * @param secondDate
 	 * @return true if same year and week, else false
 	 */
-	public static boolean sameWeek(Date firstDate, Date secondDate) {
+	public static boolean sameWeek(Date firstDate, Date secondDate)
+	{
 		if (getYear(firstDate) == getYear(secondDate))
 			if (getWeekNumber(firstDate) == getWeekNumber(secondDate))
 				return true;
@@ -39,9 +41,9 @@ public class DateUtil {
 	 * @param date
 	 * @return weeknumber
 	 */
-	public static int getWeekNumber(Date date) {
-		int weeknumber = Integer
-				.valueOf(new SimpleDateFormat("w").format(date));
+	public static int getWeekNumber(Date date)
+	{
+		int weeknumber = Integer.valueOf(new SimpleDateFormat("w").format(date));
 
 		return weeknumber;
 	}
@@ -52,7 +54,8 @@ public class DateUtil {
 	 * @param date
 	 * @return year
 	 */
-	public static int getYear(Date date) {
+	public static int getYear(Date date)
+	{
 		int year = Integer.valueOf(new SimpleDateFormat("yyyy").format(date));
 
 		return year;
@@ -67,7 +70,8 @@ public class DateUtil {
 	 * @param day
 	 * @return date object with the parameters set
 	 */
-	public static Date createDate(int year, int month, int day) {
+	public static Date createDate(int year, int month, int day)
+	{
 		cal.clear();
 		cal.set(year, month - 1, day);
 
@@ -81,7 +85,8 @@ public class DateUtil {
 	 * @param endDate
 	 * @return Set of week object
 	 */
-	public static Set<Week> getWeeksFromDates(Date startDate, Date endDate) {
+	public static Set<Week> getWeeksFromDates(Date startDate, Date endDate)
+	{
 		Set<Week> weeks = new HashSet<Week>();
 
 		Integer startWeek = getWeekNumber(startDate);
@@ -90,17 +95,39 @@ public class DateUtil {
 		Integer endYear = getYear(endDate);
 
 		int startZaehler = startWeek;
-		for (int year = startYear; year <= endYear; year++) {
+		for (int year = startYear; year <= endYear; year++)
+		{
 			int endZaehler = 52;
 			if (year == endYear)
 				endZaehler = endWeek;
 
-			for (int kw = startZaehler; kw <= endZaehler; kw++) {
+			for (int kw = startZaehler; kw <= endZaehler; kw++)
+			{
 				weeks.add(new Week(year, kw));
 			}
 			startZaehler = 1;
 		}
 
 		return weeks;
+	}
+
+	/**
+	 * Converts a given week to the start date of the week.
+	 * 
+	 * @param week
+	 * @return monday of the given week
+	 */
+	public static Date getDateOfWeek(Week week)
+	{
+		Date date;
+
+		final GregorianCalendar calendar = new GregorianCalendar();
+		calendar.clear();
+		calendar.set(Calendar.YEAR, week.getYear());
+		calendar.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
+
+		date = calendar.getTime();
+
+		return date;
 	}
 }

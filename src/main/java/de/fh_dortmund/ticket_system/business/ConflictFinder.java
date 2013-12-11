@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.Shift;
@@ -26,16 +28,16 @@ import de.fh_dortmund.ticket_system.util.DateUtil;
 @ApplicationScoped
 public class ConflictFinder implements Serializable
 {
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
 	@ManagedProperty("#{shiftData}")
-	ShiftData shiftData;
+	ShiftData					shiftData;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData employeeData;
+	EmployeeData				employeeData;
 
 	@ManagedProperty("#{EventData}")
-	EventData eventData;
+	EventData					eventData;
 
 	public ConflictFinder()
 	{
@@ -80,6 +82,31 @@ public class ConflictFinder implements Serializable
 		}
 
 		return ok;
+	}
+
+	/**
+	 * Compares the two given sets for conflicts and generates a list.
+	 * 
+	 * @param set1
+	 * @param set2
+	 * @return returns a list of conflicts between the two given sets.
+	 */
+	public List<Conflict> getAllConflicts(Set<Week> set1, Set<Week> set2)
+	{
+		List<Conflict> conflicts = new ArrayList<Conflict>();
+
+		for (Week kw : set1)
+		{
+			if (set2.contains(kw))
+			{
+				Conflict conflict = new Conflict();
+				conflict.setWeek(kw);
+				conflict.setSolved(false);
+				
+				conflicts.add(conflict);
+			}
+		}
+		return conflicts;
 	}
 
 	/**
