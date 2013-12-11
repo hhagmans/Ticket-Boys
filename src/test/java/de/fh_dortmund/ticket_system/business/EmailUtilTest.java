@@ -1,8 +1,21 @@
 package de.fh_dortmund.ticket_system.business;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.mail.internet.InternetAddress;
 
-/**
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import de.fh_dortmund.ticket_system.util.EmailUtil;
+
+@Ignore
 public class EmailUtilTest
 {
 	private static final String	TEST_EMAIL1		= "test@test.de";
@@ -28,7 +41,6 @@ public class EmailUtilTest
 		}
 		catch (EmailException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -44,7 +56,6 @@ public class EmailUtilTest
 		}
 		catch (EmailException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -62,7 +73,6 @@ public class EmailUtilTest
 		}
 		catch (EmailException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(email.getSubject(), TEST_SUBJECT);
@@ -78,7 +88,6 @@ public class EmailUtilTest
 		}
 		catch (EmailException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(email.getSubject(), TEST_SUBJECT);
@@ -100,4 +109,3 @@ public class EmailUtilTest
 		}
 	}
 }
-*/

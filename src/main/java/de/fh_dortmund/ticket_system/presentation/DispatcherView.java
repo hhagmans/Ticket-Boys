@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import de.fh_dortmund.ticket_system.base.BaseView;
+import de.fh_dortmund.ticket_system.business.ConflictFinder;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.business.ShiftModel;
@@ -41,6 +42,9 @@ public class DispatcherView extends BaseView implements Serializable
 
 	@ManagedProperty("#{rightsManager}")
 	private RightsManager			rightsManager;
+
+	@ManagedProperty("#{conflictFinder}")
+	private ConflictFinder			conflictFinder;
 
 	private ShiftModel				shiftModel;
 
@@ -85,22 +89,26 @@ public class DispatcherView extends BaseView implements Serializable
 		showMessage("Erfolg!", "Die Dispatcher der KW " + shift1.getWeek().getWeekNumber() + " & "
 				+ shift0.getWeek().getWeekNumber() + " wurden getauscht!");
 
+		// TODO: checkForConflict and generateConflictObject
+		if (conflictFinder.checkShift(shift0))
+		{
+			addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!", "Die vertauschte Shift '"
+					+ shift0.getWeek().getWeekNumber() + "' für den Benutzer '" + shift0.getDispatcher().getFullName()
+					+ "' hat einen Konflikt erzeugt."));
+
+			conflictFinder.generateConflictFor(shift0.getDispatcher(), shift0.getWeek());
+		}
+		if (conflictFinder.checkShift(shift1))
+		{
+			addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!", "Die vertauschte Shift '"
+					+ shift1.getWeek().getWeekNumber() + "' für den Benutzer '" + shift1.getDispatcher().getFullName()
+					+ "' hat einen Konflikt erzeugt."));
+
+			conflictFinder.generateConflictFor(shift1.getDispatcher(), shift0.getWeek());
+		}
 	}
 
-	public void sendmail()
-	{
-		// test email sending
-		try
-		{
-			DailyChecker.check(shiftData);
-			// showMessage("Email versendet","");
-		}
-		catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			// showMessage(e.getMessage(), "fehler");
-		}
-	}
+	
 
 	private void updateShifts(Shift shift)
 	{
@@ -191,6 +199,16 @@ public class DispatcherView extends BaseView implements Serializable
 	public void setRightsManager(RightsManager rightsManager)
 	{
 		this.rightsManager = rightsManager;
+	}
+
+	public ConflictFinder getConflictFinder()
+	{
+		return conflictFinder;
+	}
+
+	public void setConflictFinder(ConflictFinder conflictFinder)
+	{
+		this.conflictFinder = conflictFinder;
 	}
 
 }

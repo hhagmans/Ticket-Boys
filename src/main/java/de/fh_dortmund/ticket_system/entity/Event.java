@@ -176,7 +176,6 @@ public class Event implements ScheduleEvent, Serializable {
 	}
 
 	public EventType getEventType() {
-		// TODO Auto-generated method stub
 		return eventType;
 	}
 
