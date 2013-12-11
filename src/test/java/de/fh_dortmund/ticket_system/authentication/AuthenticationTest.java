@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.authentication;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -25,12 +26,18 @@ public class AuthenticationTest
 	private static final String	USER		= "User1";
 	Authentication				auth;
 
+	@BeforeClass
+	public static void setUpClass()
+	{
+		EmployeeData employeeData = new EmployeeData();
+		employeeData.add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE, 0, 0));
+	}
+
 	@Before
 	public void setUp() throws Exception
 	{
 		auth = new NoAuthentication();
 		auth.setEmployeeData(new EmployeeData());
-		auth.getEmployeeData().add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE,0,0));
 	}
 
 	@Test

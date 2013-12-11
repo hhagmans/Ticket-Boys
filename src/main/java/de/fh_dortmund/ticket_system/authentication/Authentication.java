@@ -13,17 +13,17 @@ import de.fh_dortmund.ticket_system.util.MessageUtil;
 
 public abstract class Authentication implements Serializable
 {
-	private static Logger	log					= Logger.getLogger(Authentication.class);
+	private static Logger		log					= Logger.getLogger(Authentication.class);
 
-	private static final long		serialVersionUID	= 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private String					name;
-	private String					passwort;
-	private boolean					loggedIn;
-	private Employee				employee;
+	private String				name;
+	private String				passwort;
+	private boolean				loggedIn;
+	private Employee			employee;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData					employeeData;
+	EmployeeData				employeeData;
 
 	/**
 	 * Hier kommt die Authentifizierung statt.
@@ -36,6 +36,11 @@ public abstract class Authentication implements Serializable
 
 	public String login()
 	{
+		if (isLoggedIn())
+		{
+			return "/pages/index?faces-redirect=true";
+		}
+
 		if (authenticate(name, passwort) && findEmployee())
 		{
 			setLoggedIn(true);
