@@ -56,17 +56,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
-		switch (event.getEventType()) {
-		case vacation:
-			event.setStyleClass("vacation-event");
-			break;
-		case other:
-			event.setStyleClass("other-event");
-			break;
-		default:
-			break;
-		}
-
+		event.setStyleClass(event.getEventType().getStyleClass());
 		getData().add(event);
 	}
 
@@ -116,7 +106,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 					"Dispatcher-Schicht", startDate, endDate,
 					EventType.dispatcher);
 			event.setEditable(false);
-			event.setStyleClass("dispatcher-event");
+			event.setStyleClass(event.getEventType().getStyleClass());
 			myEvents.add(event);
 		}
 
@@ -171,8 +161,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 					h.getDate().toDateTimeAtStartOfDay().toDate(), h.getDate()
 							.toDateTimeAtStartOfDay().toDate(),
 					EventType.holiday);
+			event.setStyleClass(event.getEventType().getStyleClass());
 			event.setEditable(false);
-			event.setStyleClass("holiday-event");
 			vacList.add(event);
 		}
 		return vacList;
