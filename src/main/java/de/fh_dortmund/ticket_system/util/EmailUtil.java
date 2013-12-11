@@ -49,7 +49,6 @@ public class EmailUtil
 	private static Email send(Email email, String... to) throws EmailException
 	{
 		email.addTo(to);
-		// TODO Send wird erst mal ignoriert bis wir einen server haben
 		email.send();
 
 		return email;
