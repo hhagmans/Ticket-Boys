@@ -16,10 +16,12 @@ import de.fh_dortmund.ticket_system.business.EventData;
 import de.fh_dortmund.ticket_system.business.ShiftCalculator;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
+import de.fh_dortmund.ticket_system.persistence.EventDao;
 import de.fh_dortmund.ticket_system.persistence.EventDaoSqlite;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
@@ -72,6 +74,30 @@ public class TestdataProvider {
 		return empList;
 	}
 
+	private static List<Event> getEventList() {
+		List<Event> eventList;
+
+		// Auslesen der json File
+		InputStream is = new TestdataProvider().getClass().getResourceAsStream(
+				"/test/EventData.json");
+		// XXX
+		java.util.Scanner s = new Scanner(is).useDelimiter("\\A");
+		String json = s.hasNext() ? s.next() : "";
+
+		try {
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Serialisieren in eine Liste von Employees
+		Type type = new TypeToken<List<Event>>() {
+		}.getType();
+		eventList = new Gson().fromJson(json, type);
+
+		return eventList;
+	}
+
 	public static void fillEmployees(EmployeeDao dao) {
 		List<Employee> allEmployees = getEmployeeList();
 
@@ -112,6 +138,15 @@ public class TestdataProvider {
 			for (Shift shift : allshifts) {
 				if (!shift.equals(dao.findById(shift.getUniqueRowKey())))
 					dao.add(shift);
+			}
+		}
+	}
+
+	public static void fillEvents(EventDao dao) {
+		List<Event> events = TestdataProvider.getEventList();
+		if (dao.findAll().isEmpty()) {
+			for (Event event : events) {
+				dao.add(event);
 			}
 		}
 	}
