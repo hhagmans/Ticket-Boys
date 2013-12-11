@@ -21,17 +21,18 @@ import de.fh_dortmund.ticket_system.entity.Shift;
  */
 @ManagedBean
 @ApplicationScoped
-public class ShiftCalculator implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ShiftCalculator implements Serializable
+{
+	private static final long	serialVersionUID		= 1L;
 
 	@ManagedProperty("#{conflict}")
-	private ConflictFinder conflict;
+	private ConflictFinder		conflict;
 
-	private static final int CYCLES_TO_BE_GENERATED = 3;
+	private static final int	CYCLES_TO_BE_GENERATED	= 3;
 
-	private static final int WEEKS_IN_A_YEAR = 52;
+	private static final int	WEEKS_IN_A_YEAR			= 52;
 
-	private Calendar cal;
+	private Calendar			cal;
 
 	/**
 	 * Generates and returns a {@link List} of {@link Shift}s from the given
@@ -42,7 +43,8 @@ public class ShiftCalculator implements Serializable {
 	 *            list of employees where role = dispatcher
 	 * @return generated list of shifts
 	 */
-	public List<Shift> generateShiftList(List<Employee> dispatchers) {
+	public List<Shift> generateShiftList(List<Employee> dispatchers)
+	{
 		cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
@@ -56,7 +58,8 @@ public class ShiftCalculator implements Serializable {
 		List<Shift> shifts = new ArrayList<Shift>(nshifts);
 
 		int size = dispatchers.size();
-		for (int i = 0; i < nshifts; i++) {
+		for (int i = 0; i < nshifts; i++)
+		{
 			Employee dispatcher = dispatchers.get(i % size);
 
 			Employee representative = dispatchers.get((i + (size / 2)) % size);
@@ -64,21 +67,30 @@ public class ShiftCalculator implements Serializable {
 			Shift shift = new Shift(year, week, dispatcher, representative);
 
 			int o = i;
-			while (!conflict.checkShift(shift)) {
+			while (!conflict.checkShift(shift))
+			{
 
 				o++;
-				if (o == i) {
+				if (o == i)
+				{
 					shift.setDispatcher(dispatchers.get(i));
+					// TODO: generateConflictObject
+					if (conflict.checkShift(shift))
+					{
+						conflict.generateConflictFor(shift.getDispatcher(), shift.getWeek());
+					}
 					break;
 				}
-				if (o == dispatchers.size()) {
+				if (o == dispatchers.size())
+				{
 					o = 0;
 				}
 				shift.setDispatcher(dispatchers.get(o));
 			}
 			shifts.add(shift);
 
-			if (++week > WEEKS_IN_A_YEAR) {
+			if (++week > WEEKS_IN_A_YEAR)
+			{
 				year++;
 				week = 1;
 			}
@@ -87,14 +99,17 @@ public class ShiftCalculator implements Serializable {
 		return shifts;
 	}
 
-	public ShiftCalculator() {
+	public ShiftCalculator()
+	{
 	}
 
-	public ConflictFinder getConflict() {
+	public ConflictFinder getConflict()
+	{
 		return conflict;
 	}
 
-	public void setConflict(ConflictFinder conflict) {
+	public void setConflict(ConflictFinder conflict)
+	{
 		this.conflict = conflict;
 	}
 }

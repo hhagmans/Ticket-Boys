@@ -89,7 +89,6 @@ public class Shift implements Serializable {
 
 	@Id
 	public String getUniqueRowKey() {
-		// TODO Auto-generated method stub
 		return week.getYear() + "-" + week.getWeekNumber();
 	}
 

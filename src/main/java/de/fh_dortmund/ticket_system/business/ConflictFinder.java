@@ -11,15 +11,11 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-import org.primefaces.model.ScheduleEvent;
-
-import de.fh_dortmund.ticket_system.base.BaseData;
 import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
-import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.util.DateUtil;
 
 /**
@@ -28,7 +24,7 @@ import de.fh_dortmund.ticket_system.util.DateUtil;
  * @author Alex Hofmann
  * 
  */
-@ManagedBean(name = "conflictFinder")
+@ManagedBean
 @ApplicationScoped
 public class ConflictFinder implements Serializable
 {
@@ -44,7 +40,7 @@ public class ConflictFinder implements Serializable
 	EventData					eventData;
 
 	@ManagedProperty("#{conflictData}")
-	private ConflictData	conflictData;
+	private ConflictData		conflictData;
 
 	public ConflictFinder()
 	{
@@ -89,31 +85,6 @@ public class ConflictFinder implements Serializable
 		}
 
 		return ok;
-	}
-
-	/**
-	 * Compares the two given sets for conflicts and generates a list.
-	 * 
-	 * @param set1
-	 * @param set2
-	 * @return returns a list of conflicts between the two given sets.
-	 */
-	public List<Conflict> getAllConflicts(Set<Week> set1, Set<Week> set2)
-	{
-		List<Conflict> conflicts = new ArrayList<Conflict>();
-
-		for (Week kw : set1)
-		{
-			if (set2.contains(kw))
-			{
-				Conflict conflict = new Conflict();
-				conflict.setWeek(kw);
-				conflict.setSolved(false);
-
-				conflicts.add(conflict);
-			}
-		}
-		return conflicts;
 	}
 
 	/**
@@ -284,21 +255,73 @@ public class ConflictFinder implements Serializable
 		this.eventData = eventData;
 	}
 
-	// Conflic beim Tauschen und neuen Urlaub
-	public void generateConflictFor(Employee employee, ScheduleEvent event)
+	/**
+	 * Generates conflict object for an employee and an event.
+	 * 
+	 * @param employee
+	 * @param event
+	 */
+	public void generateConflictFor(Employee employee, Event event)
 	{
-		Set<Week> weeksFromDates = DateUtil.getWeeksFromDates(event.getStartDate(), event.getEndDate());
-		List<Conflict> conflicts = new ArrayList<Conflict>();
-		for (Week week : weeksFromDates)
+		Set<Week> eventWeeks = DateUtil.getWeeksFromDates(event.getStartDate(), event.getEndDate());
+		generateConflictFor(employee, eventWeeks);
+	}
+
+	public void generateConflictFor(Employee employee, Week week)
+	{
+		HashSet<Week> weeks = new HashSet<Week>();
+		weeks.add(week);
+		generateConflictFor(employee, weeks);
+	}
+
+	public void generateConflictFor(Employee employee, Set<Week> weeks)
+	{
+		Set<Event> employeeEvents = employee.getMyEvents();
+		Set<Week> employeeWeeks = new HashSet<Week>();
+		for (Event e : employeeEvents)
 		{
-			Conflict conflict = new Conflict();
-			conflict.setEmployee(employee);
-			conflict.setSolved(false);
-			conflict.setWeek(week);
-			
-			conflicts.add(conflict);
+			employeeWeeks.addAll(DateUtil.getWeeksFromDates(e.getStartDate(), e.getEndDate()));
 		}
 
-		conflictData.add(conflicts);
+		List<Conflict> conflicts = getAllConflicts(employee, employeeWeeks, weeks);
+
+		getConflictData().add(conflicts);
 	}
+
+	/**
+	 * Compares the two given sets for conflicts and generates a list.
+	 * 
+	 * @param set1
+	 * @param set2
+	 * @return returns a list of conflicts between the two given sets.
+	 */
+	public List<Conflict> getAllConflicts(Employee employee, Set<Week> set1, Set<Week> set2)
+	{
+		List<Conflict> conflicts = new ArrayList<Conflict>();
+
+		for (Week kw : set1)
+		{
+			if (set2.contains(kw))
+			{
+				Conflict conflict = new Conflict();
+				conflict.setWeek(kw);
+				conflict.setSolved(false);
+				conflict.setEmployee(employee);
+
+				conflicts.add(conflict);
+			}
+		}
+		return conflicts;
+	}
+
+	public ConflictData getConflictData()
+	{
+		return conflictData;
+	}
+
+	public void setConflictData(ConflictData conflictData)
+	{
+		this.conflictData = conflictData;
+	}
+
 }

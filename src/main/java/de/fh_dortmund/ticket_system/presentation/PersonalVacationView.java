@@ -81,22 +81,24 @@ public class PersonalVacationView extends BaseView implements Serializable
 
 	public void addEvent(ActionEvent actionEvent)
 	{
+		Event tempEvent = (Event) event;
+		tempEvent.setEmployee(getAuth().getEmployee());
+		
 		if (event.getId() == null)
 		{
-			Event tempEvent = (Event) event;
-			tempEvent.setEmployee(getAuth().getEmployee());
-			if (!getConflictFinder().checkVacation(tempEvent))
-			{
-				addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
-						"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
-				
-				getConflictFinder().generateConflictFor(getAuth().getEmployee(), event);
-			}
 			getPersonalEventModel().addEvent(tempEvent);
 		}
 		else
 		{
 			getPersonalEventModel().updateEvent(event);
+		}
+		
+		if (!getConflictFinder().checkVacation(tempEvent))
+		{
+			addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
+					"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
+
+			conflictFinder.generateConflictFor(getAuth().getEmployee(), tempEvent);
 		}
 
 		event = new Event();
@@ -149,6 +151,7 @@ public class PersonalVacationView extends BaseView implements Serializable
 	{
 
 		Event tempEvent = (Event) event.getScheduleEvent();
+		tempEvent.setEmployee(auth.getEmployee());
 		FacesMessage message = null;
 		switch (tempEvent.getEventType())
 		{
@@ -167,14 +170,22 @@ public class PersonalVacationView extends BaseView implements Serializable
 						+ event.getDayDelta() + " Tage.");
 				getPersonalEventModel().updateEvent(tempEvent);
 				addMessage(message);
+				// TODO: generateConflictObject
+				if (!conflictFinder.checkVacation(tempEvent))
+				{
+					addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
+							"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
+
+					conflictFinder.generateConflictFor(getAuth().getEmployee(), tempEvent);
+				}
 				break;
 		}
-
 	}
 
 	public void onEventResize(ScheduleEntryResizeEvent event)
 	{
 		Event tempEvent = (Event) event.getScheduleEvent();
+		tempEvent.setEmployee(auth.getEmployee());
 		FacesMessage message = null;
 		switch (tempEvent.getEventType())
 		{
@@ -193,6 +204,14 @@ public class PersonalVacationView extends BaseView implements Serializable
 						+ event.getDayDelta() + " Tage.");
 				getPersonalEventModel().updateEvent(event.getScheduleEvent(), event.getDayDelta());
 				addMessage(message);
+				// TODO: generateConflictObject
+				if (!conflictFinder.checkVacation(tempEvent))
+				{
+					addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Neuer Konflikt!",
+							"Der soeben geplante Urlaub kollidiert mit Ihrer Dispatcher-Schicht."));
+
+					conflictFinder.generateConflictFor(getAuth().getEmployee(), tempEvent);
+				}
 				break;
 		}
 	}
