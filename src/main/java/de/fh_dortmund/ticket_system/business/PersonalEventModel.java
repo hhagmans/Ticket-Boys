@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
@@ -27,7 +27,7 @@ import de.jollyday.HolidayCalendar;
 import de.jollyday.HolidayManager;
 
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class PersonalEventModel implements ScheduleModel, Serializable {
 
 	private static final long serialVersionUID = 1L;
