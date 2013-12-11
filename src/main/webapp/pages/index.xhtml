@@ -19,7 +19,7 @@
 				<br />
 			</p:panel>
 			<p:panel>
-				<p:commandButton id="seePersonalVacations" action="personalVacationView?faces-redirect=true" icon="ui-icon-image" value="Eigene Abwesenheiten"/>
+				<p:commandButton id="seePersonalVacations" action="personalVacationView?faces-redirect=true" icon="ui-icon-image" value="Eigene Abwesenheiten" rendered="#{auth.employee.role != 'guest'}"/>
 			</p:panel>
 		</h:form>
 	</ui:define>
