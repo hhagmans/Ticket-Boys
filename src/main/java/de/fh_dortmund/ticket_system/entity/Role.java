@@ -3,7 +3,7 @@ package de.fh_dortmund.ticket_system.entity;
 import javax.persistence.Id;
 
 public enum Role {
-	admin("Admin"), guest("Gast"), dispatcher("Dispatcher"), vacationer("Urlauber");
+	admin("Admin"), guest("Gast"), dispatcher("Dispatcher"), vacationer("Urlaubsplannutzer");
 
 	private String roleName;
 

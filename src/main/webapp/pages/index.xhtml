@@ -9,14 +9,11 @@
 	<ui:define name="content">
 		<h:form>
 			<p:panel header="Willkommen #{auth.name}" styleClass="login">
-				<p:outputLabel>Du bist eingeloggt mit:</p:outputLabel>
+				<p:outputLabel>Sie sind eingeloggt mit:</p:outputLabel>
 				<br />
 				<p:outputLabel>Name: "#{auth.name}"</p:outputLabel>
 				<br />
-				<p:outputLabel>Passwort: "#{auth.passwort}"</p:outputLabel>
-				<br />
-				<p:outputLabel>Eingeloggt: "#{auth.loggedIn}"</p:outputLabel>
-				<br />
+				<p:outputLabel>Rolle: "#{auth.employee.role}"</p:outputLabel>
 			</p:panel>
 			<p:panel>
 				<p:commandButton id="seePersonalVacations" action="personalVacationView?faces-redirect=true" icon="ui-icon-image" value="Eigene Abwesenheiten" rendered="#{auth.employee.role != 'guest'}"/>
