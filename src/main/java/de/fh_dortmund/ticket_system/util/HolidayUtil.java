@@ -25,14 +25,19 @@ public class HolidayUtil
 		HolidayCalendarType usersHolidayCalendarType = emp.getHolidayCalendarType();
 		manager = HolidayManager.getInstance(usersHolidayCalendarType.getCountry());
 
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+
 		if (!usersHolidayCalendarType.getState().isEmpty())
 		{
-			holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR),
-				usersHolidayCalendarType.getState());
+			holidays = manager.getHolidays(year, usersHolidayCalendarType.getState());
+			holidays.addAll(manager.getHolidays(year + 1, usersHolidayCalendarType.getState()));
+
 		}
 		else
 		{
-			holidays = manager.getHolidays(Calendar.getInstance().get(Calendar.YEAR));
+			holidays = manager.getHolidays(year);
+			holidays.addAll(manager.getHolidays(year + 1));
 		}
 
 		return holidays;
