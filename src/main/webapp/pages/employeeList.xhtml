@@ -20,8 +20,9 @@
 			</p:confirmDialog>
 
 
-			<p:dataTable var="employee" widgetVar="employeeList" value="#{employeeView.employeeModel}"
-				id="employeeList" editable="true">
+			<p:dataTable var="employee" widgetVar="employeeList"
+				value="#{employeeView.employeeModel}" id="employeeList"
+				editable="true">
 
 				<p:ajax event="rowEdit" listener="#{employeeView.onEdit}"
 					update=":employeeListMainform:messages" />
@@ -81,22 +82,27 @@
 							<h:outputText value="#{employee.holidayCalendarType.label}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu id="typeholidayCalendarType" value="#{employee.holidayCalendarType}" >
-           		   				<f:selectItems value="#{employeeView.employeeHolidayCalendarTypes}" var="holidayCalendarType"  itemValue="#{holidayCalendarType}" itemLabel="#{holidayCalendarType.label}" />
-              				</h:selectOneMenu>
+							<h:selectOneMenu id="typeholidayCalendarType"
+								value="#{employee.holidayCalendarType}">
+								<f:selectItems
+									value="#{employeeView.employeeHolidayCalendarTypes}"
+									var="holidayCalendarType" itemValue="#{holidayCalendarType}"
+									itemLabel="#{holidayCalendarType.label}" />
+							</h:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				
+
 				<p:column headerText="Rolle" style="width:10%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.role.roleName}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu id="type" value="#{employee.role}" >
-           		   				<f:selectItems value="#{employeeView.employeeRoles}" var="role"  itemValue="#{role}" itemLabel="#{role.roleName}" />
-              				</h:selectOneMenu>
+							<h:selectOneMenu id="type" value="#{employee.role}">
+								<f:selectItems value="#{employeeView.employeeRoles}" var="role"
+									itemValue="#{role}" itemLabel="#{role.roleName}" />
+							</h:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -104,13 +110,14 @@
 				<p:column style="width:4%;border-style:none">
 					<p:rowEditor>
 					</p:rowEditor>
-					
+
 				</p:column>
-				<p:column  style="width:2%;border-style:none">
+				<p:column style="width:2%;border-style:none">
 					<p:commandButton id="deleteEmployeeButton"
 						action="#{employeeView.deleteEmployee(employee)}"
 						update=":employeeListMainform:messages, :employeeListMainform:employeeList"
-						icon="ui-icon-circle-close" title="Löschen" oncomplete="PF('employeeList').update">
+						icon="ui-icon-circle-close" title="Löschen"
+						oncomplete="PF('employeeList').update">
 						<p:confirm header="Bestätigung"
 							message="Möchten Sie diesen Mitarbeiter wirklich löschen?"
 							icon="ui-icon-alert" />
@@ -118,33 +125,43 @@
 				</p:column>
 				<br />
 				<f:facet title="Neuer User" name="footer">
-				<h:outputLabel style="align:center" value="Neuer User"/>
-         			<h:panelGrid title="Neuer User" styleClass="newEmpPanel" id="newEmpPanel" columns="6" border="0"  >
-					    <h:outputLabel value="Konzern ID"/>
-					    <h:outputLabel value="Vorname"/>
-					    <h:outputLabel value="Nachname"/>
-					    <h:outputLabel value="Arbeitsort"/>
-					    <h:outputLabel value="Role"/>
-					    <h:outputLabel value="Feiertags-Config"/>
-					    <p:inputText value="#{employeeView.newRec.konzernID}" />
-					    
-					    <p:inputText value="#{employeeView.newRec.firstName}" />
-					    
-					    <p:inputText value="#{employeeView.newRec.lastName}" />
-					    
-					    <p:inputText value="#{employeeView.newRec.city}" />
-					    
-					    <h:selectOneMenu id="newEmpType" value="#{employeeView.newRec.role}" >
-		           		   	<f:selectItems value="#{employeeView.employeeRoles}" var="role"  itemValue="#{role}" itemLabel="#{role.roleName}" />
-		              	</h:selectOneMenu>
-		              	
-		              	 <h:selectOneMenu id="newEmpCalendarType" value="#{employeeView.newRec.holidayCalendarType}" >
-		           		   	<f:selectItems value="#{employeeView.employeeHolidayCalendarTypes}" var="holidayCalendarType"  itemValue="#{holidayCalendarType}" itemLabel="#{holidayCalendarType.label}" />
-		              	</h:selectOneMenu>
+					<h:outputLabel style="align:center" value="Neuer User" />
+					<h:panelGrid title="Neuer User" styleClass="newEmpPanel"
+						id="newEmpPanel" columns="6" border="0">
+						<h:outputLabel value="Konzern ID" />
+						<h:outputLabel value="Vorname" />
+						<h:outputLabel value="Nachname" />
+						<h:outputLabel value="Arbeitsort" />
+						<h:outputLabel value="Auswahl der Feiertage" />
+						<h:outputLabel value="Rolle" />
+						<p:inputText value="#{employeeView.newRec.konzernID}" />
+
+						<p:inputText value="#{employeeView.newRec.firstName}" />
+
+						<p:inputText value="#{employeeView.newRec.lastName}" />
+
+						<p:inputText value="#{employeeView.newRec.city}" />
+
+						<h:selectOneMenu id="newEmpCalendarType"
+							value="#{employeeView.newRec.holidayCalendarType}">
+							<f:selectItems
+								value="#{employeeView.employeeHolidayCalendarTypes}"
+								var="holidayCalendarType" itemValue="#{holidayCalendarType}"
+								itemLabel="#{holidayCalendarType.label}" />
+						</h:selectOneMenu>
+
+						<h:selectOneMenu id="newEmpType"
+							value="#{employeeView.newRec.role}">
+							<f:selectItems value="#{employeeView.employeeRoles}" var="role"
+								itemValue="#{role}" itemLabel="#{role.roleName}" />
+						</h:selectOneMenu>
 					</h:panelGrid>
-					<p:commandButton style="align:center" id="addEmployeeButton" icon="ui-icon-circle-plus" action="#{employeeView.addEmployee()}"
-					value="Submit" update=":employeeListMainform:employeeList, :employeeListMainform:messages" oncomplete="PF('employeeList').update" />
-     			</f:facet>
+					<p:commandButton style="align:center" id="addEmployeeButton"
+						icon="ui-icon-circle-plus" action="#{employeeView.addEmployee()}"
+						value="Submit"
+						update=":employeeListMainform:employeeList, :employeeListMainform:messages"
+						oncomplete="PF('employeeList').update" />
+				</f:facet>
 			</p:dataTable>
 
 		</h:form>
