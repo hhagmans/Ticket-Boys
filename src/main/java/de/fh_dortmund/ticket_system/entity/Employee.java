@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import de.fh_dortmund.ticket_system.util.HolidayCalendarType;
+
 /**
  * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
  * 
@@ -33,6 +35,7 @@ public class Employee implements Serializable
 	private int zipcode;
 	private Role role;
 	private int score;
+	private HolidayCalendarType holidayCalendarType;
 	private int vacationCount = 0;
 	private int maxVacationCount = 30;
 	private int freeVacationCount;
@@ -273,5 +276,15 @@ public class Employee implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public HolidayCalendarType getHolidayCalendarType()
+	{
+		return holidayCalendarType;
+	}
+
+	public void setHolidayCalendarType(HolidayCalendarType holidayCalendarType)
+	{
+		this.holidayCalendarType = holidayCalendarType;
 	}
 }
