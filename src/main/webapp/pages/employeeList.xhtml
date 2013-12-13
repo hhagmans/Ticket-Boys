@@ -58,7 +58,7 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{employee.lastName}" style="width:100%"
-								label="Year" />
+								label="lastname" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -70,19 +70,20 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:inputText value="#{employee.city}" style="width:100%"
-								label="Year" />
+								label="city" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="PLZ" style="width:14%">
+				<p:column headerText="Feiertag-Config" style="width:14%">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{employee.zipcode}" />
+							<h:outputText value="#{employee.holidayCalendarType.label}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{employee.zipcode}" style="width:100%"
-								label="Year" />
+							<h:selectOneMenu id="typeholidayCalendarType" value="#{employee.holidayCalendarType}" >
+           		   				<f:selectItems value="#{employeeView.employeeHolidayCalendarTypes}" var="holidayCalendarType"  itemValue="#{holidayCalendarType}" itemLabel="#{holidayCalendarType.label}" />
+              				</h:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -120,8 +121,8 @@
 					    <h:outputLabel value="Vorname"/>
 					    <h:outputLabel value="Nachname"/>
 					    <h:outputLabel value="Arbeitsort"/>
-					    <h:outputLabel value="PLZ"/>
 					    <h:outputLabel value="Role"/>
+					    <h:outputLabel value="Feiertags-Config"/>
 					    <p:inputText value="#{employeeView.newRec.konzernID}" />
 					    
 					    <p:inputText value="#{employeeView.newRec.firstName}" />
@@ -130,10 +131,12 @@
 					    
 					    <p:inputText value="#{employeeView.newRec.city}" />
 					    
-					    <p:inputText value="#{employeeView.newRec.zipcode}" />
-					    
 					    <h:selectOneMenu id="newEmpType" value="#{employeeView.newRec.role}" >
 		           		   	<f:selectItems value="#{employeeView.employeeRoles}" var="role"  itemValue="#{role}" itemLabel="#{role.roleName}" />
+		              	</h:selectOneMenu>
+		              	
+		              	 <h:selectOneMenu id="newEmpCalendarType" value="#{employeeView.newRec.holidayCalendarType}" >
+		           		   	<f:selectItems value="#{employeeView.employeeHolidayCalendarTypes}" var="holidayCalendarType"  itemValue="#{holidayCalendarType}" itemLabel="#{holidayCalendarType.label}" />
 		              	</h:selectOneMenu>
 					</h:panelGrid>
 					<p:commandButton style="align:center" id="addEmployeeButton" icon="ui-icon-circle-plus" action="#{employeeView.addEmployee()}"

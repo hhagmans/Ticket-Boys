@@ -1,5 +1,10 @@
 package de.fh_dortmund.ticket_system.authentication;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -9,28 +14,22 @@ import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 @Ignore
 public class AuthenticationTest
 {
-	private static final Role	ROLE		= Role.admin;
-	private static final int	ZIPCODE		= 12345;
-	private static final String	CITY		= "CITY";
-	private static final String	FIRSTNAME	= "FIRSTNAME";
-	private static final String	LASTNAME	= "LASTNAME";
-	private static final String	PASSWORT	= "Blub";
-	private static final String	USER		= "User1";
-	Authentication				auth;
+	private static final Role ROLE = Role.admin;
+	private static final String CITY = "CITY";
+	private static final String FIRSTNAME = "FIRSTNAME";
+	private static final String LASTNAME = "LASTNAME";
+	private static final String PASSWORT = "Blub";
+	private static final String USER = "User1";
+	Authentication auth;
 
 	@BeforeClass
 	public static void setUpClass()
 	{
 		EmployeeData employeeData = new EmployeeData();
-		employeeData.add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ZIPCODE, ROLE, 0, 0));
+		employeeData.add(new Employee(USER, FIRSTNAME, LASTNAME, CITY, ROLE, 0, 0));
 	}
 
 	@Before

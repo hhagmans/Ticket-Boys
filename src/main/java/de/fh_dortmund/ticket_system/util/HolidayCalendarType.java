@@ -49,4 +49,10 @@ public enum HolidayCalendarType {
 		this.state = state;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.label;
+	}
+
 }

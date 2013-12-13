@@ -15,16 +15,18 @@ import de.fh_dortmund.ticket_system.business.EmployeeModel;
 import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
+import de.fh_dortmund.ticket_system.util.HolidayCalendarType;
 
 @ManagedBean
 @ViewScoped
-public class EmployeeView extends BaseView implements Serializable {
+public class EmployeeView extends BaseView implements Serializable
+{
 	private static final long serialVersionUID = 1L;
 
 	private Employee selectedEmployee;
 
-	private Employee newRec = new Employee("new", "first name", "last name",
-			"city", 12345, Role.admin, 0, 0);
+	private Employee newRec = new Employee("new", "first name", "last name", "city", Role.admin, 0, 0,
+		HolidayCalendarType.germanyNRW);
 
 	@ManagedProperty("#{employeeData}")
 	EmployeeData employeeData;
@@ -34,55 +36,65 @@ public class EmployeeView extends BaseView implements Serializable {
 
 	private EmployeeModel employeeModel;
 
-	public EmployeeView() {
+	public EmployeeView()
+	{
 
 	}
 
-	public void onEdit(RowEditEvent event) {
+	public void onEdit(RowEditEvent event)
+	{
 		updateEmployee((Employee) event.getObject());
-		addMessage("Mitarbeiter bearbeitet",
-				((Employee) event.getObject()).getKonzernID());
+		addMessage("Mitarbeiter bearbeitet", ((Employee) event.getObject()).getKonzernID());
 	}
 
-	public void onCancel(RowEditEvent event) {
+	public void onCancel(RowEditEvent event)
+	{
 		addMessage("Abgebrochen", ((Employee) event.getObject()).getKonzernID());
 	}
 
-	public void updateEmployee(Employee employee) {
+	public void updateEmployee(Employee employee)
+	{
 		getEmployeeData().update(employee);
 	}
 
-	public void addEmployee() {
+	public void addEmployee()
+	{
 		getEmployeeData().add(getNewRec());
-		addMessage("Mitarbeiter hinzugefügt", "Der Mitarbeiter "
-				+ getNewRec().getFullName() + " wurde erfolgreich hinzugefügt");
+		addMessage("Mitarbeiter hinzugefügt", "Der Mitarbeiter " + getNewRec().getFullName()
+			+ " wurde erfolgreich hinzugefügt");
 	}
 
-	public void deleteEmployee(Employee employee) {
+	public void deleteEmployee(Employee employee)
+	{
 		getEmployeeData().delete(employee);
 		getShiftData().deleteEmployeeFromShifts(employee);
-		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName()
-				+ " wurde gelöscht");
+		addMessage("Erfolg!", "Der Mitarbeiter " + employee.getFullName() + " wurde gelöscht");
 	}
 
-	public Employee getSelectedEmployee() {
+	public Employee getSelectedEmployee()
+	{
 		return selectedEmployee;
 	}
 
-	public void setSelectedEmployee(Employee selectedEmployee) {
+	public void setSelectedEmployee(Employee selectedEmployee)
+	{
 		this.selectedEmployee = selectedEmployee;
 	}
 
-	public EmployeeData getEmployeeData() {
+	public EmployeeData getEmployeeData()
+	{
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData) {
+	public void setEmployeeData(EmployeeData employeeData)
+	{
 		this.employeeData = employeeData;
 	}
 
-	public EmployeeModel getEmployeeModel() {
-		if (employeeModel == null) {
+	public EmployeeModel getEmployeeModel()
+	{
+		if (employeeModel == null)
+		{
 			List<Employee> findAllEmployees = getEmployeeData().findAll();
 			System.out.println("all employees: " + findAllEmployees.size());
 			EmployeeModel employeeModel2 = new EmployeeModel(findAllEmployees);
@@ -92,29 +104,38 @@ public class EmployeeView extends BaseView implements Serializable {
 		return employeeModel;
 	}
 
-	public void setEmployeeModel(EmployeeModel employeeModel) {
+	public void setEmployeeModel(EmployeeModel employeeModel)
+	{
 		this.employeeModel = employeeModel;
 	}
 
-	public Employee getNewRec() {
+	public Employee getNewRec()
+	{
 		return newRec;
 	}
 
-	public void setNewRec(Employee newRec) {
+	public void setNewRec(Employee newRec)
+	{
 		this.newRec = newRec;
 	}
 
-	public ShiftData getShiftData() {
+	public ShiftData getShiftData()
+	{
 		return shiftData;
 	}
 
-	public void setShiftData(ShiftData shiftData) {
+	public void setShiftData(ShiftData shiftData)
+	{
 		this.shiftData = shiftData;
 	}
 
-	public Role[] getEmployeeRoles() {
-		Role[] e = { Role.admin, Role.dispatcher, Role.vacationer, Role.guest };
-		return e;
+	public Role[] getEmployeeRoles()
+	{
+		return Role.values();
 	}
 
+	public HolidayCalendarType[] getEmployeeHolidayCalendarTypes()
+	{
+		return HolidayCalendarType.values();
+	}
 }

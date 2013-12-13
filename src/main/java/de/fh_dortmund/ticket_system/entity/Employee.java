@@ -32,10 +32,9 @@ public class Employee implements Serializable
 	private String firstName;
 	private String lastName;
 	private String city;
-	private int zipcode;
 	private Role role;
 	private int score;
-	private HolidayCalendarType holidayCalendarType;
+	private HolidayCalendarType holidayCalendarType = HolidayCalendarType.germanyNRW;
 	private int vacationCount = 0;
 	private int maxVacationCount = 30;
 	private int freeVacationCount;
@@ -88,16 +87,6 @@ public class Employee implements Serializable
 		this.city = city;
 	}
 
-	public int getZipcode()
-	{
-		return zipcode;
-	}
-
-	public void setZipcode(int zipcode)
-	{
-		this.zipcode = zipcode;
-	}
-
 	public Role getRole()
 	{
 		return role;
@@ -148,18 +137,31 @@ public class Employee implements Serializable
 		this.vacationCount -= value;
 	}
 
-	public Employee(String konzernID, String firstName, String lastName, String city, int zipcode, Role role,
-		int score, int vacationCount)
+	public Employee(String konzernID, String firstName, String lastName, String city, Role role, int score,
+		int vacationCount)
 	{
 		this.konzernID = konzernID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.city = city;
-		this.zipcode = zipcode;
 		this.role = role;
 		this.score = score;
 		this.vacationCount = vacationCount;
 		this.freeVacationCount = maxVacationCount - vacationCount;
+	}
+
+	public Employee(String konzernID, String firstName, String lastName, String city, Role role, int score,
+		int vacationCount, HolidayCalendarType holidayCalendarType)
+	{
+		this.konzernID = konzernID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.city = city;
+		this.role = role;
+		this.score = score;
+		this.vacationCount = vacationCount;
+		this.freeVacationCount = maxVacationCount - vacationCount;
+		this.holidayCalendarType = holidayCalendarType;
 	}
 
 	@javax.persistence.Transient
