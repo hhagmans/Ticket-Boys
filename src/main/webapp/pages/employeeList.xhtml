@@ -28,7 +28,7 @@
 				<p:ajax event="rowEditCancel" listener="#{employeeView.onCancel}"
 					update=":employeeListMainform:messages" />
 
-				<p:column headerText="Konzern ID" style="width:20%">
+				<p:column headerText="Konzern ID" style="width:10%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.konzernID}" />
@@ -40,7 +40,7 @@
 				</p:column>
 
 
-				<p:column headerText="Vorname" style="width:20%">
+				<p:column headerText="Vorname" style="width:15%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.firstName}" />
@@ -63,7 +63,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Arbeitsort" style="width:20%">
+				<p:column headerText="Arbeitsort" style="width:15%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.city}" />
@@ -75,7 +75,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Feiertag-Config" style="width:14%">
+				<p:column headerText="Auswahl der Feiertage" style="width:20%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.holidayCalendarType.label}" />
@@ -88,7 +88,7 @@
 					</p:cellEditor>
 				</p:column>
 				
-				<p:column headerText="Role" style="width:14%">
+				<p:column headerText="Rolle" style="width:10%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.role.roleName}" />
@@ -101,9 +101,12 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column style="width:6%">
+				<p:column style="width:2%;border-style:none">
 					<p:rowEditor>
 					</p:rowEditor>
+					
+				</p:column>
+				<p:column  style="width:2%;border-style:none">
 					<p:commandButton id="deleteEmployeeButton"
 						action="#{employeeView.deleteEmployee(employee)}"
 						update=":employeeListMainform:messages, :employeeListMainform:employeeList"
