@@ -177,16 +177,6 @@ public class ConfliktTest {
 
 		Set<Week> set3 = conflikt.getEmployeesWeek(employee3);
 
-		System.out.println("Set1:");
-		for (Week week : set1) {
-			System.out.println(week.getWeekNumber());
-		}
-
-		System.out.println("Set2:");
-		for (Week week : set2) {
-			System.out.println(week.getWeekNumber());
-		}
-
 		assertFalse(conflikt.checkForNoConflicts(set1, set2));
 		assertTrue(conflikt.checkForNoConflicts(set1, set3));
 

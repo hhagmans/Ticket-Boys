@@ -148,12 +148,6 @@ public class ConflictFinder implements Serializable {
 		Set<Week> eventWeeks = getEmployeesWeek(employeeData.findByID(shift
 				.getDispatcher().getKonzernID()));
 
-		System.out.println(shift.getDispatcher().getKonzernID());
-
-		for (Week week : eventWeeks) {
-			System.out.println(week.getUniqueRowKey());
-		}
-
 		boolean result = checkForNoConflicts(shiftWeeks, eventWeeks);
 
 		return result;
