@@ -15,10 +15,13 @@ import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.EventData;
 import de.fh_dortmund.ticket_system.business.ShiftCalculator;
 import de.fh_dortmund.ticket_system.business.ShiftData;
+import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
+import de.fh_dortmund.ticket_system.entity.Week;
+import de.fh_dortmund.ticket_system.persistence.ConflictDao;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
 import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
 import de.fh_dortmund.ticket_system.persistence.EventDao;
@@ -26,7 +29,8 @@ import de.fh_dortmund.ticket_system.persistence.EventDaoSqlite;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 
-public class TestdataProvider {
+public class TestdataProvider
+{
 	/**
 	 * Fetches the list of all employees and filters them by role. Returns all
 	 * {@link Role#dispatcher}s.
@@ -35,12 +39,17 @@ public class TestdataProvider {
 	 * 
 	 * @see #getEmployeeList()
 	 */
-	public List<Employee> getDispatchingEmployees() {
+	public List<Employee> getDispatchingEmployees()
+	{
 		List<Employee> dispatchers = new ArrayList<Employee>();
 
 		for (Employee e : getEmployeeList())
+		{
 			if (e.getRole().equals(Role.dispatcher))
+			{
 				dispatchers.add(e);
+			}
+		}
 
 		return dispatchers;
 	}
@@ -50,70 +59,89 @@ public class TestdataProvider {
 	 * 
 	 * @return list of employees
 	 */
-	private static List<Employee> getEmployeeList() {
+	private static List<Employee> getEmployeeList()
+	{
 		List<Employee> empList;
 
 		// Auslesen der json File
-		InputStream is = new TestdataProvider().getClass().getResourceAsStream(
-				"/test/UserList.json");
+		InputStream is = new TestdataProvider().getClass().getResourceAsStream("/test/UserList.json");
 		// XXX
 		java.util.Scanner s = new Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
 
-		try {
+		try
+		{
 			is.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 
 		// Serialisieren in eine Liste von Employees
-		Type type = new TypeToken<List<Employee>>() {
+		Type type = new TypeToken<List<Employee>>()
+		{
 		}.getType();
 		empList = new Gson().fromJson(json, type);
 
 		return empList;
 	}
 
-	private static List<Event> getEventList() {
+	private static List<Event> getEventList()
+	{
 		List<Event> eventList;
 
 		// Auslesen der json File
-		InputStream is = new TestdataProvider().getClass().getResourceAsStream(
-				"/test/EventData.json");
+		InputStream is = new TestdataProvider().getClass().getResourceAsStream("/test/EventData.json");
 		// XXX
 		java.util.Scanner s = new Scanner(is).useDelimiter("\\A");
 		String json = s.hasNext() ? s.next() : "";
 
-		try {
+		try
+		{
 			is.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 
 		// Serialisieren in eine Liste von Employees
-		Type type = new TypeToken<List<Event>>() {
+		Type type = new TypeToken<List<Event>>()
+		{
 		}.getType();
 		eventList = new Gson().fromJson(json, type);
 
 		return eventList;
 	}
 
-	public static void fillEmployees(EmployeeDao dao) {
+	public static void fillEmployees(EmployeeDao dao)
+	{
 		List<Employee> allEmployees = getEmployeeList();
 
-		for (Employee employee : allEmployees) {
+		for (Employee employee : allEmployees)
+		{
 			if (!employee.equals(dao.findById(employee.getKonzernID())))
+			{
 				dao.add(employee);
+			}
 		}
 
 		System.out.println("Employees added " + allEmployees.size());
 	}
 
-	public static void fillShift(ShiftDao dao) {
+	public static void fillConflict(ConflictDao dao)
+	{
+		dao.add(new Conflict(new Employee("", "Peter", "Enis", "Marl", Role.dispatcher, 0, 0), new Week(2014, 3)));
+	}
+
+	public static void fillShift(ShiftDao dao)
+	{
 		TestdataProvider dataProvider = new TestdataProvider();
 		List<Employee> dispatchers = dataProvider.getDispatchingEmployees();
 		List<Shift> allshifts = new ArrayList<Shift>();
-		if (dispatchers != null) {
+		if (dispatchers != null)
+		{
 			ShiftCalculator sh = new ShiftCalculator();
 
 			ConflictFinder conflict = new ConflictFinder();
@@ -134,18 +162,25 @@ public class TestdataProvider {
 			allshifts = sh.generateShiftList(dispatchers);
 		}
 
-		if (dao.findAll().isEmpty()) {
-			for (Shift shift : allshifts) {
+		if (dao.findAll().isEmpty())
+		{
+			for (Shift shift : allshifts)
+			{
 				if (!shift.equals(dao.findById(shift.getUniqueRowKey())))
+				{
 					dao.add(shift);
+				}
 			}
 		}
 	}
 
-	public static void fillEvents(EventDao dao) {
+	public static void fillEvents(EventDao dao)
+	{
 		List<Event> events = TestdataProvider.getEventList();
-		if (dao.findAll().isEmpty()) {
-			for (Event event : events) {
+		if (dao.findAll().isEmpty())
+		{
+			for (Event event : events)
+			{
 				dao.add(event);
 			}
 		}

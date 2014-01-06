@@ -2,7 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:param name="title" value="Willkommen" />
 
@@ -18,6 +19,22 @@
 			<p:panel>
 				<p:commandButton id="seePersonalVacations" action="personalVacationView?faces-redirect=true" icon="ui-icon-image" value="Eigene Abwesenheiten" rendered="#{auth.employee.role != 'guest'}"/>
 			</p:panel>
+			<p:panel rendered="#{auth.employee.role != 'guest'}">
+			<h:outputText value="Meine Terminkonflikte" />  
+			
+			<!--
+		        <p:selectManyMenu id="conflictMenu" value="#{conflictView.selectedConflicts}">  
+            	<f:selectItems value="#{conflictView.conflicts}" var="c" itemLabel="#{conflict.name}" itemValue="#{conflict}"/>  
+        		<p:column>#{c.name}</p:column>
+        		</p:selectManyMenu>
+        		
+        		<p:commandButton style="align:center" id="solveConflictButton"
+						icon="ui-icon-circle-plus" action="#{ConflictView.solveConflicts()}"
+						value="Submit" update=":content"
+						oncomplete="PF('conflictMenu').update" />
+			-->
+			</p:panel>
+			
 		</h:form>
 	</ui:define>
 

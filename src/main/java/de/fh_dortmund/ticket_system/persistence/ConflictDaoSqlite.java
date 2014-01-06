@@ -1,7 +1,8 @@
 package de.fh_dortmund.ticket_system.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Query;
 
 import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Conflict;
@@ -9,21 +10,17 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 public class ConflictDaoSqlite extends BaseDaoSqlite<Conflict> implements ConflictDao
 {
-
-	public List<Conflict> findByEmployee(Employee employee)
+	@Override
+	public List<Conflict> findAll()
 	{
-		List<Conflict> allConflicts = findAll();
-		List<Conflict> userConflicts = new ArrayList<Conflict>();
+		return getEm().createNamedQuery("Conflict_findAll", Conflict.class).getResultList();
+	}
 
-		for (Conflict c : allConflicts)
-		{
-			if (c.getEmployee().equals(employee))
-			{
-				userConflicts.add(c);
-			}
-		}
-
-		return userConflicts;
+	public List<Conflict> findByUser(Employee emp)
+	{
+		Query setParameter = getEm().createNamedQuery("Conflict_findByUser", Conflict.class).setParameter("employee",
+			emp);
+		return setParameter.getResultList();
 	}
 
 }
