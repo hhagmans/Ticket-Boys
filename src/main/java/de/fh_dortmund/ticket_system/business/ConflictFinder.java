@@ -62,11 +62,11 @@ public class ConflictFinder implements Serializable {
 	}
 
 	/**
-	 * Checks if no two sets have any weeks in common.
+	 * Checks if two sets have any weeks in common.
 	 * 
 	 * @param set1
 	 * @param set2
-	 * @return true if the sets have at least one week in common, else false
+	 * @return false if the sets have at least one week in common, else true
 	 */
 	public boolean checkForNoConflicts(Set<Week> set1, Set<Week> set2) {
 		// Check for conflikts
@@ -145,7 +145,14 @@ public class ConflictFinder implements Serializable {
 		shiftWeeks.add(shiftWeek);
 
 		// Get shifts employee events
-		Set<Week> eventWeeks = getEmployeesWeek(shift.getDispatcher());
+		Set<Week> eventWeeks = getEmployeesWeek(employeeData.findByID(shift
+				.getDispatcher().getKonzernID()));
+
+		System.out.println(shift.getDispatcher().getKonzernID());
+
+		for (Week week : eventWeeks) {
+			System.out.println(week.getUniqueRowKey());
+		}
 
 		boolean result = checkForNoConflicts(shiftWeeks, eventWeeks);
 
@@ -190,8 +197,15 @@ public class ConflictFinder implements Serializable {
 	protected Set<Week> getEmployeesWeek(Employee employee) {
 		Set<Week> employeesWeeks = new HashSet<Week>();
 		Set<Event> events = employee.getMyEvents();
-		if (events == null) {
-			return new HashSet<Week>();
+		if (events == null || events.size() == 0) {
+			try {
+				events = new HashSet<Event>(getEventData().findByUser(employee));
+			} catch (NullPointerException n) {
+				return new HashSet<Week>();
+			}
+			if (events.size() == 0) {
+				return new HashSet<Week>();
+			}
 		}
 
 		for (Event vacationEvent : events) {
