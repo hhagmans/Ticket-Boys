@@ -8,7 +8,7 @@
 	<ui:param name="title" value="Nutzer" />
 
 	<ui:define name="content">
-		<h:form id="employeeListMainform">
+		<h:form id="employeeListMainform" onkeypress="if (event.keyCode == 13) { return false; }">
 
 			<p:growl id="messages" showDetail="true" />
 
