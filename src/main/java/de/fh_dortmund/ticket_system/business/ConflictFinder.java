@@ -11,12 +11,15 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import org.apache.commons.mail.EmailException;
+
 import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
 import de.fh_dortmund.ticket_system.util.DateUtil;
+import de.fh_dortmund.ticket_system.util.EmailUtil;
 
 /**
  * Class for identifying conflicts between employee events and shifts.
@@ -245,12 +248,24 @@ public class ConflictFinder implements Serializable {
 	public void generateConflictFor(Employee employee, Event event) {
 		Set<Week> eventWeeks = DateUtil.getWeeksFromDates(event.getStartDate(),
 				event.getEndDate());
+		try {
+			EmailUtil.sendConfEmail("Hallo " + employee.getFullName() + ",\n\nBei der Planung " + "\"" + event.getTitle() + "\"" + " vom " + event.getStartDate() + " bis " + event.getEndDate() + " ist ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem", "ticketboys1337@gmail.com");
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		generateConflictFor(employee, eventWeeks);
 	}
 
 	public void generateConflictFor(Employee employee, Week week) {
 		HashSet<Week> weeks = new HashSet<Week>();
 		weeks.add(week);
+		try {
+			EmailUtil.sendConfEmail("Hallo " + employee.getFullName() + ",\n\nBei der Einsatzplanung ist in KW " + week.getWeekNumber() +" ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem", "ticketboys1337@gmail.com");
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		generateConflictFor(employee, weeks);
 	}
 
