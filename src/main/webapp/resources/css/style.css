@@ -16,6 +16,10 @@ body {
 	margin: 0 auto;
 }
 
+.overline1{
+	font-weight: bold;
+}
+
 .holiday-event{
 	background-color: grey;
 }
