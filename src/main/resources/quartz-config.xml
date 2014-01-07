@@ -14,6 +14,15 @@
 			<description>Print a welcome message</description>
 			<job-class>de.fh_dortmund.ticket_system.util.SchedulerJob</job-class>
 		</job>
+		
+		<job>
+			<name>ConflictReminder</name>
+			<group>AGroup</group>
+			<description>Weekly check for conflicts with mail sending</description>
+			<job-class>de.fh_dortmund.ticket_system.util.ConflictReminder</job-class>
+		</job>
+		
+		
  
 		<trigger>
 			<cron>
@@ -22,6 +31,15 @@
 				<job-group>AGroup</job-group>
 				<!-- every monday at 8 am: "0 0 8 ? * MON" -->
 				<cron-expression>0 0 8 ? * MON</cron-expression>
+			</cron>
+		</trigger>
+		<trigger>
+			<cron>
+				<name>WeeklyFriday8am</name>
+				<job-name>ConflictReminder</job-name>
+				<job-group>AGroup</job-group>
+				<!-- every friday at 8 am: "0 0 8 ? * MON" -->
+				<cron-expression>0 0 8 ? * FRI</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>
