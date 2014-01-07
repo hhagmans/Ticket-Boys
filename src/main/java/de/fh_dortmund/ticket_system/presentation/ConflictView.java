@@ -24,6 +24,8 @@ public class ConflictView implements Serializable {
 	@ManagedProperty("#{auth}")
 	private Authentication auth;
 
+	private Conflict selectedConflict;
+
 	private List<Conflict> selectedConflicts;
 
 	private List<Conflict> conflicts;
@@ -44,6 +46,16 @@ public class ConflictView implements Serializable {
 	}
 
 	public void solveConflicts() {
+
+		System.out.println("Hallo");
+		System.out.println(getSelectedConflict());
+		System.out.println(getSelectedConflicts());
+
+		if (getSelectedConflict() != null) {
+			getSelectedConflict().setSolved(true);
+			return;
+		}
+
 		if (getSelectedConflicts().size() == 0) {
 			return;
 		}
@@ -59,6 +71,14 @@ public class ConflictView implements Serializable {
 
 	public void setAuth(Authentication auth) {
 		this.auth = auth;
+	}
+
+	public Conflict getSelectedConflict() {
+		return selectedConflict;
+	}
+
+	public void setSelectedConflict(Conflict selectedConflict) {
+		this.selectedConflict = selectedConflict;
 	}
 
 	public List<Conflict> getSelectedConflicts() {

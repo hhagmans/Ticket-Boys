@@ -108,7 +108,7 @@ public class DispatcherView extends BaseView implements Serializable {
 							+ "' hat einen Konflikt erzeugt."));
 
 			conflictFinder.generateConflictFor(shift1.getDispatcher(),
-					shift0.getWeek());
+					shift1.getWeek());
 		}
 	}
 
