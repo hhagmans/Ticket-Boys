@@ -132,7 +132,7 @@ public class TestdataProvider
 
 	public static void fillConflict(ConflictDao dao)
 	{
-		dao.add(new Conflict(new Employee("", "Peter", "Enis", "Marl", Role.dispatcher, 0, 0), new Week(2014, 3)));
+		dao.add(new Conflict(new Employee("Penis", "Peter", "Enis", "Marl", Role.dispatcher, 0, 0), new Week(2014, 3)));
 	}
 
 	public static void fillShift(ShiftDao dao)
