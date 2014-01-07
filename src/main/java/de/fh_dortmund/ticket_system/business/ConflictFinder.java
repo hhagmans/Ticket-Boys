@@ -293,7 +293,7 @@ public class ConflictFinder implements Serializable
 						+ " bis "
 						+ event.getEndDate()
 						+ " ist ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem",
-					"ticketboys1337@gmail.com");
+					employee.getEmail());
 		}
 		catch (EmailException e)
 		{
@@ -319,7 +319,7 @@ public class ConflictFinder implements Serializable
 						+ ",\n\nBei der Einsatzplanung ist in KW "
 						+ week.getWeekNumber()
 						+ " ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem",
-					"ticketboys1337@gmail.com");
+					employee.getEmail());
 		}
 		catch (EmailException e)
 		{
