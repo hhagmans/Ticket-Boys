@@ -6,6 +6,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
 
 import de.fh_dortmund.ticket_system.business.ShiftData;
@@ -146,8 +147,35 @@ public class DailyChecker
 		}
 	}
 
-	public static void conflictTrigger()
+	public static void conflictTrigger(String[] text)
 	{
+		String employeeFullname = text[0];
+		String title = text[1];
+		String startDate = text[2];
+		String endDate = text[3];
+
+		try
+		{
+			EmailUtil
+				.sendConfEmail(
+					"Hallo "
+						+ employeeFullname
+						+ ",\n\nBei der Planung "
+						+ "\""
+						+ title
+						+ "\""
+						+ " vom "
+						+ startDate
+						+ " bis "
+						+ endDate
+						+ " ist ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem",
+					"ticketboys1337@gmail.com");
+		}
+		catch (EmailException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }

@@ -29,7 +29,8 @@ import de.fh_dortmund.ticket_system.util.EmailUtil;
  */
 @ManagedBean
 @ApplicationScoped
-public class ConflictFinder implements Serializable {
+public class ConflictFinder implements Serializable
+{
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty("#{shiftData}")
@@ -44,7 +45,8 @@ public class ConflictFinder implements Serializable {
 	@ManagedProperty("#{conflictData}")
 	private ConflictData conflictData;
 
-	public ConflictFinder() {
+	public ConflictFinder()
+	{
 	}
 
 	/**
@@ -53,7 +55,8 @@ public class ConflictFinder implements Serializable {
 	 * @param employee
 	 * @return true if the employee has no conflicts, else false
 	 */
-	public boolean checkEmployee(Employee employee) {
+	public boolean checkEmployee(Employee employee)
+	{
 		// Get all Weeks from employee
 		Set<Week> employeesWeeks = getEmployeesWeek(employee);
 
@@ -71,11 +74,14 @@ public class ConflictFinder implements Serializable {
 	 * @param set2
 	 * @return false if the sets have at least one week in common, else true
 	 */
-	public boolean checkForNoConflicts(Set<Week> set1, Set<Week> set2) {
+	public boolean checkForNoConflicts(Set<Week> set1, Set<Week> set2)
+	{
 		// Check for conflikts
 		boolean ok = true;
-		for (Week kw : set1) {
-			if (set2.contains(kw)) {
+		for (Week kw : set1)
+		{
+			if (set2.contains(kw))
+			{
 				ok = false;
 				break;
 			}
@@ -89,9 +95,12 @@ public class ConflictFinder implements Serializable {
 	 * 
 	 * @return true if every employee has no conficts, else false
 	 */
-	public boolean checkAllEmployees() {
-		for (Employee employee : getEmployeeData().findAll()) {
-			if (!checkEmployee(employee)) {
+	public boolean checkAllEmployees()
+	{
+		for (Employee employee : getEmployeeData().findAll())
+		{
+			if (!checkEmployee(employee))
+			{
 				return false;
 			}
 		}
@@ -105,7 +114,8 @@ public class ConflictFinder implements Serializable {
 	 * @param eventvent
 	 * @return true if the vacation has no conflict, else false
 	 */
-	public boolean checkVacation(Event eventvent) {
+	public boolean checkVacation(Event eventvent)
+	{
 		// Get all weeks of event
 		Date startDate = eventvent.getStartDate();
 		Date endDate = eventvent.getEndDate();
@@ -126,9 +136,12 @@ public class ConflictFinder implements Serializable {
 	 * 
 	 * @return true if every vacation has no conflicts, else false
 	 */
-	public boolean checkAllVacations() {
-		for (Event event : getEventData().findAll()) {
-			if (!checkVacation(event)) {
+	public boolean checkAllVacations()
+	{
+		for (Event event : getEventData().findAll())
+		{
+			if (!checkVacation(event))
+			{
 				return false;
 			}
 		}
@@ -141,15 +154,15 @@ public class ConflictFinder implements Serializable {
 	 * @param shift
 	 * @return true if the shift has no conflicts, else false
 	 */
-	public boolean checkShift(Shift shift) {
+	public boolean checkShift(Shift shift)
+	{
 		// Get all shiftweeks
 		Week shiftWeek = shift.getWeek();
 		Set<Week> shiftWeeks = new HashSet<Week>();
 		shiftWeeks.add(shiftWeek);
 
 		// Get shifts employee events
-		Set<Week> eventWeeks = getEmployeesWeek(employeeData.findByID(shift
-				.getDispatcher().getKonzernID()));
+		Set<Week> eventWeeks = getEmployeesWeek(employeeData.findByID(shift.getDispatcher().getKonzernID()));
 
 		boolean result = checkForNoConflicts(shiftWeeks, eventWeeks);
 
@@ -161,9 +174,12 @@ public class ConflictFinder implements Serializable {
 	 * 
 	 * @return true if every shift has no conflicts, else false
 	 */
-	public boolean checkAllShifts() {
-		for (Shift shift : getShiftData().findAll()) {
-			if (!checkShift(shift)) {
+	public boolean checkAllShifts()
+	{
+		for (Shift shift : getShiftData().findAll())
+		{
+			if (!checkShift(shift))
+			{
 				return false;
 			}
 		}
@@ -177,9 +193,11 @@ public class ConflictFinder implements Serializable {
 	 * @param shifts
 	 * @return a set of weeks
 	 */
-	protected Set<Week> getShiftsWeeks(List<Shift> shifts) {
+	protected Set<Week> getShiftsWeeks(List<Shift> shifts)
+	{
 		Set<Week> kws = new HashSet<Week>();
-		for (Shift shift : shifts) {
+		for (Shift shift : shifts)
+		{
 			kws.add(shift.getWeek());
 		}
 		return kws;
@@ -191,51 +209,63 @@ public class ConflictFinder implements Serializable {
 	 * @param employee
 	 * @return a set of weeks
 	 */
-	protected Set<Week> getEmployeesWeek(Employee employee) {
+	protected Set<Week> getEmployeesWeek(Employee employee)
+	{
 		Set<Week> employeesWeeks = new HashSet<Week>();
 		Set<Event> events = employee.getMyEvents();
-		if ((events == null) || (events.size() == 0)) {
-			try {
+		if ((events == null) || (events.size() == 0))
+		{
+			try
+			{
 				events = new HashSet<Event>(getEventData().findByUser(employee));
-			} catch (NullPointerException n) {
+			}
+			catch (NullPointerException n)
+			{
 				return new HashSet<Week>();
 			}
-			if (events.size() == 0) {
+			if (events.size() == 0)
+			{
 				return new HashSet<Week>();
 			}
 		}
 
-		for (Event vacationEvent : events) {
+		for (Event vacationEvent : events)
+		{
 			Date startDate = vacationEvent.getStartDate();
 			Date endDate = vacationEvent.getEndDate();
-			employeesWeeks.addAll(DateUtil
-					.getWeeksFromDates(startDate, endDate));
+			employeesWeeks.addAll(DateUtil.getWeeksFromDates(startDate, endDate));
 		}
 
 		return employeesWeeks;
 	}
 
-	public ShiftData getShiftData() {
+	public ShiftData getShiftData()
+	{
 		return shiftData;
 	}
 
-	public void setShiftData(ShiftData shiftData) {
+	public void setShiftData(ShiftData shiftData)
+	{
 		this.shiftData = shiftData;
 	}
 
-	public EmployeeData getEmployeeData() {
+	public EmployeeData getEmployeeData()
+	{
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData) {
+	public void setEmployeeData(EmployeeData employeeData)
+	{
 		this.employeeData = employeeData;
 	}
 
-	public EventData getEventData() {
+	public EventData getEventData()
+	{
 		return eventData;
 	}
 
-	public void setEventData(EventData eventData) {
+	public void setEventData(EventData eventData)
+	{
 		this.eventData = eventData;
 	}
 
@@ -245,35 +275,64 @@ public class ConflictFinder implements Serializable {
 	 * @param employee
 	 * @param event
 	 */
-	public void generateConflictFor(Employee employee, Event event) {
-		Set<Week> eventWeeks = DateUtil.getWeeksFromDates(event.getStartDate(),
-				event.getEndDate());
-		try {
-			EmailUtil.sendConfEmail("Hallo " + employee.getFullName() + ",\n\nBei der Planung " + "\"" + event.getTitle() + "\"" + " vom " + event.getStartDate() + " bis " + event.getEndDate() + " ist ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem", "ticketboys1337@gmail.com");
-		} catch (EmailException e) {
+	public void generateConflictFor(Employee employee, Event event)
+	{
+		Set<Week> eventWeeks = DateUtil.getWeeksFromDates(event.getStartDate(), event.getEndDate());
+		try
+		{
+			EmailUtil
+				.sendConfEmail(
+					"Hallo "
+						+ employee.getFullName()
+						+ ",\n\nBei der Planung "
+						+ "\""
+						+ event.getTitle()
+						+ "\""
+						+ " vom "
+						+ event.getStartDate()
+						+ " bis "
+						+ event.getEndDate()
+						+ " ist ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem",
+					"ticketboys1337@gmail.com");
+		}
+		catch (EmailException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		generateConflictFor(employee, eventWeeks);
 	}
 
-	public void generateConflictFor(Employee employee, Week week) {
+	public void generateConflictFor(Employee employee, Week week)
+	{
 		HashSet<Week> weeks = new HashSet<Week>();
 		weeks.add(week);
-		try {
-			EmailUtil.sendConfEmail("Hallo " + employee.getFullName() + ",\n\nBei der Einsatzplanung ist in KW " + week.getWeekNumber() +" ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem", "ticketboys1337@gmail.com");
-		} catch (EmailException e) {
-			// TODO Auto-generated catch block
+
+		generateConflictFor(employee, weeks);
+
+		try
+		{
+			EmailUtil
+				.sendConfEmail(
+					"Hallo "
+						+ employee.getFullName()
+						+ ",\n\nBei der Einsatzplanung ist in KW "
+						+ week.getWeekNumber()
+						+ " ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem",
+					"ticketboys1337@gmail.com");
+		}
+		catch (EmailException e)
+		{
 			e.printStackTrace();
 		}
-		generateConflictFor(employee, weeks);
+
 	}
 
-	public void generateConflictFor(Employee employee, Set<Week> weeks) {
+	public void generateConflictFor(Employee employee, Set<Week> weeks)
+	{
 		Set<Week> employeeWeeks = getEmployeesWeek(employee);
 
-		List<Conflict> conflicts = getAllConflicts(employee, employeeWeeks,
-				weeks);
+		List<Conflict> conflicts = getAllConflicts(employee, employeeWeeks, weeks);
 
 		// Filter conflict doubles
 
@@ -281,9 +340,12 @@ public class ConflictFinder implements Serializable {
 
 		List<Conflict> filteredConflicts = new ArrayList<Conflict>();
 
-		for (Conflict conflict : conflicts) {
+		for (Conflict conflict : conflicts)
+		{
 			if (!allConflicts.contains(conflict))
+			{
 				filteredConflicts.add(conflict);
+			}
 		}
 
 		getConflictData().add(filteredConflicts);
@@ -296,12 +358,14 @@ public class ConflictFinder implements Serializable {
 	 * @param set2
 	 * @return returns a list of conflicts between the two given sets.
 	 */
-	public List<Conflict> getAllConflicts(Employee employee, Set<Week> set1,
-			Set<Week> set2) {
+	public List<Conflict> getAllConflicts(Employee employee, Set<Week> set1, Set<Week> set2)
+	{
 		List<Conflict> conflicts = new ArrayList<Conflict>();
 
-		for (Week kw : set1) {
-			if (set2.contains(kw)) {
+		for (Week kw : set1)
+		{
+			if (set2.contains(kw))
+			{
 				Conflict conflict = new Conflict(employee, kw);
 
 				conflicts.add(conflict);
@@ -310,11 +374,13 @@ public class ConflictFinder implements Serializable {
 		return conflicts;
 	}
 
-	public ConflictData getConflictData() {
+	public ConflictData getConflictData()
+	{
 		return conflictData;
 	}
 
-	public void setConflictData(ConflictData conflictData) {
+	public void setConflictData(ConflictData conflictData)
+	{
 		this.conflictData = conflictData;
 	}
 

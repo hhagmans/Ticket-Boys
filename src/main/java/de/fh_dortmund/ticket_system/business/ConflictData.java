@@ -18,17 +18,13 @@ public class ConflictData extends BaseData<Conflict, ConflictDao> implements Ser
 {
 	private static final long serialVersionUID = -836521223253264448L;
 
-	//	@PostConstruct
-	//	private void init() {
-	//		TestdataProvider.fillConflict(getDao());
-	//	}
-
 	public ConflictData()
 	{
 		setDao(new ConflictDaoSqlite());
 	}
 
-	public List<Conflict> findByUser(Employee emp) {
+	public List<Conflict> findByUser(Employee emp)
+	{
 		return getDao().findByUser(emp);
 	}
 
