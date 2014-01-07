@@ -8,7 +8,7 @@
 	<ui:param name="title" value="Willkommen" />
 
 	<ui:define name="content">
-		<h:form>
+		<h:form id="IndexMainForm">
 			<p:panel header="Willkommen #{auth.name}" styleClass="login">
 				<p:outputLabel>Sie sind eingeloggt mit:</p:outputLabel>
 				<br />
@@ -22,17 +22,15 @@
 			<p:panel rendered="#{auth.employee.role != 'guest'}">
 			<h:outputText value="Meine Terminkonflikte" />  
 			
-			<!--
 		        <p:selectManyMenu id="conflictMenu" value="#{conflictView.selectedConflicts}">  
             	<f:selectItems value="#{conflictView.conflicts}" var="c" itemLabel="#{conflict.name}" itemValue="#{conflict}"/>  
         		<p:column>#{c.name}</p:column>
         		</p:selectManyMenu>
         		
         		<p:commandButton style="align:center" id="solveConflictButton"
-						icon="ui-icon-circle-plus" action="#{ConflictView.solveConflicts()}"
-						value="Submit" update=":content"
+						icon="ui-icon-circle-plus" action="#{conflictView.solveConflicts()}"
+						value="Submit" update=":IndexMainForm:conflictMenu"
 						oncomplete="PF('conflictMenu').update" />
-			-->
 			</p:panel>
 			
 		</h:form>
