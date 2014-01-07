@@ -6,57 +6,49 @@ import java.util.List;
  * Generic class for ManagedBeans with DAO abstraction.
  * 
  * @author Alex Hofmann
- *
- * @param <E> Class Type of the entity of the DAO
- * @param <Dao> The DAO implementation 
+ * 
+ * @param <E>
+ *            Class Type of the entity of the DAO
+ * @param <Dao>
+ *            The DAO implementation
  */
-public class BaseData<E, Dao extends BaseDao<E>>
-{
-	private Dao	dao;
+public class BaseData<E, Dao extends BaseDao<E>> {
+	private Dao dao;
 
-	public E findByID(String konzernID)
-	{
-		E t = dao.findById(konzernID);
+	public E findByID(String id) {
+		E t = dao.findById(id);
 		return t;
 	}
 
-	public void update(E t)
-	{
+	public void update(E t) {
 		dao.update(t);
 	}
 
-	public void update(List<E> l)
-	{
+	public void update(List<E> l) {
 		dao.update(l);
 	}
 
-	public void delete(E t)
-	{
+	public void delete(E t) {
 		dao.delete(t);
 	}
 
-	public void add(E t)
-	{
+	public void add(E t) {
 		dao.add(t);
 	}
 
-	public void add(List<E> l)
-	{
+	public void add(List<E> l) {
 		dao.add(l);
 	}
 
-	public List<E> findAll()
-	{
+	public List<E> findAll() {
 		return dao.findAll();
 	}
 
-	public Dao getDao()
-	{
+	public Dao getDao() {
 		return dao;
 	}
 
-	public void setDao(Dao dao)
-	{
+	public void setDao(Dao dao) {
 		this.dao = dao;
 	}
 }

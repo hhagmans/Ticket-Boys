@@ -16,7 +16,11 @@ public class EmailUtil
 	public static final String USERNAME = "ticketboys1337@gmail.com";
 	public static final String PASSWORD = "ticketboysevonik";
 	public static final String SUBJECT = "Ihr Dispatcher-Einsatz steht bevor";
+	public static final String CONFLICTSUBJECT = "Bei der Einsatzplanung ist ein Konflikt aufgetreten";
 
+	public static Email sendConfEmail(String msg, String... to) throws EmailException {
+		return sendEmailWithSubject(CONFLICTSUBJECT, msg, to);
+	}
 	
 	public static Email sendEmail(String msg, String... to) throws EmailException
 	{
