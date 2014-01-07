@@ -9,10 +9,13 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
+import org.apache.commons.mail.EmailException;
+
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
+import de.fh_dortmund.ticket_system.util.EmailUtil;
 
 /**
  * Meant to be the Dispatcher-List generating Class. Later with score and shit.
