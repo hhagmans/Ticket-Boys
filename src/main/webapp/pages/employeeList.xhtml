@@ -41,7 +41,7 @@
 				</p:column>
 
 
-				<p:column headerText="Vorname" style="width:15%">
+				<p:column headerText="Vorname" style="width:12%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.firstName}" />
@@ -52,7 +52,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Nachname" style="width:20%">
+				<p:column headerText="Nachname" style="width:18%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.lastName}" />
@@ -64,7 +64,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Arbeitsort" style="width:15%">
+				<p:column headerText="Arbeitsort" style="width:10%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{employee.city}" />
@@ -72,6 +72,17 @@
 						<f:facet name="input">
 							<p:inputText value="#{employee.city}" style="width:100%"
 								label="city" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Email" style="width:10%">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{employee.email}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{employee.email}" style="width:100%"
+								label="email" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>

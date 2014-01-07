@@ -38,6 +38,7 @@ public class Employee implements Serializable
 	private int vacationCount = 0;
 	private int maxVacationCount = 30;
 	private int freeVacationCount;
+	private String email;
 
 	private Set<Event> myEvents = new HashSet<Event>();
 
@@ -288,5 +289,15 @@ public class Employee implements Serializable
 	public void setHolidayCalendarType(HolidayCalendarType holidayCalendarType)
 	{
 		this.holidayCalendarType = holidayCalendarType;
+	}
+
+	public String getEmail()
+	{
+		return email;
+	}
+
+	public void setEmail(String email)
+	{
+		this.email = email;
 	}
 }
