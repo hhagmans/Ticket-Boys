@@ -8,8 +8,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 @ManagedBean
-public class EmailUtil
-{
+public class EmailUtil {
 	public static final String HOST = "smtp.googlemail.com";
 	public static final Integer SMTP_PORT = 465;
 	public static final String FROM = "ticketboys1337@gmail.com";
@@ -18,25 +17,25 @@ public class EmailUtil
 	public static final String SUBJECT = "Ihr Dispatcher-Einsatz steht bevor";
 	public static final String CONFLICTSUBJECT = "Bei der Einsatzplanung ist ein Konflikt aufgetreten";
 
-	public static Email sendConfEmail(String msg, String... to) throws EmailException {
+	public static Email sendConfEmail(String msg, String... to)
+			throws EmailException {
 		return sendEmailWithSubject(CONFLICTSUBJECT, msg, to);
 	}
-	
-	public static Email sendEmail(String msg, String... to) throws EmailException
-	{
+
+	public static Email sendEmail(String msg, String... to)
+			throws EmailException {
 		return sendEmailWithSubject(SUBJECT, msg, to);
 	}
 
-	public static Email sendEmailWithSubject(String subject, String msg, String... to) throws EmailException
-	{
+	public static Email sendEmailWithSubject(String subject, String msg,
+			String... to) throws EmailException {
 		Email email = createEmail(msg);
 		email.setSubject(subject);
 
 		return send(email, to);
 	}
 
-	public static Email createEmail(String msg) throws EmailException
-	{
+	public static Email createEmail(String msg) throws EmailException {
 		Email email = new SimpleEmail();
 		email.setHostName(HOST);
 		email.setSmtpPort(SMTP_PORT);
@@ -50,10 +49,12 @@ public class EmailUtil
 		return email;
 	}
 
-	private static Email send(Email email, String... to) throws EmailException
-	{
+	private static Email send(Email email, String... to) throws EmailException {
+
 		email.addTo(to);
-		email.send();
+
+		Thread t1 = new Thread(new EmailSender(email));
+		t1.start();
 
 		return email;
 	}
