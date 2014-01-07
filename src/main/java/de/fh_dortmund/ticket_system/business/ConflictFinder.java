@@ -260,7 +260,18 @@ public class ConflictFinder implements Serializable {
 		List<Conflict> conflicts = getAllConflicts(employee, employeeWeeks,
 				weeks);
 
-		getConflictData().add(conflicts);
+		// Filter conflict doubles
+
+		List<Conflict> allConflicts = getConflictData().findAll();
+
+		List<Conflict> filteredConflicts = new ArrayList<Conflict>();
+
+		for (Conflict conflict : conflicts) {
+			if (!allConflicts.contains(conflict))
+				filteredConflicts.add(conflict);
+		}
+
+		getConflictData().add(filteredConflicts);
 	}
 
 	/**

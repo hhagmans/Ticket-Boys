@@ -30,8 +30,7 @@ public class ConflictView implements Serializable {
 
 	public List<Conflict> getConflictsForCurrentUser() {
 		Employee currentUser = auth.getEmployee();
-		List<Conflict> conflicts = conflictData.getDao()
-				.findByUser(currentUser);
+		List<Conflict> conflicts = conflictData.findByUser(currentUser);
 
 		return conflicts;
 	}
@@ -45,11 +44,11 @@ public class ConflictView implements Serializable {
 	}
 
 	public void solveConflicts() {
-		if (selectedConflicts.size() == 0) {
+		if (getSelectedConflicts().size() == 0) {
 			return;
 		}
 
-		for (Conflict c : selectedConflicts) {
+		for (Conflict c : getSelectedConflicts()) {
 			c.setSolved(true);
 		}
 	}
