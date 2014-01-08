@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.persistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,14 +24,13 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
+		getEm().remove(event);
 		if (event.getEventType() == EventType.vacation) {
 			Employee emp = event.getEmployee();
-			long diffDays = calculateDayCount(event);
-			emp.decrementVacationCount((int) diffDays + 1);
+			updateVacationCount(emp);
 			emp.refreshFreeVacationDays();
 			getEm().merge(emp);
 		}
-		getEm().remove(event);
 		tx.commit();
 	}
 
@@ -40,9 +40,8 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		tx.begin();
 		getEm().persist(event);
 		if (event.getEventType() == EventType.vacation) {
-			long diffDays = calculateDayCount(event);
 			Employee employee = event.getEmployee();
-			employee.incrementVacationCount((int) diffDays + 1);
+			updateVacationCount(employee);
 			employee.refreshFreeVacationDays();
 		}
 		tx.commit();
@@ -52,26 +51,7 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		Employee emp = event.getEmployee();
-		if (event.getEventType() == EventType.vacation) {
-			Calendar start = Calendar.getInstance();
-			int holidayCount;
-			start.setTime(event.getEndDate());
-			start.add(Calendar.DAY_OF_MONTH, dayDelta);
-			if (start.getTime().after(event.getEndDate())) {
-				holidayCount = HolidayUtil.getNumberofHolidaysBetweenTwoDates(
-						event.getEmployee(), event.getEndDate(),
-						start.getTime());
-			} else {
-				holidayCount = HolidayUtil.getNumberofHolidaysBetweenTwoDates(
-						event.getEmployee(), start.getTime(),
-						event.getEndDate());
-			}
-			if (dayDelta > 0) {
-				emp.incrementVacationCount(dayDelta - holidayCount);
-			} else {
-				emp.incrementVacationCount(dayDelta + holidayCount);
-			}
-		}
+		updateVacationCount(emp);
 		emp.refreshFreeVacationDays();
 		getEm().merge(event);
 		getEm().merge(emp);
@@ -94,6 +74,54 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 				.createNamedQuery("findByUser", Event.class).setParameter(
 						"employee", emp);
 		return (List<Event>) setParameter.getResultList();
+	}
+
+	public List<Event> findByUserAndYear(Employee emp, int year) {
+		Query setParameter = getEm()
+				.createNamedQuery("findByUser", Event.class).setParameter(
+						"employee", emp);
+		List<Event> userList = (List<Event>) setParameter.getResultList();
+		List<Event> filteredList = new ArrayList<Event>();
+		Calendar c = Calendar.getInstance();
+		for (Event event : userList) {
+			c.setTime(event.getStartDate());
+			if (c.get(Calendar.YEAR) == year) {
+				c.setTime(event.getEndDate());
+				if (c.get(Calendar.YEAR) == year + 1) {
+					c.set(Calendar.YEAR, year);
+					c.set(Calendar.MONTH, 11);
+					c.set(Calendar.DAY_OF_MONTH, 31);
+					System.out.println(c.getTime());
+					event.setEndDate(c.getTime());
+				}
+				filteredList.add(event);
+			} else {
+				c.setTime(event.getEndDate());
+				if (c.get(Calendar.YEAR) == year) {
+					c.set(Calendar.YEAR, year);
+					c.set(Calendar.MONTH, 0);
+					c.set(Calendar.DAY_OF_MONTH, 1);
+					System.out.println(c.getTime());
+					event.setStartDate(c.getTime());
+					filteredList.add(event);
+				}
+			}
+
+		}
+		return filteredList;
+	}
+
+	private void updateVacationCount(Employee emp) {
+		Calendar c = Calendar.getInstance();
+		List<Event> eventList = findByUserAndYear(emp, c.get(Calendar.YEAR));
+		long count = 0;
+		for (Event event : eventList) {
+			if (event.getEventType() == EventType.vacation)
+				count = count + (calculateDayCount(event) + 1);
+		}
+		emp.setVacationCount((int) count);
+		getEm().merge(emp);
+
 	}
 
 	private long calculateDayCount(Event event) {
