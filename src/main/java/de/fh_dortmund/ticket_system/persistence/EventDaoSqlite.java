@@ -53,7 +53,24 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		tx.begin();
 		Employee emp = event.getEmployee();
 		if (event.getEventType() == EventType.vacation) {
-			emp.incrementVacationCount(dayDelta);
+			Calendar start = Calendar.getInstance();
+			int holidayCount;
+			start.setTime(event.getEndDate());
+			start.add(Calendar.DAY_OF_MONTH, dayDelta);
+			if (start.getTime().after(event.getEndDate())) {
+				holidayCount = HolidayUtil.getNumberofHolidaysBetweenTwoDates(
+						event.getEmployee(), event.getEndDate(),
+						start.getTime());
+			} else {
+				holidayCount = HolidayUtil.getNumberofHolidaysBetweenTwoDates(
+						event.getEmployee(), start.getTime(),
+						event.getEndDate());
+			}
+			if (dayDelta > 0) {
+				emp.incrementVacationCount(dayDelta - holidayCount);
+			} else {
+				emp.incrementVacationCount(dayDelta + holidayCount);
+			}
 		}
 		emp.refreshFreeVacationDays();
 		getEm().merge(event);
