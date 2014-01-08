@@ -19,7 +19,7 @@ import org.primefaces.model.ScheduleEvent;
 @Table(name = "Event")
 @NamedQueries({
 		@NamedQuery(name = "findAll", query = "SELECT v FROM Event v"),
-		@NamedQuery(name = "findByUser", query = "SELECT v FROM Event v WHERE v.employee = :employee") })
+		@NamedQuery(name = "findByUser", query = "SELECT v FROM Event v WHERE v.employee = :employee"), })
 public class Event implements ScheduleEvent, Serializable {
 
 	private static final long serialVersionUID = 1L;
