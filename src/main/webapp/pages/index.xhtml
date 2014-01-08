@@ -9,12 +9,7 @@
 
 	<ui:define name="content">
 		<h:form id="IndexMainForm">
-			<p:panel header="Willkommen #{auth.name}" styleClass="login">
-				<p:outputLabel>Sie sind eingeloggt mit:</p:outputLabel>
-				<br />
-				<p:outputLabel>Name: "#{auth.name}"</p:outputLabel>
-				<br />
-				<p:outputLabel>Rolle: "#{auth.employee.role}"</p:outputLabel>
+			<p:panel header="Willkommen #{auth.employee.fullName} (#{auth.employee.role})" styleClass="login">
 			</p:panel>
 			<p:panel>
 			<h:outputText styleClass="overline1" value="Meine Abwesenheiten" />  
