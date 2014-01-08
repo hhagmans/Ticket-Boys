@@ -25,15 +25,30 @@
 			<p:panel rendered="#{auth.employee.role != 'guest'}">
 			<h:outputText styleClass="overline1" value="Meine Terminkonflikte" />  
 				<br />
-		        <p:selectOneMenu  id="conflictMenu" value="#{conflictView.selectedConflict}"  widgetVar="conflictMenu" var="c">  
-            	<f:selectItems value="#{conflictView.conflicts}" var="conflict" itemLabel="#{conflict.name}" itemValue="#{conflict}"/>  
-        		<p:column style="width:50%">#{c}</p:column>
-        		</p:selectOneMenu>
-				<br />
-        		<p:commandButton style="align:center" id="solveConflictButton"
+				
+				<p:dataTable id="conflictTable" var="conflict"
+				value="#{conflictView.conflictModel}"
+				widgetVar="conflictTable" selection="#{conflictView.selectedConflicts}"
+				emptyMessage="Es wurden keine Treffer gefunden"
+				draggableColumns="true">
+
+				<f:facet name="header">
+				<p:commandButton style="align:center" id="solveConflictButton"
 						icon="ui-icon-circle-cross" action="#{conflictView.solveConflicts()}"
-						value="Konflikt als gelöst markieren" update=":IndexMainForm:conflictMenu"
-						oncomplete="PF('conflictMenu').update" />
+						value="Konflikte als gelöst markieren" update=":IndexMainForm:conflictTable"
+						oncomplete="PF('conflictTable').update" />
+				</f:facet>
+
+				<p:column selectionMode="multiple" style="width:2%" />
+
+				<p:column id="nameColumn"
+					headerText="Konflikt">
+					<h:outputText value="#{conflict.name}" />
+				</p:column>
+
+			</p:dataTable>
+				<br />
+        		
 			</p:panel>
 			
 		</h:form>
