@@ -70,7 +70,6 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	@Override
 	public List<ScheduleEvent> getEvents() {
 		Employee employee = getAuth().getEmployee();
-		getData().updateVacationCount(employee);
 		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
 				employee));
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
