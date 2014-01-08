@@ -33,7 +33,11 @@ public class EventData extends BaseData<Event, EventDao> implements
 		return getDao().findByUser(emp);
 	}
 
-	public void update(Event vacationEvent, int dayDelta) {
-		getDao().update(vacationEvent, dayDelta);
+	public void updateVacationCount(Employee emp) {
+		getDao().updateVacationCount(emp);
+	}
+
+	public void update(Event vacationEvent) {
+		getDao().update(vacationEvent);
 	}
 }
