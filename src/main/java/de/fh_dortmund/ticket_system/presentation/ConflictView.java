@@ -57,7 +57,6 @@ public class ConflictView implements Serializable {
 
 			} else {
 				conflict.setSolved(true);
-				conflict.setName("GELÖST: " + conflict.getName());
 				conflictData.update(conflict);
 			}
 		}
