@@ -1,5 +1,6 @@
 package de.fh_dortmund.ticket_system.util;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 import javax.faces.bean.ApplicationScoped;
@@ -13,7 +14,10 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
 @ApplicationScoped
-public class DailyChecker {
+public class DailyChecker implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@ManagedProperty("#{EmailUtil}")
 	static EmailUtil emailUtil;
 
