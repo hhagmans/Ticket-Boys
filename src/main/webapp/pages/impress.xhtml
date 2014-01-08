@@ -1,0 +1,39 @@
+<ui:composition template="/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="impress" value="Impressum" />
+
+	<ui:define name="content">
+		<h:form id="IndexMainForm">
+			<p:panel header="Impressum">
+			<center>
+				<p:outputLabel styleClass="evonik_deep_purple" ><strong>Ticket Boys:</strong></p:outputLabel>
+				<br />
+				<br />
+				<p:outputLabel styleClass="evonik_gold">Timo Schwarz</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="evonik_gold">Hendrik Hagmans</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="evonik_gold">Alex Hofmann</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="evonik_gold">Matthias Wienand</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="evonik_gold">Stefan Wallkötter</p:outputLabel>
+				<br />
+				<br />
+				<br />
+				<p:outputLabel styleClass="evonik_warm_grey">Ein Projekt der Fachhochschule Dortmund</p:outputLabel>
+				<br />
+				<br />
+				<p:outputLabel><a id="github" href="https://github.com/hhagmans/Ticket-Boys" target="_blank">visit github repository</a></p:outputLabel>
+				<br />
+				</center>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
