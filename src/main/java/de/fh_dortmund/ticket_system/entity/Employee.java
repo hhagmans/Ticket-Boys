@@ -144,6 +144,21 @@ public class Employee implements Serializable {
 		this.holidayCalendarType = holidayCalendarType;
 	}
 
+	public Employee(String konzernID, String firstName, String lastName,
+			String city, Role role, int score, int vacationCount,
+			HolidayCalendarType holidayCalendarType, String email) {
+		this.konzernID = konzernID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.city = city;
+		this.role = role;
+		this.score = score;
+		this.vacationCount = vacationCount;
+		this.freeVacationCount = maxVacationCount - vacationCount;
+		this.holidayCalendarType = holidayCalendarType;
+		this.email = email;
+	}
+
 	@javax.persistence.Transient
 	public String getFullName() {
 		return firstName + " " + lastName;
