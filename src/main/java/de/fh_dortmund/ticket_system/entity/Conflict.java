@@ -42,7 +42,8 @@ public class Conflict implements Serializable {
 		this.week = week;
 		this.solved = false;
 		this.name = "Kalenderwoche: " + week.getUniqueRowKey();
-		this.id = employee.getKonzernID() + week.getUniqueRowKey();
+		this.id = employee.getKonzernID() + week.getUniqueRowKey()
+				+ Math.random();
 	}
 
 	@Id
