@@ -69,6 +69,33 @@ body {
 .evonik_warm_grey {
 	color: #c5c2bb;
 }
+.evonik_gold {
+	color: #7f6a4f;
+}
+
+.hyperlink {
+	color: #7f6a4f;
+	text-decoration: none;
+}
+
+#impress {
+	text-decoration: none;
+	color: #c5c2bb;
+}
+
+#impress:hover {
+	color: #7f6a4f;
+}
+
+#github {
+	color: #c5c2bb;
+	text-decoration: none;
+	font-size: 80%;
+}
+
+#github:hover {
+	color: #7f6a4f;
+}
 
 /* Override classes for menubar  */
 .ui-menu.ui-widget a {
