@@ -18,7 +18,7 @@
 
 	
   <p:panel id="panel" header="Team-Abwesenheiten" style="background-color: #9a1d85;">  
-    <p:schedule id="schedule"  draggable="false" value="#{teamVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
+    <p:schedule resizable="false" id="schedule"  draggable="false" value="#{teamVacationView.eventModel}" widgetVar="myschedule" locale="de" slotMinutes="60">  
   	
         <p:ajax event="eventSelect" listener="#{teamVacationView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show()" />  
     </p:schedule>  
