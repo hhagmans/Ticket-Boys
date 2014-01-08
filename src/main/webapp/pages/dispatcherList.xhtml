@@ -1,4 +1,4 @@
-<ui:composition template="/template/template.xhtml"
+<ui:composition  template="/template/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -10,7 +10,7 @@
 	<ui:param name="title" value="Dispatcher" />
 
 	<ui:define name="content">
-		<h:form id="dispatcherListMainform">
+		<h:form onkeypress="if (event.keyCode == 13) { return false; }" id="dispatcherListMainform">
 
 	<p:growl id="messages" showDetail="true" />
 	

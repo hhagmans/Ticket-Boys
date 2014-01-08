@@ -6,7 +6,6 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
 
 import de.fh_dortmund.ticket_system.business.ShiftData;
@@ -14,8 +13,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
 @ApplicationScoped
-public class DailyChecker
-{
+public class DailyChecker {
 	@ManagedProperty("#{EmailUtil}")
 	static EmailUtil emailUtil;
 
@@ -26,18 +24,14 @@ public class DailyChecker
 	static int currentday = cal.get(GregorianCalendar.DAY_OF_MONTH);
 	static int currentmonth = cal.get(GregorianCalendar.MONTH);
 
-	public static Employee getLatestEmployee(ShiftData shiftData)
-	{
+	public static Employee getLatestEmployee(ShiftData shiftData) {
 		Employee latestEmployee = null;
 		int calcweek = currentweek;
 		int calcyear = currentyear;
-		if (calcweek > 50)
-		{
+		if (calcweek > 50) {
 			calcweek = calcweek - 50;
 			calcyear++;
-		}
-		else
-		{
+		} else {
 			calcweek = calcweek + 2;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
@@ -45,18 +39,14 @@ public class DailyChecker
 		return latestEmployee;
 	}
 
-	public static Employee getSoonestEmployee(ShiftData shiftData)
-	{
+	public static Employee getSoonestEmployee(ShiftData shiftData) {
 		Employee soonestEmployee = null;
 		int calcweek = currentweek;
 		int calcyear = currentyear;
-		if (calcweek > 51)
-		{
+		if (calcweek > 51) {
 			calcweek = calcweek - 50;
 			calcyear++;
-		}
-		else
-		{
+		} else {
 			calcweek = calcweek + 1;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
@@ -64,18 +54,14 @@ public class DailyChecker
 		return soonestEmployee;
 	}
 
-	public static int getLatestKW(ShiftData shiftData)
-	{
+	public static int getLatestKW(ShiftData shiftData) {
 		int latestKW = 0;
 		int calcweek = currentweek;
 		int calcyear = currentyear;
-		if (calcweek > 50)
-		{
+		if (calcweek > 50) {
 			calcweek = calcweek - 50;
 			calcyear++;
-		}
-		else
-		{
+		} else {
 			calcweek = calcweek + 2;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
@@ -84,18 +70,14 @@ public class DailyChecker
 		return latestKW;
 	}
 
-	public static int getSoonestKW(ShiftData shiftData)
-	{
+	public static int getSoonestKW(ShiftData shiftData) {
 		int soonestKW = 0;
 		int calcweek = currentweek;
 		int calcyear = currentyear;
-		if (calcweek > 51)
-		{
+		if (calcweek > 51) {
 			calcweek = calcweek - 50;
 			calcyear++;
-		}
-		else
-		{
+		} else {
 			calcweek = calcweek + 1;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
@@ -104,78 +86,46 @@ public class DailyChecker
 		return soonestKW;
 	}
 
-	public int getCurrentDay()
-	{
+	public int getCurrentDay() {
 		return currentday;
 	}
 
-	public int getCurrentWeek()
-	{
+	public int getCurrentWeek() {
 		return currentweek;
 	}
 
 	private static Logger log = Logger.getLogger(DailyChecker.class);
 
-	public static void trigger(ShiftData shiftData)
-	{
-		try
-		{
+	public static void trigger(ShiftData shiftData) {
+		try {
 			Employee latestEmployee = getLatestEmployee(shiftData);
 			Employee soonestEmployee = getSoonestEmployee(shiftData);
 			String msg_first = "Hallo "
-				+ soonestEmployee.getFullName()
-				+ ",\n\n"
-				+ "Sie sind in KW "
-				+ getSoonestKW(shiftData)
-				+ " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
+					+ soonestEmployee.getFullName()
+					+ ",\n\n"
+					+ "Sie sind in KW "
+					+ getSoonestKW(shiftData)
+					+ " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
 			String msg_last = "Hallo "
-				+ latestEmployee.getFullName()
-				+ ",\n\n"
-				+ "Sie sind in KW "
-				+ getLatestKW(shiftData)
-				+ " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
-			//			email address for soonest employee: String address = getSoonestEmployee(shiftData).getKonzernID() + "@evonik.com"
+					+ latestEmployee.getFullName()
+					+ ",\n\n"
+					+ "Sie sind in KW "
+					+ getLatestKW(shiftData)
+					+ " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
+			// email address for soonest employee: String address =
+			// getSoonestEmployee(shiftData).getKonzernID() + "@evonik.com"
 			EmailUtil.sendEmail(msg_first, soonestEmployee.getEmail());
-			//			email address for latest employee: String address = getLatestEmployee(shiftData).getKonzernID() + "@evonik.com"
+			// email address for latest employee: String address =
+			// getLatestEmployee(shiftData).getKonzernID() + "@evonik.com"
 			EmailUtil.sendEmail(msg_last, latestEmployee.getEmail());
 			log.info("Email send");
-		}
-		catch (Exception e1)
-		{
+		} catch (Exception e1) {
 			log.error(e1);
 			e1.printStackTrace();
 		}
 	}
 
-	public static void conflictTrigger(String[] text)
-	{
-		String employeeFullname = text[0];
-		String title = text[1];
-		String startDate = text[2];
-		String endDate = text[3];
-
-		try
-		{
-			EmailUtil
-				.sendConfEmail(
-					"Hallo "
-						+ employeeFullname
-						+ ",\n\nBei der Planung "
-						+ "\""
-						+ title
-						+ "\""
-						+ " vom "
-						+ startDate
-						+ " bis "
-						+ endDate
-						+ " ist ein Konflikt aufgetreten. Bitte beheben Sie diesen.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem",
-					"ticketboys1337@gmail.com");
-		}
-		catch (EmailException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void conflictTrigger() {
 
 	}
 }

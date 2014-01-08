@@ -25,10 +25,10 @@
 			<p:panel rendered="#{auth.employee.role != 'guest'}">
 			<h:outputText styleClass="overline1" value="Meine Terminkonflikte" />  
 				<br />
-		        <p:selectManyMenu id="conflictMenu" value="#{conflictView.selectedConflicts}" converter="conflict" widgetVar="conflictMenu" var="c">  
+		        <p:selectOneMenu  id="conflictMenu" value="#{conflictView.selectedConflict}"  widgetVar="conflictMenu" var="c">  
             	<f:selectItems value="#{conflictView.conflicts}" var="conflict" itemLabel="#{conflict.name}" itemValue="#{conflict}"/>  
-        		<p:column>#{c}</p:column>
-        		</p:selectManyMenu>
+        		<p:column style="width:50%">#{c}</p:column>
+        		</p:selectOneMenu>
 				<br />
         		<p:commandButton style="align:center" id="solveConflictButton"
 						icon="ui-icon-circle-cross" action="#{conflictView.solveConflicts()}"

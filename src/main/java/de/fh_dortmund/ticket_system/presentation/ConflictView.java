@@ -26,15 +26,19 @@ public class ConflictView implements Serializable {
 
 	private Conflict selectedConflict;
 
-	private List<Conflict> selectedConflicts;
-
 	private List<Conflict> conflicts;
 
-	public List<Conflict> getConflictsForCurrentUser() {
+	public List<Conflict> getUnsolvedConflictsForCurrentUser() {
 		Employee currentUser = auth.getEmployee();
 		List<Conflict> conflicts = conflictData.findByUser(currentUser);
+		List<Conflict> unsolvedConflicts = conflictData.findByUser(currentUser);
+		for (Conflict c : conflicts) {
+			if (!c.getSolved()) {
+				unsolvedConflicts.add(c);
+			}
+		}
 
-		return conflicts;
+		return unsolvedConflicts;
 	}
 
 	public ConflictData getConflictData() {
@@ -47,22 +51,21 @@ public class ConflictView implements Serializable {
 
 	public void solveConflicts() {
 
-		System.out.println("Hallo");
-		System.out.println(getSelectedConflict());
-		System.out.println(getSelectedConflicts());
-
-		if (getSelectedConflict() != null) {
-			getSelectedConflict().setSolved(true);
+		Conflict conflict = getSelectedConflict();
+		if (conflict == null) {
 			return;
 		}
 
-		if (getSelectedConflicts().size() == 0) {
+		if (conflict.getSolved()) {
 			return;
+		} else {
+			System.out.println("Conflict Name: " + conflict.getName()
+					+ " solved: " + conflict.getSolved());
+			conflict.setSolved(true);
+			conflict.setName("GELÖST: " + conflict.getName());
+			conflictData.update(conflict);
 		}
 
-		for (Conflict c : getSelectedConflicts()) {
-			c.setSolved(true);
-		}
 	}
 
 	public Authentication getAuth() {
@@ -73,6 +76,14 @@ public class ConflictView implements Serializable {
 		this.auth = auth;
 	}
 
+	public List<Conflict> getConflicts() {
+		return getUnsolvedConflictsForCurrentUser();
+	}
+
+	public void setConflicts(List<Conflict> conflicts) {
+		this.conflicts = conflicts;
+	}
+
 	public Conflict getSelectedConflict() {
 		return selectedConflict;
 	}
@@ -81,19 +92,4 @@ public class ConflictView implements Serializable {
 		this.selectedConflict = selectedConflict;
 	}
 
-	public List<Conflict> getSelectedConflicts() {
-		return selectedConflicts;
-	}
-
-	public void setSelectedConflicts(List<Conflict> selectedConflicts) {
-		this.selectedConflicts = selectedConflicts;
-	}
-
-	public List<Conflict> getConflicts() {
-		return getConflictsForCurrentUser();
-	}
-
-	public void setConflicts(List<Conflict> conflicts) {
-		this.conflicts = conflicts;
-	}
 }
