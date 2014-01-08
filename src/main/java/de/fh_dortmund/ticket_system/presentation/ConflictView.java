@@ -3,14 +3,9 @@ package de.fh_dortmund.ticket_system.presentation;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 
 import de.fh_dortmund.ticket_system.authentication.Authentication;
 import de.fh_dortmund.ticket_system.business.ConflictData;
@@ -20,7 +15,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 
 @ManagedBean
 @ViewScoped
-public class ConflictView implements Serializable, Converter {
+public class ConflictView implements Serializable {
 
 	private static final long serialVersionUID = -6264092603228857048L;
 
@@ -29,8 +24,6 @@ public class ConflictView implements Serializable, Converter {
 
 	@ManagedProperty("#{auth}")
 	private Authentication auth;
-
-	private Conflict selectedConflict;
 
 	private List<Conflict> selectedConflicts;
 
@@ -105,53 +98,6 @@ public class ConflictView implements Serializable, Converter {
 
 	public void setConflictModel(ConflictModel conflictModel) {
 		this.conflictModel = conflictModel;
-	}
-
-	public Conflict getSelectedConflict() {
-		return selectedConflict;
-	}
-
-	public void setSelectedConflict(Conflict selectedConflict) {
-		this.selectedConflict = selectedConflict;
-	}
-
-	public Object getAsObject(FacesContext facesContext, UIComponent component,
-			String submittedValue) {
-		if (submittedValue.trim().equals("")) {
-			return null;
-		} else {
-			try {
-				String name = submittedValue;
-
-				ConflictData conflictDataclass = (ConflictData) facesContext
-						.getApplication()
-						.getELResolver()
-						.getValue(facesContext.getELContext(), null,
-								"conflictData");
-
-				for (Conflict c : conflictDataclass.findAll()) {
-					if (c.getName() == name) {
-						return c;
-					}
-				}
-
-			} catch (NumberFormatException exception) {
-				throw new ConverterException(new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Conversion Error",
-						"Not a valid conflict"));
-			}
-		}
-
-		return null;
-	}
-
-	public String getAsString(FacesContext facesContext, UIComponent component,
-			Object value) {
-		if (value == null || value.equals("")) {
-			return "";
-		} else {
-			return String.valueOf(((Conflict) value).getName());
-		}
 	}
 
 }
