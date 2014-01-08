@@ -2,8 +2,11 @@ package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -51,6 +54,8 @@ public class Conflict implements Serializable {
 		this.id = id;
 	}
 
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinTable(name = "confEmpID")
 	public Employee getEmployee() {
 		return employee;
 	}
