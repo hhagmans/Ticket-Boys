@@ -28,7 +28,6 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		if (event.getEventType() == EventType.vacation) {
 			Employee emp = event.getEmployee();
 			updateVacationCount(emp);
-			emp.refreshFreeVacationDays();
 			getEm().merge(emp);
 		}
 		tx.commit();
@@ -42,17 +41,16 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		if (event.getEventType() == EventType.vacation) {
 			Employee employee = event.getEmployee();
 			updateVacationCount(employee);
-			employee.refreshFreeVacationDays();
 		}
 		tx.commit();
 	}
 
-	public void update(Event event, int dayDelta) {
+	@Override
+	public void update(Event event) {
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		Employee emp = event.getEmployee();
 		updateVacationCount(emp);
-		emp.refreshFreeVacationDays();
 		getEm().merge(event);
 		getEm().merge(emp);
 		tx.commit();
@@ -111,7 +109,8 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		return filteredList;
 	}
 
-	private void updateVacationCount(Employee emp) {
+	@Override
+	public void updateVacationCount(Employee emp) {
 		Calendar c = Calendar.getInstance();
 		List<Event> eventList = findByUserAndYear(emp, c.get(Calendar.YEAR));
 		long count = 0;
@@ -120,6 +119,7 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 				count = count + (calculateDayCount(event) + 1);
 		}
 		emp.setVacationCount((int) count);
+		emp.refreshFreeVacationDays();
 		getEm().merge(emp);
 
 	}

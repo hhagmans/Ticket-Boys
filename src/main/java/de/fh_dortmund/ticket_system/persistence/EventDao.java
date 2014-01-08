@@ -9,5 +9,5 @@ import de.fh_dortmund.ticket_system.entity.Event;
 public interface EventDao extends BaseDao<Event> {
 	public List<Event> findByUser(Employee emp);
 
-	public void update(Event vacationEvent, int dayDelta);
+	public void updateVacationCount(Employee emp);
 }

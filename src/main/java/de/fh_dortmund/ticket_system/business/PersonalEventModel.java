@@ -70,6 +70,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	@Override
 	public List<ScheduleEvent> getEvents() {
 		Employee employee = getAuth().getEmployee();
+		getData().updateVacationCount(employee);
 		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
 				employee));
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
@@ -83,6 +84,7 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 			vacationEvent.setTitle(vacationEvent.getPersonalTitle());
 			arrayList.add(vacationEvent);
 		}
+
 		return arrayList;
 	}
 
@@ -162,12 +164,6 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent);
-	}
-
-	public void updateEvent(ScheduleEvent event, int dayDelta) {
-		Event vacEvent = (Event) event;
-
-		getData().update(vacEvent, dayDelta);
 	}
 
 	@Override
