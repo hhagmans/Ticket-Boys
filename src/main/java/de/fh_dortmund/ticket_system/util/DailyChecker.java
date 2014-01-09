@@ -8,8 +8,8 @@ import javax.faces.bean.ManagedBean;
 
 import org.apache.log4j.Logger;
 
-import de.fh_dortmund.ticket_system.business.ShiftData;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 
 @ManagedBean
 @ApplicationScoped
@@ -25,7 +25,7 @@ public class DailyChecker implements Serializable
 	static int currentday = cal.get(GregorianCalendar.DAY_OF_MONTH);
 	static int currentmonth = cal.get(GregorianCalendar.MONTH);
 
-	public static Employee getLatestEmployee(ShiftData shiftData)
+	public static Employee getLatestEmployee(ShiftDao shiftDao)
 	{
 		Employee latestEmployee = null;
 		int calcweek = currentweek;
@@ -40,11 +40,11 @@ public class DailyChecker implements Serializable
 			calcweek = calcweek + 2;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
-		latestEmployee = shiftData.findByID(currentRowKey).getDispatcher();
+		latestEmployee = shiftDao.findById(currentRowKey).getDispatcher();
 		return latestEmployee;
 	}
 
-	public static Employee getSoonestEmployee(ShiftData shiftData)
+	public static Employee getSoonestEmployee(ShiftDao shiftDao)
 	{
 		Employee soonestEmployee = null;
 		int calcweek = currentweek;
@@ -59,11 +59,11 @@ public class DailyChecker implements Serializable
 			calcweek = calcweek + 1;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
-		soonestEmployee = shiftData.findByID(currentRowKey).getDispatcher();
+		soonestEmployee = shiftDao.findById(currentRowKey).getDispatcher();
 		return soonestEmployee;
 	}
 
-	public static int getLatestKW(ShiftData shiftData)
+	public static int getLatestKW(ShiftDao shiftDao)
 	{
 		int latestKW = 0;
 		int calcweek = currentweek;
@@ -78,12 +78,12 @@ public class DailyChecker implements Serializable
 			calcweek = calcweek + 2;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
-		latestKW = shiftData.findByID(currentRowKey).getWeek().getWeekNumber();
+		latestKW = shiftDao.findById(currentRowKey).getWeek().getWeekNumber();
 
 		return latestKW;
 	}
 
-	public static int getSoonestKW(ShiftData shiftData)
+	public static int getSoonestKW(ShiftDao shiftDao)
 	{
 		int soonestKW = 0;
 		int calcweek = currentweek;
@@ -98,7 +98,7 @@ public class DailyChecker implements Serializable
 			calcweek = calcweek + 1;
 		}
 		String currentRowKey = calcyear + "-" + calcweek;
-		soonestKW = shiftData.findByID(currentRowKey).getWeek().getWeekNumber();
+		soonestKW = shiftDao.findById(currentRowKey).getWeek().getWeekNumber();
 
 		return soonestKW;
 	}
@@ -115,26 +115,26 @@ public class DailyChecker implements Serializable
 
 	private static Logger log = Logger.getLogger(DailyChecker.class);
 
-	public static void trigger(ShiftData shiftData)
+	public static void trigger(ShiftDao shiftDao)
 	{
 
 		System.out.println("Hello. This is DailyChecker talking!");
-		System.out.println("This is my shiftData: " + shiftData);
+		System.out.println("This is my shiftData: " + shiftDao);
 		try
 		{
-			Employee latestEmployee = getLatestEmployee(shiftData);
-			Employee soonestEmployee = getSoonestEmployee(shiftData);
+			Employee latestEmployee = getLatestEmployee(shiftDao);
+			Employee soonestEmployee = getSoonestEmployee(shiftDao);
 			String msg_first = "Hallo "
 				+ soonestEmployee.getFullName()
 				+ ",\n\n"
 				+ "Sie sind in KW "
-				+ getSoonestKW(shiftData)
+				+ getSoonestKW(shiftDao)
 				+ " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
 			String msg_last = "Hallo "
 				+ latestEmployee.getFullName()
 				+ ",\n\n"
 				+ "Sie sind in KW "
-				+ getLatestKW(shiftData)
+				+ getLatestKW(shiftDao)
 				+ " als Dispatcher eingetragen. Ihr Einsatz beginnt in Kürze.\n\nWeitere Details finden Sie unter http://localhost:8080/TicketSystem";
 			// email address for soonest employee: String address =
 			// getSoonestEmployee(shiftData).getKonzernID() + "@evonik.com"

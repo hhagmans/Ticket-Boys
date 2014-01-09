@@ -14,7 +14,7 @@ import de.fh_dortmund.ticket_system.persistence.EventDao;
 import de.fh_dortmund.ticket_system.persistence.EventDaoSqlite;
 import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
-@ManagedBean(eager = true)
+@ManagedBean()
 @ApplicationScoped
 public class EventData extends BaseData<Event, EventDao> implements Serializable
 {

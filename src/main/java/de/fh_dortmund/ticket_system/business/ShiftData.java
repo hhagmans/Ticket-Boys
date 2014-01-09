@@ -21,7 +21,7 @@ import de.fh_dortmund.ticket_system.util.TestdataProvider;
  * 
  */
 
-@ManagedBean(eager = true)
+@ManagedBean()
 @ApplicationScoped
 public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
 {

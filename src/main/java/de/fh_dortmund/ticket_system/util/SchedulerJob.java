@@ -4,13 +4,12 @@ import java.io.Serializable;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import de.fh_dortmund.ticket_system.business.ShiftData;
+import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 
 @ManagedBean
 @ApplicationScoped
@@ -19,8 +18,7 @@ public class SchedulerJob implements Job, Serializable
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty("#{shiftData}")
-	private ShiftData shiftData;
+	private ShiftDaoSqlite dao = new ShiftDaoSqlite();
 
 	public SchedulerJob()
 	{
@@ -32,17 +30,17 @@ public class SchedulerJob implements Job, Serializable
 	{
 		System.out.println("!!!!..............---Daily Trigger------.............!!!!");
 
-		DailyChecker.trigger(getShiftData());
+		DailyChecker.trigger(dao);
 	}
 
-	public ShiftData getShiftData()
+	public ShiftDaoSqlite getDao()
 	{
-		return shiftData;
+		return dao;
 	}
 
-	public void setShiftData(ShiftData shiftData)
+	public void setDao(ShiftDaoSqlite dao)
 	{
-		this.shiftData = shiftData;
+		this.dao = dao;
 	}
 
 }
