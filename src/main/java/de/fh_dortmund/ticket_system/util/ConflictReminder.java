@@ -4,36 +4,27 @@ import java.io.Serializable;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.ee.servlet.QuartzInitializerServlet;
 
-import de.fh_dortmund.ticket_system.business.ConflictData;
+import de.fh_dortmund.ticket_system.persistence.ConflictDao;
+import de.fh_dortmund.ticket_system.persistence.ConflictDaoSqlite;
 
 @ManagedBean
 @ApplicationScoped
-public class ConflictReminder extends QuartzInitializerServlet implements Job,
-		Serializable {
+public class ConflictReminder implements Job, Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty("#{conflictData}")
-	private ConflictData conflictData;
+	private ConflictDao conflictDao = new ConflictDaoSqlite();
 
 	@Override
-	public void execute(JobExecutionContext context)
-			throws JobExecutionException {
-		DailyChecker.conflictTrigger();
+	public void execute(JobExecutionContext context) throws JobExecutionException
+	{
+		DailyChecker.conflictTrigger(conflictDao);
 	}
 
-	public ConflictData getConflictData() {
-		return conflictData;
-	}
-
-	public void setConflictData(ConflictData conflictData) {
-		this.conflictData = conflictData;
-	}
 }

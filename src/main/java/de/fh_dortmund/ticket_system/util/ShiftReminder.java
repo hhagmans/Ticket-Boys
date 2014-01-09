@@ -13,14 +13,14 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 
 @ManagedBean
 @ApplicationScoped
-public class SchedulerJob implements Job, Serializable
+public class ShiftReminder implements Job, Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 
 	private ShiftDaoSqlite dao = new ShiftDaoSqlite();
 
-	public SchedulerJob()
+	public ShiftReminder()
 	{
 
 	}
@@ -28,8 +28,6 @@ public class SchedulerJob implements Job, Serializable
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException
 	{
-		System.out.println("!!!!..............---Daily Trigger------.............!!!!");
-
 		DailyChecker.trigger(dao);
 	}
 

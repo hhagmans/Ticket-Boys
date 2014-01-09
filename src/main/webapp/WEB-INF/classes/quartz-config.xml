@@ -12,7 +12,7 @@
 			<name>AJob</name>
 			<group>AGroup</group>
 			<description>Print a welcome message</description>
-			<job-class>de.fh_dortmund.ticket_system.util.SchedulerJob</job-class>
+			<job-class>de.fh_dortmund.ticket_system.util.ShiftReminder</job-class>
 		</job>
 		
 		<job>
@@ -37,7 +37,7 @@
 				<job-name>ConflictReminder</job-name>
 				<job-group>AGroup</job-group>
 				<!-- every friday at 8 am: "0 0 8 ? * MON" -->
-				<cron-expression>0 0 8 ? * FRI</cron-expression>
+				<cron-expression>15 0/1 * * * ?</cron-expression>
 			</cron>
 		</trigger>
 	</schedule>
