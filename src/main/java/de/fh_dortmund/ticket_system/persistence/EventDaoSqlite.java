@@ -86,7 +86,7 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 			c.setTime(tempEvent.getStartDate());
 			if (c.get(Calendar.YEAR) == year) {
 				c.setTime(tempEvent.getEndDate());
-				if (c.get(Calendar.YEAR) == year + 1) {
+				if (c.get(Calendar.YEAR) > year) {
 					c.set(Calendar.YEAR, year);
 					c.set(Calendar.MONTH, 11);
 					c.set(Calendar.DAY_OF_MONTH, 31);

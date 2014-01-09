@@ -71,6 +71,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		Employee employee = getAuth().getEmployee();
 		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
 				employee));
+
+		getData().updateVacationCount(employee);
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 
 		if (employee.getRole() == Role.dispatcher) {
