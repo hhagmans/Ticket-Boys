@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Represents a unique week in a year.
@@ -23,7 +24,7 @@ public class Week implements Serializable
 	private int year;
 	private int weekNumber;
 	private String uniqueRowKey;
-	private final String DATE_FORMAT = "%td-%tm-%tY%n";
+	private final String DATE_FORMAT = "%td.%tm.%tY";
 
 	public Week()
 	{
@@ -69,6 +70,7 @@ public class Week implements Serializable
 		return false;
 	}
 
+	@Transient
 	public Date getEndDate()
 	{
 		Calendar cal = Calendar.getInstance();
@@ -80,12 +82,15 @@ public class Week implements Serializable
 		return cal.getTime();
 	}
 
+	@Transient
 	public String getEndDateFormatted()
 	{
-		return String.format(DATE_FORMAT, getEndDate());
+		Date t = getEndDate();
+		return String.format(DATE_FORMAT, t, t, t);
 
 	}
 
+	@Transient
 	public Date getStartDate()
 	{
 		Calendar cal = Calendar.getInstance();
@@ -96,9 +101,11 @@ public class Week implements Serializable
 		return cal.getTime();
 	}
 
+	@Transient
 	public String getStartDateFormatted()
 	{
-		return String.format(DATE_FORMAT, getStartDate());
+		Date t = getStartDate();
+		return String.format(DATE_FORMAT, t, t, t);
 	}
 
 	@Override

@@ -39,7 +39,7 @@
 
 				<p:column id="kwColumn" filterBy="week.weekNumber" sortBy="week.weekNumber"
 					headerText="Kalenderwoche" filterMatchMode="exact">
-					<h:outputText value="#{shift.week.weekNumber}" />
+					<h:outputText value="KW #{shift.week.weekNumber}: #{shift.week.getStartDateFormatted()} - #{shift.week.getEndDateFormatted()}" />
 				</p:column>
 
 				<p:column id="dispatcherNameColumn" filterBy="dispatcher.getFullName()"
