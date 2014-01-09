@@ -23,6 +23,7 @@ public class Week implements Serializable
 	private int year;
 	private int weekNumber;
 	private String uniqueRowKey;
+	private final String DATE_FORMAT = "%td-%tm-%tY%n";
 
 	public Week()
 	{
@@ -75,7 +76,14 @@ public class Week implements Serializable
 		cal.set(Calendar.YEAR, this.getYear());
 		cal.set(Calendar.WEEK_OF_YEAR, this.getWeekNumber());
 		cal.set(Calendar.DAY_OF_WEEK, 1);
+
 		return cal.getTime();
+	}
+
+	public String getEndDateFormatted()
+	{
+		return String.format(DATE_FORMAT, getEndDate());
+
 	}
 
 	public Date getStartDate()
@@ -86,6 +94,11 @@ public class Week implements Serializable
 		cal.set(Calendar.YEAR, this.getYear());
 		cal.set(Calendar.DAY_OF_WEEK, 2);
 		return cal.getTime();
+	}
+
+	public String getStartDateFormatted()
+	{
+		return String.format(DATE_FORMAT, getStartDate());
 	}
 
 	@Override
