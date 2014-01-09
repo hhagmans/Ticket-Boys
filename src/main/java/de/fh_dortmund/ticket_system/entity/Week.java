@@ -1,6 +1,8 @@
 package de.fh_dortmund.ticket_system.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -58,7 +60,7 @@ public class Week implements Serializable
 		}
 
 		Week kw = (Week) obj;
-		if ((this.getYear() == kw.getYear()) && (this.getWeekNumber() == kw.getWeekNumber()))
+		if (this.getYear() == kw.getYear() && this.getWeekNumber() == kw.getWeekNumber())
 		{
 			return true;
 		}
@@ -66,13 +68,33 @@ public class Week implements Serializable
 		return false;
 	}
 
+	public Date getEndDate()
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.YEAR, this.getYear());
+		cal.set(Calendar.WEEK_OF_YEAR, this.getWeekNumber());
+		cal.set(Calendar.DAY_OF_WEEK, 1);
+		return cal.getTime();
+	}
+
+	public Date getStartDate()
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.WEEK_OF_YEAR, this.getWeekNumber());
+		cal.set(Calendar.YEAR, this.getYear());
+		cal.set(Calendar.DAY_OF_WEEK, 2);
+		return cal.getTime();
+	}
+
 	@Override
 	public int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + year;
-		result = (prime * result) + weekNumber;
+		result = prime * result + year;
+		result = prime * result + weekNumber;
 
 		return result;
 	}

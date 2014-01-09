@@ -22,7 +22,6 @@ import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
 import de.fh_dortmund.ticket_system.util.HolidayUtil;
-import de.fh_dortmund.ticket_system.util.WeekUtil;
 import de.jollyday.Holiday;
 
 @ManagedBean
@@ -110,8 +109,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable
 		{
 
 			Week week = shift.getWeek();
-			Date startDate = WeekUtil.getStartDateForWeek(week);
-			Date endDate = WeekUtil.getEndDateForWeek(week);
+			Date startDate = week.getStartDate();
+			Date endDate = week.getEndDate();
 
 			Event event = new Event(UUID.randomUUID().toString(), "Dispatcher-Schicht", startDate, endDate,
 				EventType.dispatcher);
