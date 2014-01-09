@@ -30,7 +30,7 @@ public class SchedulerJob implements Job, Serializable
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException
 	{
-		System.out.println("..............---Daily Trigger------.............!!!!");
+		System.out.println("!!!!..............---Daily Trigger------.............!!!!");
 
 		DailyChecker.trigger(getShiftData());
 	}
