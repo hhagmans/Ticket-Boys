@@ -85,6 +85,10 @@ public class EventModel extends PersonalEventModel {
 		getData().update(vacEvent);
 	}
 
+	public void updateEvent(Event event) {
+		getData().update(event);
+	}
+
 	@Override
 	public int getEventCount() {
 		List<Event> events = getData().findAll();

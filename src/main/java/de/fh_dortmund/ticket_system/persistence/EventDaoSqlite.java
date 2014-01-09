@@ -28,7 +28,6 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		if (event.getEventType() == EventType.vacation) {
 			Employee emp = event.getEmployee();
 			updateVacationCount(emp);
-			getEm().merge(emp);
 		}
 		tx.commit();
 	}
@@ -50,9 +49,8 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		EntityTransaction tx = getEm().getTransaction();
 		tx.begin();
 		Employee emp = event.getEmployee();
-		updateVacationCount(emp);
 		getEm().merge(event);
-		getEm().merge(emp);
+		updateVacationCount(emp);
 		tx.commit();
 	}
 
@@ -82,26 +80,27 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		List<Event> filteredList = new ArrayList<Event>();
 		Calendar c = Calendar.getInstance();
 		for (Event event : userList) {
-			c.setTime(event.getStartDate());
+			Event tempEvent = new Event(String.valueOf(Math.random()),
+					event.getTitle(), event.getStartDate(), event.getEndDate(),
+					event.getEventType(), event.getEmployee());
+			c.setTime(tempEvent.getStartDate());
 			if (c.get(Calendar.YEAR) == year) {
-				c.setTime(event.getEndDate());
+				c.setTime(tempEvent.getEndDate());
 				if (c.get(Calendar.YEAR) == year + 1) {
 					c.set(Calendar.YEAR, year);
 					c.set(Calendar.MONTH, 11);
 					c.set(Calendar.DAY_OF_MONTH, 31);
-					System.out.println(c.getTime());
-					event.setEndDate(c.getTime());
+					tempEvent.setEndDate(c.getTime());
 				}
-				filteredList.add(event);
+				filteredList.add(tempEvent);
 			} else {
-				c.setTime(event.getEndDate());
+				c.setTime(tempEvent.getEndDate());
 				if (c.get(Calendar.YEAR) == year) {
 					c.set(Calendar.YEAR, year);
 					c.set(Calendar.MONTH, 0);
 					c.set(Calendar.DAY_OF_MONTH, 1);
-					System.out.println(c.getTime());
-					event.setStartDate(c.getTime());
-					filteredList.add(event);
+					tempEvent.setStartDate(c.getTime());
+					filteredList.add(tempEvent);
 				}
 			}
 
