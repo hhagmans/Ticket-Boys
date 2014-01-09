@@ -2,7 +2,6 @@ package de.fh_dortmund.ticket_system.business;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,11 +22,13 @@ import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
 import de.fh_dortmund.ticket_system.util.HolidayUtil;
+import de.fh_dortmund.ticket_system.util.WeekUtil;
 import de.jollyday.Holiday;
 
 @ManagedBean
 @SessionScoped
-public class PersonalEventModel implements ScheduleModel, Serializable {
+public class PersonalEventModel implements ScheduleModel, Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,18 +41,21 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	@ManagedProperty("#{shiftData}")
 	private ShiftData shiftData;
 
-	public PersonalEventModel() {
+	public PersonalEventModel()
+	{
 	}
 
 	@Override
-	public void addEvent(ScheduleEvent event) {
+	public void addEvent(ScheduleEvent event)
+	{
 		Event newEvent = (Event) event;
 		newEvent.setId(UUID.randomUUID().toString());
 		newEvent.setEmployee(auth.getEmployee());
 		getData().add(newEvent);
 	}
 
-	public void addEvent(Event event) {
+	public void addEvent(Event event)
+	{
 		event.setId(UUID.randomUUID().toString());
 		event.setEmployee(auth.getEmployee());
 		event.setPersonalTitle(event.getTitle());
@@ -60,7 +64,8 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	}
 
 	@Override
-	public boolean deleteEvent(ScheduleEvent event) {
+	public boolean deleteEvent(ScheduleEvent event)
+	{
 		Event vacEvent = (Event) event;
 		getData().delete(vacEvent);
 		// FIXME Return true...
@@ -68,18 +73,21 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	}
 
 	@Override
-	public List<ScheduleEvent> getEvents() {
+	public List<ScheduleEvent> getEvents()
+	{
 		Employee employee = getAuth().getEmployee();
-		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(
-				employee));
+		ArrayList<Event> myEvents = new ArrayList<Event>(getData().findByUser(employee));
 		ArrayList<ScheduleEvent> arrayList = new ArrayList<ScheduleEvent>();
 
 		if (employee.getRole() == Role.dispatcher)
+		{
 			myEvents = addDispatcherEvents(myEvents);
+		}
 
 		myEvents = addHolidays(myEvents);
 
-		for (Event vacationEvent : myEvents) {
+		for (Event vacationEvent : myEvents)
+		{
 			vacationEvent.setTitle(vacationEvent.getPersonalTitle());
 			arrayList.add(vacationEvent);
 		}
@@ -87,24 +95,26 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		return arrayList;
 	}
 
-	private ArrayList<Event> addDispatcherEvents(ArrayList<Event> myEvents) {
+	private ArrayList<Event> addDispatcherEvents(ArrayList<Event> myEvents)
+	{
 
 		Employee employee = getAuth().getEmployee();
 
-		List<Shift> findShiftByEmployee = getShiftData().findShiftByEmployee(
-				employee);
+		List<Shift> findShiftByEmployee = getShiftData().findShiftByEmployee(employee);
 		if (findShiftByEmployee == null)
+		{
 			return myEvents;
+		}
 
-		for (Shift shift : findShiftByEmployee) {
+		for (Shift shift : findShiftByEmployee)
+		{
 
 			Week week = shift.getWeek();
-			Date startDate = getStartDateForWeek(week);
-			Date endDate = getEndDateForWeek(week);
+			Date startDate = WeekUtil.getStartDateForWeek(week);
+			Date endDate = WeekUtil.getEndDateForWeek(week);
 
-			Event event = new Event(UUID.randomUUID().toString(),
-					"Dispatcher-Schicht", startDate, endDate,
-					EventType.dispatcher);
+			Event event = new Event(UUID.randomUUID().toString(), "Dispatcher-Schicht", startDate, endDate,
+				EventType.dispatcher);
 			event.setEditable(false);
 			event.setStyleClass(event.getEventType().getStyleClass());
 			myEvents.add(event);
@@ -113,39 +123,21 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 		return myEvents;
 	}
 
-	private Date getEndDateForWeek(Week week) {
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(Calendar.YEAR, week.getYear());
-		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
-		cal.set(Calendar.DAY_OF_WEEK, 1);
-		return cal.getTime();
-	}
+	public ArrayList<Event> addHolidays(ArrayList<Event> vacList)
+	{
 
-	private Date getStartDateForWeek(Week week) {
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(Calendar.WEEK_OF_YEAR, week.getWeekNumber());
-		cal.set(Calendar.YEAR, week.getYear());
-		cal.set(Calendar.DAY_OF_WEEK, 2);
-		return cal.getTime();
-	}
+		Set<Holiday> holidays = HolidayUtil.getHolidaysforUser(getAuth().getEmployee());
 
-	public ArrayList<Event> addHolidays(ArrayList<Event> vacList) {
-
-		Set<Holiday> holidays = HolidayUtil.getHolidaysforUser(getAuth()
-				.getEmployee());
-
-		if (holidays == null) {
+		if (holidays == null)
+		{
 			return vacList;
 		}
 
 		Event event;
-		for (Holiday h : holidays) {
-			event = new Event(UUID.randomUUID().toString(), h.getDescription(),
-					h.getDate().toDateTimeAtStartOfDay().toDate(), h.getDate()
-							.toDateTimeAtStartOfDay().toDate(),
-					EventType.holiday);
+		for (Holiday h : holidays)
+		{
+			event = new Event(UUID.randomUUID().toString(), h.getDescription(), h.getDate().toDateTimeAtStartOfDay()
+				.toDate(), h.getDate().toDateTimeAtStartOfDay().toDate(), EventType.holiday);
 			event.setStyleClass(event.getEventType().getStyleClass());
 			event.setEditable(false);
 			vacList.add(event);
@@ -154,52 +146,63 @@ public class PersonalEventModel implements ScheduleModel, Serializable {
 	}
 
 	@Override
-	public ScheduleEvent getEvent(String id) {
+	public ScheduleEvent getEvent(String id)
+	{
 		return getData().findByID(id);
 	}
 
 	@Override
-	public void updateEvent(ScheduleEvent event) {
+	public void updateEvent(ScheduleEvent event)
+	{
 		Event vacEvent = (Event) event;
 
 		getData().update(vacEvent);
 	}
 
 	@Override
-	public int getEventCount() {
+	public int getEventCount()
+	{
 		List<Event> events = getData().findAll();
 		return events.size();
 	}
 
 	@Override
-	public void clear() {
+	public void clear()
+	{
 		List<Event> events = getData().findAll();
-		for (Event vacationEvent : events) {
+		for (Event vacationEvent : events)
+		{
 			getData().delete(vacationEvent);
 		}
 	}
 
-	public EventData getData() {
+	public EventData getData()
+	{
 		return data;
 	}
 
-	public void setData(EventData data) {
+	public void setData(EventData data)
+	{
 		this.data = data;
 	}
 
-	public Authentication getAuth() {
+	public Authentication getAuth()
+	{
 		return auth;
 	}
 
-	public void setAuth(Authentication auth) {
+	public void setAuth(Authentication auth)
+	{
 		this.auth = auth;
 	}
 
-	public ShiftData getShiftData() {
+	public ShiftData getShiftData()
+	{
 		return shiftData;
 	}
 
-	public void setShiftData(ShiftData shiftData) {
+	public void setShiftData(ShiftData shiftData)
+	{
 		this.shiftData = shiftData;
 	}
 
