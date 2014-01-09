@@ -14,30 +14,34 @@ import de.fh_dortmund.ticket_system.business.ShiftData;
 
 @ManagedBean
 @ApplicationScoped
-public class SchedulerJob implements Job, Serializable {
+public class SchedulerJob implements Job, Serializable
+{
 
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty("#{shiftData}")
 	private ShiftData shiftData;
 
-	public SchedulerJob() {
+	public SchedulerJob()
+	{
+
 	}
 
 	@Override
-	public void execute(JobExecutionContext context)
-			throws JobExecutionException {
-		System.out
-				.println("..............---Daily Trigger------.............!!!!");
+	public void execute(JobExecutionContext context) throws JobExecutionException
+	{
+		System.out.println("..............---Daily Trigger------.............!!!!");
 
 		DailyChecker.trigger(getShiftData());
 	}
 
-	public ShiftData getShiftData() {
+	public ShiftData getShiftData()
+	{
 		return shiftData;
 	}
 
-	public void setShiftData(ShiftData shiftData) {
+	public void setShiftData(ShiftData shiftData)
+	{
 		this.shiftData = shiftData;
 	}
 

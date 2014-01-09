@@ -22,7 +22,7 @@ import de.fh_dortmund.ticket_system.util.TestdataProvider;
  * 
  */
 
-@ManagedBean
+@ManagedBean(eager = true)
 @ApplicationScoped
 public class EmployeeData extends BaseData<Employee, EmployeeDao> implements Serializable
 {

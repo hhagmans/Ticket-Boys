@@ -14,30 +14,36 @@ import de.fh_dortmund.ticket_system.persistence.EventDao;
 import de.fh_dortmund.ticket_system.persistence.EventDaoSqlite;
 import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
-@ManagedBean
+@ManagedBean(eager = true)
 @ApplicationScoped
-public class EventData extends BaseData<Event, EventDao> implements
-		Serializable {
+public class EventData extends BaseData<Event, EventDao> implements Serializable
+{
 	private static final long serialVersionUID = 1386350160944016195L;
 
-	public EventData() {
+	public EventData()
+	{
 		setDao(new EventDaoSqlite());
 	}
 
 	@PostConstruct
-	public void init() {
+	public void init()
+	{
 		TestdataProvider.fillEvents(getDao());
 	}
 
-	public List<Event> findByUser(Employee emp) {
+	public List<Event> findByUser(Employee emp)
+	{
 		return getDao().findByUser(emp);
 	}
 
-	public void updateVacationCount(Employee emp) {
+	public void updateVacationCount(Employee emp)
+	{
 		getDao().updateVacationCount(emp);
 	}
 
-	public void update(Event vacationEvent) {
+	@Override
+	public void update(Event vacationEvent)
+	{
 		getDao().update(vacationEvent);
 	}
 }

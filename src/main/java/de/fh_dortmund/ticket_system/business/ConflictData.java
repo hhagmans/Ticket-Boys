@@ -12,7 +12,7 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.persistence.ConflictDao;
 import de.fh_dortmund.ticket_system.persistence.ConflictDaoSqlite;
 
-@ManagedBean
+@ManagedBean(eager = true)
 @ApplicationScoped
 public class ConflictData extends BaseData<Conflict, ConflictDao> implements Serializable
 {
