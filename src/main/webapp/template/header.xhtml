@@ -15,6 +15,7 @@
 			<p id="evonik_headline">Dispatcher &amp; Urlaubsplan</p>
 
 			<br />
+			
 			<h:form>
 				<p:menubar>
 					<p:menuitem value="Home" action="index?faces-redirect=true"
@@ -24,9 +25,11 @@
 					<p:menuitem value="Nutzer"
 						action="employeeList?faces-redirect=true" icon="ui-icon-person"
 						rendered="#{auth.employee.role == 'admin'}" />
-					<p:menuitem value="Team-Abwesenheit"
+						<p:menuitem value="Eigene Abwesenheiten"
+						action="employeeList?faces-redirect=true" icon="ui-icon-person"
+						rendered="#{auth.employee.role != 'guest'}" />
+					<p:menuitem value="Team-Abwesenheiten"
 						action="teamVacationView?faces-redirect=true" icon="ui-icon-image" />
-					
 					<f:facet name="options">
 						<p:commandButton type="submit" value="Logout"
 							icon="ui-icon-extlink" action="#{auth.logout}" ajax="FALSE" />

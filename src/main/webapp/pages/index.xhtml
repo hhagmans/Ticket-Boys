@@ -11,12 +11,6 @@
 		<h:form id="IndexMainForm">
 			<p:panel header="Willkommen, #{auth.employee.fullName} (#{auth.employee.role})" styleClass="login">
 			</p:panel>
-			<p:panel style="border:0">
-			<h:outputText styleClass="overline1" value="Meine Abwesenheiten" />  
-				<br />
-				<br />
-				<p:commandButton id="seePersonalVacations" action="personalVacationView?faces-redirect=true" icon="ui-icon-image" value="Eigene Abwesenheiten verwalten" rendered="#{auth.employee.role != 'guest'}"/>
-			</p:panel>
 			<p:panel rendered="#{auth.employee.role != 'guest'}">
 			<h:outputText styleClass="overline1" value="Meine Terminkonflikte" />  
 				<br />
@@ -24,8 +18,9 @@
 				<p:dataTable id="conflictTable" var="conflict"
 				value="#{conflictView.conflictModel}"
 				widgetVar="conflictTable" selection="#{conflictView.selectedConflicts}"
-				emptyMessage="Es wurden keine Treffer gefunden"
+				emptyMessage="Es wurden keine Konflikte gefunden"
 				draggableColumns="true">
+				
 
 				<f:facet name="header">
 				<p:commandButton style="align:center" id="solveConflictButton"
