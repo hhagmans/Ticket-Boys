@@ -44,6 +44,12 @@ public class Week implements Serializable
 	}
 
 	@Override
+	public String toString()
+	{
+		return String.format("KW %02d", weekNumber);
+	}
+
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
