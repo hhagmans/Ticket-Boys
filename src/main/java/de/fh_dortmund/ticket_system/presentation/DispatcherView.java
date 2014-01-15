@@ -32,11 +32,11 @@ public class DispatcherView extends BaseView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty("#{shiftData}")
-	ShiftData shiftData;
-
 	@ManagedProperty("#{employeeData}")
 	EmployeeData employeeData;
+
+	@ManagedProperty("#{shiftData}")
+	ShiftData shiftData;
 
 	@ManagedProperty("#{rightsManager}")
 	private RightsManager rightsManager;

@@ -3,19 +3,17 @@ package de.fh_dortmund.ticket_system.business;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-import org.apache.commons.mail.EmailException;
-
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
-import de.fh_dortmund.ticket_system.util.EmailUtil;
 
 /**
  * Meant to be the Dispatcher-List generating Class. Later with score and shit.
@@ -25,8 +23,7 @@ import de.fh_dortmund.ticket_system.util.EmailUtil;
  */
 @ManagedBean
 @ApplicationScoped
-public class ShiftCalculator implements Serializable
-{
+public class ShiftCalculator implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty("#{conflict}")
@@ -45,20 +42,22 @@ public class ShiftCalculator implements Serializable
 	private Calendar cal;
 
 	/**
-	 * Generates and returns a {@link List} of {@link Shift}s from the given list of dispatchers (
-	 * {@link Employee}s where role = {@link Role#dispatcher}).
+	 * Generates and returns a {@link List} of {@link Shift}s from the given
+	 * list of dispatchers ( {@link Employee}s where role =
+	 * {@link Role#dispatcher}).
 	 * 
-	 * @param dispatchers list of employees where role = dispatcher
+	 * @param dispatchers
+	 *            list of employees where role = dispatcher
 	 * @return generated list of shifts
 	 */
-	public List<Shift> generateShiftList(List<Employee> testDispatchers)
-	{
+	public List<Shift> generateShiftList(List<Employee> testDispatchers) {
 		cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
 
-		//TODO: Switch input from test to production
-		//		List<Employee> dispatchers = employeeData.findAllEmployeesByRole(Role.dispatcher);
+		// TODO: Switch input from test to production
+		// List<Employee> dispatchers =
+		// employeeData.findAllEmployeesByRole(Role.dispatcher);
 		List<Employee> dispatchers = testDispatchers;
 
 		/*
@@ -70,35 +69,25 @@ public class ShiftCalculator implements Serializable
 		List<Shift> shifts = new ArrayList<Shift>(nshifts);
 
 		int size = dispatchers.size();
-		for (int i = 0; i < nshifts; i++)
-		{
-			Employee dispatcher = dispatchers.get(i % size);
-
-			Employee representative = dispatchers.get(getIndexForRepresentative(i, size));
-
-			Shift shift = new Shift(year, week, dispatcher, representative);
-
-			int o = i;
-			while (!conflict.checkShift(shift))
-			{
-
-				o++;
-				if (o == i)
-				{
-					shift.setDispatcher(dispatchers.get(i));
-					conflict.generateConflictFor(shift.getDispatcher(), shift.getWeek());
-					break;
-				}
-				if (o == dispatchers.size())
-				{
-					o = 0;
-				}
-				shift.setDispatcher(dispatchers.get(o));
+		Shift shift = null;
+		for (int i = 0; i < nshifts; i++) {
+			Employee lastDispatcher;
+			if (shift == null) {
+				lastDispatcher = dispatchers.get(0);
+			} else {
+				lastDispatcher = shift.getDispatcher();
 			}
+
+			Employee representative = dispatchers
+					.get(getIndexForRepresentative(i, size));
+
+			shift = new Shift(year, week, lastDispatcher, representative);
+
+			shift = getNextShift(dispatchers, shift, lastDispatcher);
+
 			shifts.add(shift);
 
-			if (++week > WEEKS_IN_A_YEAR)
-			{
+			if (++week > WEEKS_IN_A_YEAR) {
 				year++;
 				week = 1;
 			}
@@ -107,33 +96,83 @@ public class ShiftCalculator implements Serializable
 		return shifts;
 	}
 
-	public ShiftCalculator()
-	{
+	public ShiftCalculator() {
 	}
 
-	public ConflictFinder getConflict()
-	{
+	public ConflictFinder getConflict() {
 		return conflict;
 	}
 
-	public void setConflict(ConflictFinder conflict)
-	{
+	public void setConflict(ConflictFinder conflict) {
 		this.conflict = conflict;
 	}
 
-	public Shift generateNextShift()
-	{
+	public Shift getNextShift(List<Employee> dispatcherList, Shift shift,
+			Employee lastDispatcher) {
+		int startIndex;
 
-		List<Employee> dispatchers = employeeData.findAllEmployeesByRole(Role.dispatcher);
+		List<Employee> tempList = new ArrayList<Employee>(dispatcherList);
+
+		tempList = removeAllConflictingEmployees(tempList, shift);
+
+		if (tempList.indexOf(lastDispatcher) == tempList.size() - 1) {
+			startIndex = 0;
+		} else if (tempList.indexOf(lastDispatcher) >= 0) {
+			startIndex = tempList.indexOf(lastDispatcher) + 1;
+		} else {
+			startIndex = 0;
+		}
+
+		shift.setDispatcher(tempList.get(startIndex));
+
+		for (int i = startIndex; i < tempList.size(); i++) {
+			shift = checkScoreAndSetNewDispatcher(tempList, shift, i);
+		}
+
+		for (int i = 0; i < startIndex; i++) {
+			shift = checkScoreAndSetNewDispatcher(tempList, shift, i);
+		}
+
+		return shift;
+	}
+
+	public List<Employee> removeAllConflictingEmployees(List<Employee> empList,
+			Shift shift) {
+		Iterator<Employee> iterator = empList.iterator();
+		List<Employee> newList = new ArrayList<Employee>();
+		while (iterator.hasNext()) {
+			Employee employee = iterator.next();
+			shift.setDispatcher(employee);
+			if (conflict.checkShift(shift)) {
+				newList.add(employee);
+			}
+		}
+
+		return newList;
+	}
+
+	public Shift checkScoreAndSetNewDispatcher(List<Employee> dispatcherList,
+			Shift shift, int index) {
+		if (dispatcherList.get(index).getScore() < shift.getDispatcher()
+				.getScore()) {
+			shift.setDispatcher(dispatcherList.get(index));
+		}
+		return shift;
+	}
+
+	public Shift generateNextShift() {
+
+		List<Employee> dispatchers = employeeData
+				.findAllEmployeesByRole(Role.dispatcher);
 
 		Shift latestShift = shiftData.findLatestShift();
 		Week week = latestShift.getWeek();
 
 		int size = dispatchers.size();
-		int indexOfLastDispatcher = dispatchers.indexOf(latestShift.getDispatcher());
+		int indexOfLastDispatcher = dispatchers.indexOf(latestShift
+				.getDispatcher());
 		indexOfLastDispatcher++;
-		if ((indexOfLastDispatcher < 0) || (indexOfLastDispatcher >= size))
-		{
+		if ((indexOfLastDispatcher < 0) || (indexOfLastDispatcher >= size)) {
 			indexOfLastDispatcher = 0;
 		}
 
@@ -141,42 +180,39 @@ public class ShiftCalculator implements Serializable
 		int weekNumber = week.getWeekNumber();
 
 		weekNumber++;
-		if (weekNumber > WEEKS_IN_A_YEAR)
-		{
+		if (weekNumber > WEEKS_IN_A_YEAR) {
 			weekNumber = 0;
 			year++;
 		}
 
 		Week nextWeek = new Week(year, weekNumber);
 
-		Shift shift = new Shift(nextWeek, dispatchers.get(indexOfLastDispatcher),
-			dispatchers.get(getIndexForRepresentative(indexOfLastDispatcher, size)));
+		Shift shift = new Shift(nextWeek,
+				dispatchers.get(indexOfLastDispatcher),
+				dispatchers.get(getIndexForRepresentative(
+						indexOfLastDispatcher, size)));
 
 		return shift;
 	}
 
-	public int getIndexForRepresentative(int indexOfDispatcher, int amountOfDispatchers)
-	{
+	public int getIndexForRepresentative(int indexOfDispatcher,
+			int amountOfDispatchers) {
 		return ((indexOfDispatcher + (amountOfDispatchers / 2)) % amountOfDispatchers);
 	}
 
-	public ShiftData getShiftData()
-	{
+	public ShiftData getShiftData() {
 		return shiftData;
 	}
 
-	public void setShiftData(ShiftData shiftData)
-	{
+	public void setShiftData(ShiftData shiftData) {
 		this.shiftData = shiftData;
 	}
 
-	public EmployeeData getEmployeeData()
-	{
+	public EmployeeData getEmployeeData() {
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData)
-	{
+	public void setEmployeeData(EmployeeData employeeData) {
 		this.employeeData = employeeData;
 	}
 }
