@@ -9,6 +9,12 @@ import org.primefaces.model.SelectableDataModel;
 
 import de.fh_dortmund.ticket_system.entity.Conflict;
 
+/**
+ * Model for conflicts used by views to get conflicts.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 public class ConflictModel extends ListDataModel<Conflict> implements
 		SelectableDataModel<Conflict>, Serializable {
 	private static final long serialVersionUID = 1L;

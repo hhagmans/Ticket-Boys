@@ -24,6 +24,12 @@ import de.fh_dortmund.ticket_system.entity.Week;
 import de.fh_dortmund.ticket_system.util.HolidayUtil;
 import de.jollyday.Holiday;
 
+/**
+ * Model for personal events used by views to get personal events.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @SessionScoped
 public class PersonalEventModel implements ScheduleModel, Serializable {

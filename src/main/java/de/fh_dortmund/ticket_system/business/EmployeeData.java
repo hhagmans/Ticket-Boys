@@ -16,7 +16,7 @@ import de.fh_dortmund.ticket_system.persistence.EmployeeDaoSqlite;
 import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 /**
- * Diese Klasse speichert und verwaltet alle bekannten Benutzer
+ * This class saves and manages all conflicts.
  * 
  * @author Ticket-Boys
  * 
@@ -24,29 +24,30 @@ import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 @ManagedBean(eager = true)
 @ApplicationScoped
-public class EmployeeData extends BaseData<Employee, EmployeeDao> implements Serializable
-{
+public class EmployeeData extends BaseData<Employee, EmployeeDao> implements
+		Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public EmployeeData()
-	{
+	public EmployeeData() {
 		setDao(new EmployeeDaoSqlite());
 	}
 
+	/**
+	 * Fills employeelist with employees using fixtures
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
 	@PostConstruct
-	private void fill()
-	{
+	private void fill() {
 		TestdataProvider.fillEmployees(getDao());
 	}
 
-	public List<Employee> findAllEmployeesByRole(Role role)
-	{
+	public List<Employee> findAllEmployeesByRole(Role role) {
 		List<Employee> employees = findAll();
 		List<Employee> foundEmployees = new ArrayList<Employee>();
-		for (Employee employee : employees)
-		{
-			if (employee.getRole() == role)
-			{
+		for (Employee employee : employees) {
+			if (employee.getRole() == role) {
 				foundEmployees.add(employee);
 			}
 		}

@@ -16,7 +16,7 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.entity.Week;
 
 /**
- * Meant to be the Dispatcher-List generating Class. Later with score and shit.
+ * Meant to be the Dispatcher-List generating Class.
  * 
  * @author Ticket-Boys
  * 
@@ -107,6 +107,21 @@ public class ShiftCalculator implements Serializable {
 		this.conflict = conflict;
 	}
 
+	/**
+	 * Returns the next dispatcher ({@link Employee}) given a list of all
+	 * dispatchers ( {@link Employee}s considering the actual score
+	 * 
+	 * @param dispatcherList
+	 *            list of employees
+	 * 
+	 * @param shift
+	 *            current shift
+	 * 
+	 * @param lastDispatcher
+	 *            last Dispatcher
+	 * 
+	 * @return next shift
+	 */
 	public Shift getNextShift(List<Employee> dispatcherList, Shift shift,
 			Employee lastDispatcher) {
 		int startIndex;
@@ -136,6 +151,18 @@ public class ShiftCalculator implements Serializable {
 		return shift;
 	}
 
+	/**
+	 * Returns a list of all dispatchers ( {@link Employee}s without conflicts
+	 * given a list of all dispatchers ( {@link Employee}s
+	 * 
+	 * @param empList
+	 *            list of dispatchers
+	 * 
+	 * @param shift
+	 *            current shift
+	 * 
+	 * @return List of Employees without conflicts
+	 */
 	public List<Employee> removeAllConflictingEmployees(List<Employee> empList,
 			Shift shift) {
 		Iterator<Employee> iterator = empList.iterator();
@@ -151,6 +178,24 @@ public class ShiftCalculator implements Serializable {
 		return newList;
 	}
 
+	/**
+	 * Returns the shift (@link Shift) with the given dispatcher (
+	 * {@link Employee}) if his score is lower than the previously set
+	 * dispatcher. Else it will return the last shift.
+	 * 
+	 * @param dispatcherList
+	 *            list of employees
+	 * 
+	 * @param shift
+	 *            current shift
+	 * 
+	 * @param index
+	 *            index of curretn Dispatcher in list
+	 * 
+	 * @returns hift (@link Shift) with the given dispatcher ({@link Employee})
+	 *          if his score is lower than the previously set dispatcher. Else
+	 *          it will return the last shift.
+	 */
 	public Shift checkScoreAndSetNewDispatcher(List<Employee> dispatcherList,
 			Shift shift, int index) {
 		if (dispatcherList.get(index).getScore() < shift.getDispatcher()
@@ -160,6 +205,13 @@ public class ShiftCalculator implements Serializable {
 		return shift;
 	}
 
+	/**
+	 * Returns the next dispatcher ({@link Employee}) given a list of all
+	 * dispatchers ( {@link Employee} without considering the actual score.
+	 * 
+	 * 
+	 * @return next shift
+	 */
 	public Shift generateNextShift() {
 
 		List<Employee> dispatchers = employeeData
@@ -195,6 +247,12 @@ public class ShiftCalculator implements Serializable {
 		return shift;
 	}
 
+	/**
+	 * Returns the index for the representative
+	 * 
+	 * 
+	 * @return index of representative
+	 */
 	public int getIndexForRepresentative(int indexOfDispatcher,
 			int amountOfDispatchers) {
 		return ((indexOfDispatcher + (amountOfDispatchers / 2)) % amountOfDispatchers);

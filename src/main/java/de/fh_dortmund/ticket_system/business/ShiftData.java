@@ -15,7 +15,7 @@ import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 /**
- * Dieses Objekt verwaltet den Dispatcher-Schichtplan (Liste von Shift-Objekten)
+ * This class manages the dispatcher plan (List of shifts)
  * 
  * @author Ticket-Boys
  * 
@@ -23,59 +23,48 @@ import de.fh_dortmund.ticket_system.util.TestdataProvider;
 
 @ManagedBean()
 @ApplicationScoped
-public class ShiftData extends BaseData<Shift, ShiftDao> implements Serializable
-{
+public class ShiftData extends BaseData<Shift, ShiftDao> implements
+		Serializable {
 	private static final long serialVersionUID = -5407101199319373331L;
 
-	public ShiftData()
-	{
+	public ShiftData() {
 		setDao(new ShiftDaoSqlite());
 	}
 
 	@PostConstruct
-	public void fill()
-	{
+	public void fill() {
 		TestdataProvider.fillShift(getDao());
 	}
 
-	public Shift findShiftByWeekNumber(int weekNumber)
-	{
+	public Shift findShiftByWeekNumber(int weekNumber) {
 		List<Shift> findAllShifts = findAll();
 
-		for (Shift shift : findAllShifts)
-		{
-			if (shift.getWeek().getWeekNumber() == weekNumber)
-			{
+		for (Shift shift : findAllShifts) {
+			if (shift.getWeek().getWeekNumber() == weekNumber) {
 				return shift;
 			}
 		}
 		return null;
 	}
 
-	public List<Shift> findShiftByEmployee(Employee employee)
-	{
+	public List<Shift> findShiftByEmployee(Employee employee) {
 		return getDao().findByEmployee(employee);
 	}
 
-	public void deleteEmployeeFromShifts(Employee employee)
-	{
+	public void deleteEmployeeFromShifts(Employee employee) {
 		getDao().deleteEmployeeFromShifts(employee);
 	}
 
-	public Shift findLatestShift()
-	{
+	public Shift findLatestShift() {
 
 		List<Shift> findAllShifts = findAll();
-		if (findAllShifts == null || findAllShifts.size() == 0)
-		{
+		if (findAllShifts == null || findAllShifts.size() == 0) {
 			return null;
 		}
 
 		Shift latestShift = findAllShifts.get(0);
-		for (Shift shift : findAllShifts)
-		{
-			if (shift.getWeek().isAfter(latestShift.getWeek()))
-			{
+		for (Shift shift : findAllShifts) {
+			if (shift.getWeek().isAfter(latestShift.getWeek())) {
 				latestShift = shift;
 			}
 		}

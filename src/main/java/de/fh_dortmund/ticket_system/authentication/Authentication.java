@@ -11,22 +11,21 @@ import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
-public abstract class Authentication implements Serializable
-{
-	private static Logger		log					= Logger.getLogger(Authentication.class);
+public abstract class Authentication implements Serializable {
+	private static Logger log = Logger.getLogger(Authentication.class);
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
-	private String				name;
-	private String				passwort;
-	private boolean				loggedIn;
-	private Employee			employee;
+	private String name;
+	private String passwort;
+	private boolean loggedIn;
+	private Employee employee;
 
 	@ManagedProperty("#{employeeData}")
-	EmployeeData				employeeData;
+	EmployeeData employeeData;
 
 	/**
-	 * Hier kommt die Authentifizierung statt.
+	 * Basic Authentication
 	 * 
 	 * @param name2
 	 * @param passwort2
@@ -34,33 +33,26 @@ public abstract class Authentication implements Serializable
 	 */
 	protected abstract boolean authenticate(String name, String passwort);
 
-	public String login()
-	{
-		if (isLoggedIn())
-		{
+	public String login() {
+		if (isLoggedIn()) {
 			return "/pages/index?faces-redirect=true";
 		}
 
-		if (authenticate(name, passwort) && findEmployee())
-		{
+		if (authenticate(name, passwort) && findEmployee()) {
 			setLoggedIn(true);
 			log.info("User mit dem Namen \"" + name + "\" hat sich eingeloggt.");
 
 			return "/pages/index?faces-redirect=true";
-		}
-		else
-		{
+		} else {
 			setLoggedIn(false);
 
 			return "/login?faces-redirect=true";
 		}
 	}
 
-	private boolean findEmployee()
-	{
+	private boolean findEmployee() {
 		Employee employee = getEmployeeData().findByID(name);
-		if (employee == null)
-		{
+		if (employee == null) {
 			MessageUtil.showE("User nicht gefunden!");
 			return false;
 		}
@@ -70,66 +62,55 @@ public abstract class Authentication implements Serializable
 		return true;
 	}
 
-	public String logout()
-	{
+	public String logout() {
 		setLoggedIn(false);
 
 		if ((FacesContext.getCurrentInstance() != null)
-				&& (FacesContext.getCurrentInstance().getExternalContext() != null))
-		{
-			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+				&& (FacesContext.getCurrentInstance().getExternalContext() != null)) {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.invalidateSession();
 		}
 
 		return "/login?faces-redirect=true";
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getPasswort()
-	{
+	public String getPasswort() {
 		return passwort;
 	}
 
-	public void setPasswort(String passwort)
-	{
+	public void setPasswort(String passwort) {
 		this.passwort = passwort;
 	}
 
-	public boolean isLoggedIn()
-	{
+	public boolean isLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLoggedIn(boolean loggedIn)
-	{
+	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
 
-	public Employee getEmployee()
-	{
+	public Employee getEmployee() {
 		return employee;
 	}
 
-	public void setEmployee(Employee employee)
-	{
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
-	public EmployeeData getEmployeeData()
-	{
+	public EmployeeData getEmployeeData() {
 		return employeeData;
 	}
 
-	public void setEmployeeData(EmployeeData employeeData)
-	{
+	public void setEmployeeData(EmployeeData employeeData) {
 		this.employeeData = employeeData;
 	}
 }

@@ -12,6 +12,12 @@ import org.primefaces.model.ScheduleEvent;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
 
+/**
+ * Model for events used by views to get conflicts.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @ApplicationScoped
 public class EventModel extends PersonalEventModel {
