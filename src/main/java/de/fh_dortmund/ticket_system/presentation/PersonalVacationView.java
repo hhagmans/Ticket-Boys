@@ -163,11 +163,7 @@ public class PersonalVacationView extends BaseView implements Serializable {
 			addMessage(message);
 			break;
 		default:
-			message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Ereignis verschoben", "Verschoben um: "
-							+ event.getDayDelta() + " Tage.");
 			getPersonalEventModel().updateEvent(tempEvent);
-			addMessage(message);
 			// TODO: generateConflictObject
 			if (!conflictFinder.checkVacation(tempEvent)) {
 				addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO,
