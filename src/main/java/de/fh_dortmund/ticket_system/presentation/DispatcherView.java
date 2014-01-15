@@ -20,7 +20,7 @@ import de.fh_dortmund.ticket_system.entity.Shift;
 import de.fh_dortmund.ticket_system.util.RightsManager;
 
 /**
- * Die View zur Dispatcherliste
+ * View for dispatcherlist
  * 
  * @author Ticket-Boys
  * 
@@ -48,6 +48,11 @@ public class DispatcherView extends BaseView implements Serializable {
 
 	private List<Shift> selectedShifts;
 
+	/**
+	 * Switches two selected shifts if users are allowed to switch. Generates
+	 * conflicts for the new shifts.
+	 * 
+	 */
 	public void switchShifts() {
 		if (getSelectedShifts().size() > 2) {
 			showMessage("Verweigert",

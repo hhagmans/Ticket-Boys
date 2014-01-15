@@ -10,6 +10,13 @@ import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
+/**
+ * Implementation of the ShiftDao for SQLite. Extends BaseDaoSqlite for basic
+ * methods and implements individual methods.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 public class ShiftDaoSqlite extends BaseDaoSqlite<Shift> implements ShiftDao,
 		Serializable {
 	private static final long serialVersionUID = 1L;
@@ -65,6 +72,13 @@ public class ShiftDaoSqlite extends BaseDaoSqlite<Shift> implements ShiftDao,
 		return empShifts;
 	}
 
+	/**
+	 * Deletes an Employee from all shifts and sets a new dispatcher. Used when
+	 * an employee gets deleted.
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
 	@Override
 	public void deleteEmployeeFromShifts(Employee employee) {
 		ArrayList<Shift> shifts = new ArrayList<Shift>(findByEmployee(employee));

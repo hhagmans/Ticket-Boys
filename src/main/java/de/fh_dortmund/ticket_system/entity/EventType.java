@@ -1,5 +1,11 @@
 package de.fh_dortmund.ticket_system.entity;
 
+/**
+ * Eventtype used by events to determine type of event.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 public enum EventType {
 	vacation("Urlaub", "vacation-event"), other("Sonstiges", "other-event"), dispatcher(
 			"Dispatcher-Dienst", "dispatcher-event"), holiday("Feiertag",

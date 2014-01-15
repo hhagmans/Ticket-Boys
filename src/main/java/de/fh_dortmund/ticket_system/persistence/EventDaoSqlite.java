@@ -15,6 +15,13 @@ import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
 import de.fh_dortmund.ticket_system.util.HolidayUtil;
 
+/**
+ * Implementation of the EventtDao for SQLite. Extends BaseDaoSqlite for basic
+ * methods and implements individual methods.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 		Serializable {
 	private static final long serialVersionUID = 1L;
@@ -123,6 +130,13 @@ public class EventDaoSqlite extends BaseDaoSqlite<Event> implements EventDao,
 
 	}
 
+	/**
+	 * Calculates the daycount of an event decreased by the number of holidays
+	 * happening in this event.
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
 	private long calculateDayCount(Event event) {
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();

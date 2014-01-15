@@ -15,6 +15,13 @@ import javax.persistence.Transient;
 
 import org.primefaces.model.ScheduleEvent;
 
+/**
+ * Represents a event in the calendar. It can either be a user event (vacation,
+ * other) or a holiday event or a dispatcher shift.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @Entity
 @Table(name = "Event")
 @NamedQueries({

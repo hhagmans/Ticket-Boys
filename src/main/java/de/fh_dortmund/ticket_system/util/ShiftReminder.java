@@ -11,33 +11,35 @@ import org.quartz.JobExecutionException;
 
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 
+/**
+ * Class to remind users of their upcoming chifts.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @ApplicationScoped
-public class ShiftReminder implements Job, Serializable
-{
+public class ShiftReminder implements Job, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private ShiftDaoSqlite dao = new ShiftDaoSqlite();
 
-	public ShiftReminder()
-	{
+	public ShiftReminder() {
 
 	}
 
 	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException
-	{
+	public void execute(JobExecutionContext context)
+			throws JobExecutionException {
 		DailyChecker.trigger(dao);
 	}
 
-	public ShiftDaoSqlite getDao()
-	{
+	public ShiftDaoSqlite getDao() {
 		return dao;
 	}
 
-	public void setDao(ShiftDaoSqlite dao)
-	{
+	public void setDao(ShiftDaoSqlite dao) {
 		this.dao = dao;
 	}
 

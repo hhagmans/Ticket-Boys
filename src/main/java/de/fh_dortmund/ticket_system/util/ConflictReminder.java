@@ -12,18 +12,29 @@ import org.quartz.JobExecutionException;
 import de.fh_dortmund.ticket_system.persistence.ConflictDao;
 import de.fh_dortmund.ticket_system.persistence.ConflictDaoSqlite;
 
+/**
+ * Class for a daily reminder for existing conflicts.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @ApplicationScoped
-public class ConflictReminder implements Job, Serializable
-{
+public class ConflictReminder implements Job, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private ConflictDao conflictDao = new ConflictDaoSqlite();
 
+	/**
+	 * Triggers the conflict checker.
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
 	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException
-	{
+	public void execute(JobExecutionContext context)
+			throws JobExecutionException {
 		DailyChecker.conflictTrigger(conflictDao);
 	}
 

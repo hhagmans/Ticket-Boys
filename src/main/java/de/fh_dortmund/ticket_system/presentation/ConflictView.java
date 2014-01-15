@@ -13,6 +13,12 @@ import de.fh_dortmund.ticket_system.business.ConflictModel;
 import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 
+/**
+ * View for conflictlist
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @ViewScoped
 public class ConflictView implements Serializable {

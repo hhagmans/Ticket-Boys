@@ -7,8 +7,20 @@ import com.google.gson.JsonParser;
 import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 
+/**
+ * Class to Parse Json given by the Evonik LDAP system.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 public class LDAPJsonParser {
 
+	/**
+	 * Parses a given jsonString to an employee
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
 	public static Employee parseEmployee(String jsonLine) {
 		JsonElement jelement = new JsonParser().parse(jsonLine);
 		JsonObject jobject = jelement.getAsJsonObject();

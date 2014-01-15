@@ -11,6 +11,12 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Role;
 import de.fh_dortmund.ticket_system.entity.Shift;
 
+/**
+ * Determines the rights for a user given the role of the user.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @SessionScoped
 public class RightsManager implements Serializable {

@@ -14,28 +14,33 @@ import de.jollyday.HolidayManager;
  * @author Hendrik Hagmans
  * 
  */
-public class HolidayUtil
-{
+public class HolidayUtil {
 
-	public static Set<Holiday> getHolidaysforUser(Employee emp)
-	{
+	/**
+	 * Returns a set of holidays for a given user.
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
+	public static Set<Holiday> getHolidaysforUser(Employee emp) {
 		HolidayManager manager;
 		Set<Holiday> holidays = null;
 
-		HolidayCalendarType usersHolidayCalendarType = emp.getHolidayCalendarType();
-		manager = HolidayManager.getInstance(usersHolidayCalendarType.getCountry());
+		HolidayCalendarType usersHolidayCalendarType = emp
+				.getHolidayCalendarType();
+		manager = HolidayManager.getInstance(usersHolidayCalendarType
+				.getCountry());
 
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 
-		if (!usersHolidayCalendarType.getState().isEmpty())
-		{
-			holidays = manager.getHolidays(year, usersHolidayCalendarType.getState());
-			holidays.addAll(manager.getHolidays(year + 1, usersHolidayCalendarType.getState()));
+		if (!usersHolidayCalendarType.getState().isEmpty()) {
+			holidays = manager.getHolidays(year,
+					usersHolidayCalendarType.getState());
+			holidays.addAll(manager.getHolidays(year + 1,
+					usersHolidayCalendarType.getState()));
 
-		}
-		else
-		{
+		} else {
 			holidays = manager.getHolidays(year);
 			holidays.addAll(manager.getHolidays(year + 1));
 		}
@@ -43,26 +48,28 @@ public class HolidayUtil
 		return holidays;
 	}
 
-	public static int getNumberofHolidaysBetweenTwoDates(Employee emp, Date startDate, Date endDate)
-	{
+	/**
+	 * Returns the number of holidays between two dates for a given user.
+	 * 
+	 * @author Ticket-Boys
+	 * 
+	 */
+	public static int getNumberofHolidaysBetweenTwoDates(Employee emp,
+			Date startDate, Date endDate) {
 		Set<Holiday> holidays = getHolidaysforUser(emp);
 
-		if (holidays == null)
-		{
+		if (holidays == null) {
 			return 0;
 		}
 
 		int count = 0;
 		Date actHoliday;
-		for (Holiday h : holidays)
-		{
+		for (Holiday h : holidays) {
 			actHoliday = h.getDate().toDateTimeAtStartOfDay().toDate();
-			if (actHoliday.after(startDate) && actHoliday.before(endDate))
-			{
+			if (actHoliday.after(startDate) && actHoliday.before(endDate)) {
 				count++;
-			}
-			else if (actHoliday.equals(startDate) || actHoliday.equals(endDate))
-			{
+			} else if (actHoliday.equals(startDate)
+					|| actHoliday.equals(endDate)) {
 				count++;
 			}
 		}

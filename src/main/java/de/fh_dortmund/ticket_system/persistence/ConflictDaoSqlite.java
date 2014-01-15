@@ -10,6 +10,14 @@ import de.fh_dortmund.ticket_system.base.BaseDaoSqlite;
 import de.fh_dortmund.ticket_system.entity.Conflict;
 import de.fh_dortmund.ticket_system.entity.Employee;
 
+/**
+ * Implementation of the ConflictDao for SQLite. Extends BaseDaoSqlite for basic
+ * methods and implements individual methods.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
+
 public class ConflictDaoSqlite extends BaseDaoSqlite<Conflict> implements
 		ConflictDao, Serializable {
 	private static final long serialVersionUID = 1L;

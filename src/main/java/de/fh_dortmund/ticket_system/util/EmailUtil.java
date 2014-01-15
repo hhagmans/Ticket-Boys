@@ -7,6 +7,12 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
+/**
+ * Class to create and sent emails
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 public class EmailUtil {
 	public static final String HOST = "smtp.googlemail.com";

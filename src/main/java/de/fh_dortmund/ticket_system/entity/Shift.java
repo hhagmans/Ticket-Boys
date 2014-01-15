@@ -9,8 +9,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * Dieses Objekt repräsentiert eine Schicht Eine Schicht ist die Zuordnung einer
- * Kalenderwoche zu einem Dispatcher und seinem Vertreter
+ * Represents a shift. A shift is assigns a dispatcher and his representative to
+ * a week.
  * 
  * @author Ticket-Boys
  * 

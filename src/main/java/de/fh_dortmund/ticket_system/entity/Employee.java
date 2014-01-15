@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import de.fh_dortmund.ticket_system.util.HolidayCalendarType;
 
 /**
- * Diese Klasse stellt einen Nutzer des Dispatcher- & Urlaubssystem dar
+ * Represents a user of the dispatcher and vacation system.
  * 
  * @author Ticket-Boys
  * 

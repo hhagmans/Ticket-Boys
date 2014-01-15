@@ -29,6 +29,13 @@ import de.fh_dortmund.ticket_system.persistence.EventDaoSqlite;
 import de.fh_dortmund.ticket_system.persistence.ShiftDao;
 import de.fh_dortmund.ticket_system.persistence.ShiftDaoSqlite;
 
+/**
+ * Provides testdata and fills the database. Used in development to have some
+ * testdata.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 public class TestdataProvider {
 	/**
 	 * Fetches the list of all employees and filters them by role. Returns all
@@ -94,6 +101,11 @@ public class TestdataProvider {
 		return empList;
 	}
 
+	/**
+	 * Reads the list of events from the file /test/EventList.json.
+	 * 
+	 * @return list of events
+	 */
 	private static List<Event> getEventList() {
 		List<Event> eventList;
 
@@ -118,6 +130,10 @@ public class TestdataProvider {
 		return eventList;
 	}
 
+	/**
+	 * Fills the employeelist with testdata.
+	 * 
+	 */
 	public static void fillEmployees(EmployeeDao dao) {
 		List<Employee> allEmployees = getEmployeeList();
 
@@ -130,11 +146,19 @@ public class TestdataProvider {
 		System.out.println("Employees added " + allEmployees.size());
 	}
 
+	/**
+	 * Fills the conflictlist with testdata.
+	 * 
+	 */
 	public static void fillConflict(ConflictDao dao) {
 		dao.add(new Conflict(new Employee("Penis", "Peter", "Enis", "Marl",
 				Role.dispatcher, 0, 0), new Week(2014, 3)));
 	}
 
+	/**
+	 * Fills the shiftlist with testdata.
+	 * 
+	 */
 	public static void fillShift(ShiftDao dao) {
 		TestdataProvider dataProvider = new TestdataProvider();
 		List<Employee> dispatchers = dataProvider.getDispatchingEmployees();
@@ -169,6 +193,10 @@ public class TestdataProvider {
 		}
 	}
 
+	/**
+	 * Fills the eventlist with testdata.
+	 * 
+	 */
 	public static void fillEvents(EventDao dao) {
 		List<Event> events = TestdataProvider.getEventList();
 		if (dao.findAll().isEmpty()) {

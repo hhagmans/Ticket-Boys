@@ -26,6 +26,12 @@ import de.fh_dortmund.ticket_system.entity.Employee;
 import de.fh_dortmund.ticket_system.entity.Event;
 import de.fh_dortmund.ticket_system.entity.EventType;
 
+/**
+ * View for personal vacation calendar.
+ * 
+ * @author Ticket-Boys
+ * 
+ */
 @ManagedBean
 @ViewScoped
 public class PersonalVacationView extends BaseView implements Serializable {
