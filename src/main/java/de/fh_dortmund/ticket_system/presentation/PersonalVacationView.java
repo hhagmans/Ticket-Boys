@@ -44,11 +44,11 @@ public class PersonalVacationView extends BaseView implements Serializable {
 	@ManagedProperty("#{eventData}")
 	private EventData data;
 
-	@ManagedProperty("#{shiftData}")
-	private ShiftData shiftData;
-
 	@ManagedProperty("#{personalEventModel}")
 	private PersonalEventModel personalEventModel;
+
+	@ManagedProperty("#{shiftData}")
+	private ShiftData shiftData;
 
 	@ManagedProperty("#{conflictFinder}")
 	private ConflictFinder conflictFinder;
