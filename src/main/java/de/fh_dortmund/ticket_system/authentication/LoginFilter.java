@@ -16,9 +16,10 @@ import de.fh_dortmund.ticket_system.entity.Role;
 
 /**
  * Filter checks if LoginBean has loginIn property set to true. If it is not set
- * then request is being redirected to the login.xhml page.
+ * then request is being redirected to the login.xhml page. Redirects users with
+ * wrong roles for some pages to index page.
  * 
- * @author itcuties
+ * @author itcuties, Hendrik Hagmans
  * 
  */
 @WebFilter("/pages/*")
