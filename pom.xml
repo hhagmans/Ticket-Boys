@@ -21,7 +21,7 @@
 			<artifactId>quartz</artifactId>
 			<version>2.1.1</version>
 		</dependency>
-		
+
 		<!-- Quartz need transaction -->
 		<dependency>
 			<groupId>javax.transaction</groupId>
@@ -128,19 +128,19 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		
+
 		<dependency>
-	<groupId>de.jollyday</groupId>
-	<artifactId>jollyday</artifactId>
-	<version>0.4.6</version>
-</dependency>
-            
-            <dependency>
-	<groupId>joda-time</groupId>
-	<artifactId>joda-time</artifactId>
-	<version>2.3</version>
-</dependency>
-            
+			<groupId>de.jollyday</groupId>
+			<artifactId>jollyday</artifactId>
+			<version>0.4.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -148,6 +148,20 @@
 			<version>1.8.4</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.0-alpha4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.0-beta1</version>
+		</dependency>
+
+
 
 	</dependencies>
 
