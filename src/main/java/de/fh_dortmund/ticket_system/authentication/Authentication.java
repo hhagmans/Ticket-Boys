@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.util.LDAPJsonParser;
 import de.fh_dortmund.ticket_system.util.MessageUtil;
 
 public abstract class Authentication implements Serializable {
@@ -37,15 +38,31 @@ public abstract class Authentication implements Serializable {
 		if (isLoggedIn()) {
 			return "/pages/index?faces-redirect=true";
 		}
-
+		
+		/**
+		 * employee is authenticated in LDAP system and already in employee list
+		 */
 		if (authenticate(name, passwort) && findEmployee()) {
 			setLoggedIn(true);
 			log.info("User mit dem Namen \"" + name + "\" hat sich eingeloggt.");
-
 			return "/pages/index?faces-redirect=true";
-		} else {
+			
+			/**
+			 * employee is authenticated in LDAP system but is not yet listed in employee list
+			 */
+		} else if (authenticate(name, passwort) && !findEmployee()) {
+			getEmployeeData().add(LDAPJsonParser.getActEmployee());
+			setEmployee(LDAPJsonParser.getActEmployee());
+			setLoggedIn(true);
+			log.info("User mit dem Namen \"" + name + "\" hat sich eingeloggt.");
+			return "/pages/index?faces-redirect=true";
+		}
+		/**
+		 * employee is not authenticated in LDAP system and not listed in employee list
+		 */
+		else {
 			setLoggedIn(false);
-
+			MessageUtil.showE("Login fehlgeschlagen!");
 			return "/login?faces-redirect=true";
 		}
 	}

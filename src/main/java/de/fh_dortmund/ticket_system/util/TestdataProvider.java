@@ -10,6 +10,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import de.fh_dortmund.ticket_system.authentication.NoAuthentication;
 import de.fh_dortmund.ticket_system.business.ConflictFinder;
 import de.fh_dortmund.ticket_system.business.EmployeeData;
 import de.fh_dortmund.ticket_system.business.EventData;
@@ -151,7 +152,7 @@ public class TestdataProvider {
 	 * 
 	 */
 	public static void fillConflict(ConflictDao dao) {
-		dao.add(new Conflict(new Employee("Penis", "Peter", "Enis", "Marl",
+		dao.add(new Conflict(new Employee("Gerd", "Peter", "Daenerys", "Marl",
 				Role.dispatcher, 0, 0), new Week(2014, 3)));
 	}
 

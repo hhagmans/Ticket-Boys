@@ -1,6 +1,7 @@
 package de.fh_dortmund.ticket_system.authentication;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -12,6 +13,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import de.fh_dortmund.ticket_system.entity.Employee;
+import de.fh_dortmund.ticket_system.persistence.EmployeeDao;
+import de.fh_dortmund.ticket_system.util.LDAPJsonParser;
 import de.fh_dortmund.ticket_system.util.WebClientDevWrapper;
 
 
@@ -20,9 +24,6 @@ import de.fh_dortmund.ticket_system.util.WebClientDevWrapper;
 public class NoAuthentication extends Authentication {
 	private static final long serialVersionUID = -1084126377607196446L;
 
-	/**
-	 * No real Authentication at the moment as we do not have access to LDAP
-	 */
 	@Override
 	protected boolean authenticate(String name, String passwort) {
 		
@@ -34,7 +35,7 @@ public class NoAuthentication extends Authentication {
 		
         try {
             HttpGet httpget = new HttpGet(checkUrl);
-            System.out.println("executing http request....");
+            System.out.println("executing http request...");
 
             // Create a response handler
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -52,6 +53,11 @@ public class NoAuthentication extends Authentication {
             System.out.println("----------------------------------------");
             System.out.println(responseBody);
             System.out.println("----------------------------------------");
+            
+            if (LDAPJsonParser.checkEmployee(responseBody)) {
+            	LDAPJsonParser.parseEmployee(responseBody);
+            	return true;
+            }
 
         } finally {
             // When HttpClient instance is no longer needed,
@@ -59,9 +65,7 @@ public class NoAuthentication extends Authentication {
             // immediate deallocation of all system resources
             httpclient.getConnectionManager().shutdown();
         }
-
-		
-		return true;
+		return false;
 	}
-
+	
 }
