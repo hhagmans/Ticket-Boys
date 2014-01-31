@@ -127,3 +127,24 @@ body {
 	background: none !important;
 border: none !important;
 }
+
+.loginBox {
+	margin-top: 8px;
+	margin-buttom: 8px;
+}
+
+/*
+to align same vertical position for both boxes, difference between both boxes must be 27 px
+for small sizes and mobile use, custom css is needed
+ */
+.loginFieldName {
+	margin-top: 8px;
+	margin-buttom: 8px;
+	margin-left: 40px;
+}
+
+.loginFieldPassword {
+	margin-top: 8px;
+	margin-buttom: 8px;
+	margin-left: 13px;
+}

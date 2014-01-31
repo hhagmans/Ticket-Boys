@@ -70,7 +70,7 @@ public abstract class Authentication implements Serializable {
 	private boolean findEmployee() {
 		Employee employee = getEmployeeData().findByID(name);
 		if (employee == null) {
-			MessageUtil.showE("User nicht gefunden!");
+//			MessageUtil.showE("User nicht gefunden!");
 			return false;
 		}
 

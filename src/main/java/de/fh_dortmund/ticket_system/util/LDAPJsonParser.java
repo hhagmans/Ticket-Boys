@@ -50,14 +50,22 @@ public class LDAPJsonParser {
 			}
 
 			String email = removeQuotes(jobject.get("email").toString());
-
-
+			
+			/**
+			 * if organization unit matches WAM1 or WAM2, user will be dispatcher automatically
+			 */
 			if (removeQuotes(jobject.get("orgeinheit").toString()).equals("BS-AS-TE-WAM1") || removeQuotes(jobject.get("orgeinheit").toString()).equals("BS-AS-TE-WAM2")) {
 				employee = new Employee(konzernID, firstName, lastName, city, Role.dispatcher, 0, 0, holidayCalendarType, email);	
-	
+				
+			/**
+			 * custom administrators can be provided here	
+			 */
 			} else if (removeQuotes(jobject.get("kid").toString().toLowerCase()).equals("s20376")) {
 				employee = new Employee(konzernID, firstName, lastName, city, Role.admin, 0, 0, holidayCalendarType, email);	
-		
+			
+			/**
+			 * every other user has guest status at first
+			 */
 			} else {
 				employee = new Employee(konzernID, firstName, lastName, city, Role.guest, 0, 0, holidayCalendarType, email);	
 		

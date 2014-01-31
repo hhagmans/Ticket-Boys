@@ -13,13 +13,13 @@
 	<ui:define name="content">
 		<h:form>
 			<p:panel header="Login" styleClass="login">
-				<p:outputLabel> Name: </p:outputLabel>
-				<p:inputText value="#{auth.name}" placeholder="KonzernID" />
+				<p:outputLabel>Name: </p:outputLabel>
+				<p:inputText styleClass="loginFieldName" value="#{auth.name}" placeholder="Konzern-ID" />
 				<br />
 				<p:outputLabel>Passwort: </p:outputLabel>
-				<p:password value="#{auth.passwort}" placeholder="egal" />
+				<p:password styleClass="loginFieldPassword" value="#{auth.passwort}" placeholder="Passwort" />
 				<br />
-				<p:commandButton value="Submit" type="submit"
+				<p:commandButton styleClass="loginBox" value="Submit" type="submit"
 					action="#{auth.login()}" ajax="FALSE" />
 				<br />
 				<p:messages />
