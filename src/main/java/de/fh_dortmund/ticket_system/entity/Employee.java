@@ -37,7 +37,7 @@ public class Employee implements Serializable {
 	private int vacationCount = 0;
 	private int maxVacationCount = 30;
 	private int freeVacationCount;
-	private String email = "ticketboys1337@gmail.com";
+	private String email = "stefan.wallkoetter@evonik.com";
 
 	private Set<Event> myEvents = new HashSet<Event>();
 

@@ -134,7 +134,7 @@ border: none !important;
 }
 
 /*
-to align same vertical position for both boxes, difference between both boxes must be 27 px
+to align same vertical position for both boxes, difference between both boxes must be 27 px (margin-left)
 for small sizes and mobile use, custom css is needed
  */
 .loginFieldName {

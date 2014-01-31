@@ -74,8 +74,11 @@ public class LDAPJsonParser {
 			return null;
 		}	
 	}
-	
-//	method checks if user in given string is authenticated in Evonik LDAP system
+	/**
+	 * 
+	 * @param jsonLine
+	 * @return true if provided user name is listed in Evonik LDAP system (rc == 0)
+	 */
 	public static boolean checkEmployee(String jsonLine) {
 		JsonElement jelement = new JsonParser().parse(jsonLine);
 		JsonObject jobject = jelement.getAsJsonObject();

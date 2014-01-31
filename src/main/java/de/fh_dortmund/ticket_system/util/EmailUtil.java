@@ -15,13 +15,13 @@ import org.apache.commons.mail.SimpleEmail;
  */
 @ManagedBean
 public class EmailUtil {
-	public static final String HOST = "smtp.googlemail.com";
-	public static final Integer SMTP_PORT = 465;
-	public static final String FROM = "ticketboys1337@gmail.com";
-	public static final String USERNAME = "ticketboys1337@gmail.com";
-	public static final String PASSWORD = "ticketboysevonik";
-	public static final String SUBJECT = "Ihr Dispatcher-Einsatz steht bevor";
-	public static final String CONFLICTSUBJECT = "Bei der Einsatzplanung ist ein Konflikt aufgetreten";
+	public static final String HOST = "smtp.evonik.internal";
+	public static final Integer SMTP_PORT = 25;
+	public static final String FROM = "tinnef@evonik.com";
+//	public static final String USERNAME = "ticketboys1337@gmail.com";
+//	public static final String PASSWORD = "ticketboysevonik";
+	public static final String SUBJECT = "Tinnef: Ihr Dispatcher-Einsatz steht bevor";
+	public static final String CONFLICTSUBJECT = "Tinnef: Bei der Einsatzplanung ist ein Konflikt aufgetreten";
 
 	public static Email sendConfEmail(String msg, String... to)
 			throws EmailException {
@@ -45,11 +45,11 @@ public class EmailUtil {
 		Email email = new SimpleEmail();
 		email.setHostName(HOST);
 		email.setSmtpPort(SMTP_PORT);
-		email.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
-		email.setSSL(true);
-		email.setTLS(true);
-		email.setSSLOnConnect(true);
-		email.setFrom(FROM, "Ticket-Boys");
+//		email.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
+//		email.setSSL(true);
+//		email.setTLS(true);
+//		email.setSSLOnConnect(true);
+		email.setFrom(FROM, "Tinnef Application");
 		email.setMsg(msg);
 
 		return email;
